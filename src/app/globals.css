@@ -1,26 +1,157 @@
 @import "tailwindcss";
 
+/* ─── BPOS Design System ─────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand Colors */
+  --navy:       #00497A;
+  --night:      #002843;
+  --woodsmoke:  #222B2F;
+  --dark-mode:  #0F0F0F;
+  --nevada:     #646F7D;
+  --columbia:   #DEE8EC;
+  --sky-blue:   #EEF4F6;
+  --light-blue: #F8FAFB;
+
+  /* Accent */
+  --teal:       #00A99D;
+  --teal-light: #E6F7F6;
+
+  /* Tailwind token bridge */
+  --background: var(--light-blue);
+  --foreground: var(--woodsmoke);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background:  var(--background);
+  --color-foreground:  var(--foreground);
+  --color-navy:        #00497A;
+  --color-night:       #002843;
+  --color-woodsmoke:   #222B2F;
+  --color-nevada:      #646F7D;
+  --color-columbia:    #DEE8EC;
+  --color-sky-blue:    #EEF4F6;
+  --color-light-blue:  #F8FAFB;
+  --color-teal:        #00A99D;
+  --font-sans:         var(--font-inter);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ─── Base ───────────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-inter), 'Inter', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Typography ─────────────────────────────────────────── */
+.heading-display {
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.heading-xl {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+/* ─── Gradient utilities ─────────────────────────────────── */
+.gradient-text {
+  background: linear-gradient(135deg, #60b8ff 0%, #ffffff 50%, #a8d8ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-hero {
+  background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(0,73,122,0.5) 0%, transparent 70%),
+              radial-gradient(ellipse 60% 40% at 80% 50%, rgba(0,169,157,0.15) 0%, transparent 60%),
+              var(--night);
+}
+
+.gradient-cta {
+  background: linear-gradient(135deg, #00497A 0%, #002843 50%, #001a2e 100%);
+}
+
+/* ─── Glass card ─────────────────────────────────────────── */
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-card-light {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(222, 232, 236, 0.8);
+}
+
+/* ─── Glow ───────────────────────────────────────────────── */
+.glow-navy {
+  box-shadow: 0 0 60px rgba(0, 73, 122, 0.4), 0 0 120px rgba(0, 73, 122, 0.15);
+}
+
+.glow-teal {
+  box-shadow: 0 0 40px rgba(0, 169, 157, 0.3);
+}
+
+/* ─── Scrollbar ──────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--columbia); border-radius: 3px; }
+
+/* ─── Animations ─────────────────────────────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(-8px) rotate(1deg); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50%       { opacity: 0.8; transform: scale(1.05); }
+}
+
+@keyframes scroll-x {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-float      { animation: float 6s ease-in-out infinite; }
+.animate-float-slow { animation: floatSlow 8s ease-in-out infinite; }
+.animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+.animate-scroll-x   { animation: scroll-x 30s linear infinite; }
+
+.shimmer-bg {
+  background: linear-gradient(90deg, transparent 25%, rgba(255,255,255,0.06) 50%, transparent 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* ─── Section spacing ────────────────────────────────────── */
+.section-py { padding-top: 96px; padding-bottom: 96px; }
+@media (min-width: 768px) {
+  .section-py { padding-top: 128px; padding-bottom: 128px; }
 }
