@@ -4,50 +4,14 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 
-function BasketItem({
-  name,
-  price,
-  eligible,
-  delay,
-}: {
-  name: string;
-  price: string;
-  eligible: boolean;
-  delay: number;
-}) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ delay, duration: 0.4, ease: "easeOut" }}
-      className="flex items-center justify-between py-3 border-b border-white/10 last:border-0"
-    >
-      <div className="flex items-center gap-3">
-        <div
-          className={`w-2 h-2 rounded-full ${
-            eligible ? "bg-emerald-400" : "bg-white/30"
-          }`}
-        />
-        <span className="text-sm text-white/80 font-medium">{name}</span>
-      </div>
-      <div className="flex items-center gap-3">
-        <span className="text-sm text-white/60">{price}</span>
-        {eligible && (
-          <span className="text-xs bg-emerald-400/20 text-emerald-400 px-2 py-0.5 rounded-full font-medium">
-            Eligible
-          </span>
-        )}
-      </div>
-    </motion.div>
-  );
-}
-
-const basketItems = [
-  { name: "Naproxen Sodium 220mg", price: "$8.00", eligible: true },
-  { name: "Tylenol Extra Strength", price: "$12.00", eligible: true },
-  { name: "Advil Liqui-Gels 200mg", price: "$10.00", eligible: true },
-  { name: "Coca-Cola 12oz", price: "$2.50", eligible: false },
-  { name: "Acetaminophen Plus", price: "$15.00", eligible: true },
+const heroItems = [
+  { name: "Acetaminophen Plus Aspirin & Caffeine", barcode: "123456789",   unit: "Count", price: "$3.00",  tax: "0.80 %", eligible: true,  setPrice: false, inactive: false },
+  { name: "Antibiotic ointment",                  barcode: "12345906980", unit: "Count", price: "$12.00", tax: "0.80 %", eligible: true,  setPrice: false, inactive: false },
+  { name: "Apple",                                barcode: "12345",       unit: "KL",    price: null,     tax: null,      eligible: true,  setPrice: true,  inactive: false },
+  { name: "Alka-Seltzer (Inactive)",              barcode: "1234567",    unit: "Count", price: "$15.30", tax: "0.80 %", eligible: false, setPrice: false, inactive: true  },
+  { name: "Banana",                               barcode: "12345",       unit: "Count", price: null,     tax: null,      eligible: true,  setPrice: true,  inactive: false },
+  { name: "Benadryl",                             barcode: "123456789",  unit: "Count", price: "$8.75",  tax: "0.80 %", eligible: true,  setPrice: false, inactive: false },
+  { name: "Claritin",                             barcode: "123456789",  unit: "Count", price: "$6.90",  tax: "0.80 %", eligible: true,  setPrice: false, inactive: false },
 ];
 
 export default function HeroSection() {
@@ -209,29 +173,14 @@ export default function HeroSection() {
               transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
               className="w-fit"
             >
-              <div
-                style={{
-                  width: "68px",
-                  height: "66px",
-                  borderRadius: "14.8px",
-                  padding: "2px",
-                  background:
-                    "linear-gradient(135deg, rgba(45,211,255,0.9) 0%, rgba(45,211,255,0.5) 45%, rgba(45,211,255,0.3) 100%)",
-                }}
-              >
-                <div
-                  className="relative overflow-hidden w-full h-full"
-                  style={{ borderRadius: "12.8px" }}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src="/bpos-icon.svg"
-                    alt="Benefits POS"
-                    className="block w-full h-full object-cover"
-                    style={{ transform: "scale(1.25)" }}
-                  />
-                </div>
-              </div>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/bpos-icon.svg"
+                alt="Benefits POS"
+                width={70}
+                height={68}
+                className="block"
+              />
             </motion.div>
 
             {/* Headline */}
@@ -344,7 +293,7 @@ export default function HeroSection() {
               </div>
             </motion.div>
 
-            {/* Floating basket card */}
+            {/* Floating basket card — dark glass style, Figma data */}
             <motion.div
               initial={{ opacity: 0, x: 40, y: -10 }}
               animate={{ opacity: 1, x: 0, y: 0 }}
@@ -353,19 +302,42 @@ export default function HeroSection() {
               style={{ animationDelay: "1s" }}
             >
               <div className="flex items-center justify-between mb-3">
-                <span className="text-xs text-white/50 font-medium uppercase tracking-wider">
-                  Current Basket
-                </span>
-                <span className="text-xs text-emerald-400 font-semibold">
-                  4 eligible
-                </span>
+                <span className="text-xs text-white/50 font-medium uppercase tracking-wider">Current Basket</span>
+                <span className="text-xs text-emerald-400 font-semibold">6 eligible</span>
               </div>
-              {basketItems.map((item, i) => (
-                <BasketItem key={item.name} {...item} delay={1.1 + i * 0.1} />
+              {heroItems.slice(0, 5).map((item, i) => (
+                <motion.div
+                  key={item.name}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 1.1 + i * 0.1, duration: 0.4, ease: "easeOut" }}
+                  className="flex items-center justify-between py-2.5 border-b border-white/10 last:border-0"
+                >
+                  <div className="flex items-center gap-2.5 min-w-0 flex-1 pr-2">
+                    <div className={`w-2 h-2 rounded-full shrink-0 ${
+                      item.inactive ? "bg-white/20" : item.eligible ? "bg-emerald-400" : "bg-white/30"
+                    }`} />
+                    <span className={`text-sm font-medium truncate ${item.inactive ? "text-white/30" : "text-white/80"}`}>
+                      {item.name}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2 shrink-0">
+                    {item.setPrice ? (
+                      <span className="text-xs text-white/40 italic">Set Price</span>
+                    ) : (
+                      <span className={`text-sm ${item.inactive ? "text-white/30" : "text-white/60"}`}>{item.price}</span>
+                    )}
+                    {item.eligible && !item.inactive && (
+                      <span className="text-xs bg-emerald-400/20 text-emerald-400 px-2 py-0.5 rounded-full font-medium">
+                        Eligible
+                      </span>
+                    )}
+                  </div>
+                </motion.div>
               ))}
               <div className="mt-3 pt-3 border-t border-white/10 flex justify-between items-center">
                 <span className="text-sm text-white/70">Benefits applied</span>
-                <span className="text-sm font-bold text-emerald-400">-$45.00</span>
+                <span className="text-sm font-bold text-emerald-400">-$30.65</span>
               </div>
             </motion.div>
 
