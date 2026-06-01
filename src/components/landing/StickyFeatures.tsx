@@ -3,37 +3,14 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 
-// ─── Shared: Status Bar ────────────────────────────────────────────────────
-function StatusBar({ dark = false }: { dark?: boolean }) {
-  const c = dark ? "text-white" : "text-[#1a1a1a]";
-  return (
-    <div className={`flex justify-between items-center px-5 pt-3 pb-1 ${c}`}>
-      <span className="text-[12px] font-semibold">16:17</span>
-      <div className="flex items-center gap-1">
-        <svg className="w-3.5 h-2.5" viewBox="0 0 18 13" fill="currentColor">
-          <path d="M9 2C5.8 2 2.9 3.3 0.8 5.5l1.7 1.7C4 5.6 6.4 4.5 9 4.5s5 1.1 6.5 2.7l1.7-1.7C15.1 3.3 12.2 2 9 2zm0 4c-2 0-3.8.8-5.1 2.1l1.7 1.7C6.5 8.7 7.7 8.2 9 8.2s2.5.5 3.4 1.6l1.7-1.7C12.8 6.8 11 6 9 6zm0 4a2.2 2.2 0 100 4.4A2.2 2.2 0 009 10z" />
-        </svg>
-        <svg className="w-3 h-3" viewBox="0 0 14 13" fill="currentColor">
-          <rect x="0" y="9" width="2.5" height="4" rx="0.5" />
-          <rect x="3.8" y="6" width="2.5" height="7" rx="0.5" />
-          <rect x="7.6" y="3" width="2.5" height="10" rx="0.5" />
-          <rect x="11.4" y="0" width="2.5" height="13" rx="0.5" opacity="0.35" />
-        </svg>
-        <svg className="w-4.5 h-3" viewBox="0 0 20 13" fill="currentColor">
-          <rect x="0.5" y="0.5" width="16" height="12" rx="3" stroke="currentColor" strokeWidth="1" fill="none" opacity="0.4" />
-          <rect x="1.5" y="1.5" width="13" height="10" rx="2" />
-          <rect x="17" y="4" width="2.5" height="5" rx="1.25" />
-        </svg>
-      </div>
-    </div>
-  );
-}
+// ─── Scale constant (Figma 360px → PhoneFrame 272px) ─────────────────────
+const SCALE = 272 / 360;
 
-// ─── Shared: Phone Frame ───────────────────────────────────────────────────
+// ─── Shared: Phone Frame ──────────────────────────────────────────────────
 function PhoneFrame({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
     <div
-      className={`relative bg-white rounded-[38px] shadow-[0_32px_80px_-12px_rgba(0,0,0,0.18)] overflow-hidden border border-gray-100/80 ${className}`}
+      className={`relative bg-white rounded-[24px] shadow-[0_32px_80px_-12px_rgba(0,0,0,0.18)] overflow-hidden border border-gray-100/80 ${className}`}
       style={{ width: 272, height: 578 }}
     >
       {children}
@@ -41,449 +18,590 @@ function PhoneFrame({ children, className = "" }: { children: React.ReactNode; c
   );
 }
 
-// ─── Screen 0: Swipe Flex Card ─────────────────────────────────────────────
-function SwipeCardScreen() {
+// ─── Shared: Scale wrapper ─────────────────────────────────────────────────
+function FigmaScaled({ children }: { children: React.ReactNode }) {
   return (
     <PhoneFrame>
-      <StatusBar />
-      {/* Close */}
-      <button className="absolute top-10 right-4 w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
-        <span className="text-gray-500 text-sm font-bold">×</span>
-      </button>
-      {/* Hero illustration */}
-      <div className="mx-auto mt-6 w-[160px] h-[160px] rounded-full bg-[#002843] flex items-center justify-center overflow-hidden relative">
-        {/* Credit card */}
-        <div className="absolute -rotate-12 -top-1 left-4 w-[105px] h-[66px] rounded-xl bg-gradient-to-br from-[#e8e8e8] to-[#c8c8c8] shadow-lg border border-white/40">
-          <div className="absolute top-3 left-3">
-            <div className="w-5 h-3.5 rounded bg-amber-400/80" />
-          </div>
-          <div className="absolute bottom-2.5 left-3 text-[6px] text-gray-500 font-mono">**** **** **** 0886</div>
-        </div>
-        {/* Phone/terminal */}
-        <motion.div
-          animate={{ y: [0, -12, 0] }}
-          transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute bottom-3 right-3 w-[58px] h-[80px] rounded-xl bg-[#0a0a0a] shadow-xl border border-white/10 flex flex-col items-center justify-end pb-2"
-        >
-          <div className="w-8 h-0.5 bg-white/20 rounded mb-1" />
-          <div className="text-[5px] text-white/60 font-medium">Swipe Flex Card</div>
-        </motion.div>
-        {/* Arrow */}
-        <motion.div
-          animate={{ x: [0, 8, 0] }}
-          transition={{ duration: 1.0, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute right-[26px] top-[58px]"
-        >
-          <svg className="w-4 h-4 text-white" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-            <path d="M3 8h10M9 4l4 4-4 4" />
-          </svg>
-        </motion.div>
-      </div>
-      {/* Text */}
-      <div className="px-5 mt-5 text-center">
-        <h3 className="text-[18px] font-bold text-[#1a1a1a]">Swipe Flex Card</h3>
-        <p className="text-[12px] text-gray-500 mt-1.5 leading-[1.5]">
-          Swipe the member's Flex Card through the card reader at the top of the Terminal.
-        </p>
-      </div>
-      {/* Other Methods */}
-      <div className="px-5 mt-5">
-        <p className="text-[12px] font-bold text-[#1a1a1a] mb-3">Other Methods</p>
-        <div className="grid grid-cols-3 gap-2">
-          {[
-            { label: "Enter PAN", icon: "💳" },
-            { label: "Scan QR", icon: "⬛" },
-            { label: "Scan Card", icon: "📷" },
-          ].map(({ label, icon }) => (
-            <div key={label} className="border border-gray-200 rounded-xl p-2.5 flex flex-col items-center gap-1.5">
-              <span className="text-lg">{icon}</span>
-              <span className="text-[10px] text-gray-600 text-center">{label}</span>
-            </div>
-          ))}
-        </div>
+      <div style={{ position: "absolute", top: 0, left: 0, width: 360, height: 760, transform: `scale(${SCALE})`, transformOrigin: "top left" }}>
+        {children}
       </div>
     </PhoneFrame>
   );
 }
 
-// ─── Screen 1: Verified ────────────────────────────────────────────────────
-function VerifiedScreen() {
-  const r = 68; const circ = 2 * Math.PI * r;
+// ─── Shared: Status Bar (pure CSS/SVG) ────────────────────────────────────
+function StatusBar() {
   return (
-    <PhoneFrame>
-      <StatusBar />
-      <div className="flex flex-col items-center justify-center h-[500px]">
-        <div className="relative w-[172px] h-[172px]">
-          <svg width="172" height="172" className="absolute inset-0">
-            <circle cx="86" cy="86" r={r} fill="none" stroke="#e5e7eb" strokeWidth="7" />
-            <motion.circle
-              cx="86" cy="86" r={r} fill="none" stroke="#10b981" strokeWidth="7"
-              strokeDasharray={circ} strokeDashoffset={circ}
-              animate={{ strokeDashoffset: 0 }}
-              transition={{ duration: 0.9, ease: "easeOut" }}
-              transform="rotate(-90 86 86)" strokeLinecap="round"
-            />
-            {/* Small blue progress dot */}
-            <circle cx={86 + r} cy="86" r="4" fill="#3b82f6" opacity="0.8" />
-          </svg>
-          {/* Checkmark */}
-          <motion.svg
-            className="absolute inset-0 w-full h-full"
-            viewBox="0 0 172 172"
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.6, duration: 0.4, type: "spring" }}
-          >
-            <path d="M56 86l20 20 40-40" stroke="#10b981" strokeWidth="7" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-          </motion.svg>
-        </div>
-        <motion.h3
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
-          className="text-[22px] font-bold text-[#1a1a1a] mt-6"
-        >
-          Verified
-        </motion.h3>
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.0 }}
-          className="text-[13px] text-gray-400 mt-2"
-        >
-          Please wait...
-        </motion.p>
+    <div className="bg-white flex h-[40px] items-center justify-between px-[16px] shrink-0 w-[360px]">
+      <p className="text-[13px] text-black font-medium" style={{ fontFamily: "Roboto, sans-serif" }}>16:17</p>
+      <div className="flex items-center gap-[5px]">
+        {/* WiFi */}
+        <svg width="17" height="14" viewBox="0 0 17 14" fill="black">
+          <path d="M8.5 11.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3zm0-3.5c1.6 0 3 .65 4.05 1.7l1.4-1.4A8.24 8.24 0 0 0 8.5 6a8.24 8.24 0 0 0-5.45 2.3l1.4 1.4A5.77 5.77 0 0 1 8.5 8zm0-4C11 4 13.3 5 15 6.7l1.4-1.4A10.7 10.7 0 0 0 8.5 2 10.7 10.7 0 0 0 1.6 5.3L3 6.7A9.2 9.2 0 0 1 8.5 4z"/>
+        </svg>
+        {/* Cellular */}
+        <svg width="16" height="14" viewBox="0 0 16 14" fill="black">
+          <rect x="0"  y="9"  width="3" height="5" rx="0.5"/>
+          <rect x="4"  y="6"  width="3" height="8" rx="0.5"/>
+          <rect x="8"  y="3"  width="3" height="11" rx="0.5"/>
+          <rect x="12" y="0"  width="3" height="14" rx="0.5" opacity="0.3"/>
+        </svg>
+        {/* Battery */}
+        <svg width="22" height="12" viewBox="0 0 22 12" fill="black">
+          <rect x="0.5" y="0.5" width="18" height="11" rx="2.5" stroke="black" strokeWidth="1.2" fill="none" opacity="0.35"/>
+          <rect x="2" y="2" width="14" height="8" rx="1.5"/>
+          <rect x="19.5" y="3.5" width="2" height="5" rx="1"/>
+        </svg>
       </div>
-    </PhoneFrame>
+    </div>
+  );
+}
+
+// ─── Shared: NB Debit Card (CSS recreation of Figma design) ───────────────
+function NBCard() {
+  return (
+    <div style={{
+      position: "relative", width: "100%", height: 168, borderRadius: 16,
+      background: "linear-gradient(140deg, #082e4a 0%, #0d3a5e 55%, #0a3154 100%)",
+      overflow: "hidden",
+    }}>
+      {/* Large dark orb — bottom left */}
+      <div style={{
+        position: "absolute", width: 230, height: 230, borderRadius: "50%",
+        background: "rgba(3,18,33,0.55)", bottom: -85, left: -45,
+      }} />
+      {/* Smaller orb — upper center-right */}
+      <div style={{
+        position: "absolute", width: 155, height: 155, borderRadius: "50%",
+        background: "rgba(12,48,80,0.45)", top: -25, right: 65,
+      }} />
+      {/* Orange arc */}
+      <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
+        viewBox="0 0 328 168" preserveAspectRatio="none">
+        <path d="M -18 162 Q 90 48 230 108" stroke="#c75a2c" strokeWidth="2.8"
+          fill="none" strokeLinecap="round" opacity="0.9" />
+      </svg>
+      {/* Card content */}
+      <div style={{
+        position: "relative", zIndex: 10, padding: 16, height: "100%",
+        display: "flex", flexDirection: "column", justifyContent: "space-between",
+      }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+          <div>
+            <p style={{ color: "rgba(255,255,255,0.65)", fontSize: 14, margin: 0, fontFamily: "'Proxima Nova', sans-serif" }}>Current Available Balance</p>
+            <p style={{ color: "white", fontWeight: 700, fontSize: 34, lineHeight: 1.1, margin: "2px 0 0", fontFamily: "'Proxima Nova', sans-serif" }}>$200.00</p>
+          </div>
+          {/* NB logo */}
+          <div style={{ background: "white", borderRadius: 10, width: 44, height: 44, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+            <span style={{ color: "#002843", fontWeight: 900, fontSize: 22, fontFamily: "'Proxima Nova', sans-serif", lineHeight: 1 }}>n</span>
+          </div>
+        </div>
+        <p style={{ color: "rgba(255,255,255,0.45)", fontFamily: "monospace", fontSize: 15, letterSpacing: "0.06em", margin: 0 }}>
+          **** **** **** 0886
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// ─── Shared: Spinner Ring (CSS/SVG — used by screens 1, 5, 6) ─────────────
+function SpinnerRing({ spinning = false, showCheck = false }: { spinning?: boolean; showCheck?: boolean }) {
+  const ring = (
+    <svg viewBox="0 0 196 196" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
+      {/* Track */}
+      <circle cx="98" cy="98" r="88" fill="none" stroke="#e8f0f5" strokeWidth="10" />
+      {/* Arc */}
+      <circle cx="98" cy="98" r="88"
+        fill="none"
+        stroke={showCheck ? "#10b981" : "#00A99D"}
+        strokeWidth="10"
+        strokeDasharray={showCheck ? "553 0" : "165 388"}
+        strokeLinecap="round"
+        transform="rotate(-90 98 98)"
+      />
+      {/* Leading dot (only when spinning, not check) */}
+      {!showCheck && (
+        <circle cx="186" cy="98" r="7" fill="#3b82f6" />
+      )}
+      {/* Checkmark */}
+      {showCheck && (
+        <path d="M62 98 L87 123 L134 76"
+          stroke="#10b981" strokeWidth="9" fill="none"
+          strokeLinecap="round" strokeLinejoin="round" />
+      )}
+    </svg>
+  );
+
+  return (
+    <div style={{ position: "relative", width: 196, height: 196 }}>
+      {spinning ? (
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 1.6, repeat: Infinity, ease: "linear" }}
+          style={{ position: "absolute", inset: 0, originX: "50%", originY: "50%" }}
+        >
+          {ring}
+        </motion.div>
+      ) : (
+        ring
+      )}
+    </div>
+  );
+}
+
+// ─── Screen 0: Swipe Flex Card ─────────────────────────────────────────────
+function SwipeCardScreen() {
+  return (
+    <FigmaScaled>
+      <div className="flex flex-col items-start w-[360px]" style={{ height: 760, background: "white" }}>
+        <StatusBar />
+        {/* Close button */}
+        <div style={{ display: "flex", justifyContent: "flex-end", padding: "4px 16px 0" }}>
+          <div style={{ background: "#f8fafb", padding: 4, borderRadius: 24, display: "flex" }}>
+            <div style={{ background: "#e8f3f7", borderRadius: "50%", width: 24, height: 24, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                <path d="M1 1l8 8M9 1l-8 8" stroke="#646f7d" strokeWidth="1.8" strokeLinecap="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        {/* Terminal SVG illustration */}
+        <div style={{ display: "flex", justifyContent: "center", marginTop: 16, width: "100%" }}>
+          <svg width="180" height="180" viewBox="0 0 180 180" fill="none">
+            {/* Base / stand */}
+            <rect x="70" y="148" width="40" height="8" rx="4" fill="#e0e8ed"/>
+            <rect x="60" y="155" width="60" height="6" rx="3" fill="#d0dae0"/>
+            {/* Terminal body */}
+            <rect x="40" y="30" width="100" height="118" rx="10" fill="#0d2f4a"/>
+            <rect x="44" y="34" width="92" height="80" rx="6" fill="#1a4060"/>
+            {/* Screen glow */}
+            <rect x="48" y="38" width="84" height="72" rx="4" fill="#0a2840" opacity="0.8"/>
+            {/* Screen content */}
+            <text x="90" y="72" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="10" fontFamily="monospace">SWIPE CARD</text>
+            <rect x="60" y="80" width="60" height="4" rx="2" fill="rgba(255,255,255,0.15)"/>
+            <rect x="65" y="88" width="50" height="4" rx="2" fill="rgba(255,255,255,0.1)"/>
+            {/* Card slot */}
+            <rect x="50" y="120" width="80" height="6" rx="3" fill="#0a2438"/>
+            <rect x="52" y="121" width="76" height="4" rx="2" fill="#082030"/>
+            {/* Buttons row */}
+            <circle cx="70" cy="136" r="5" fill="#0a2840"/>
+            <circle cx="90" cy="136" r="5" fill="#00A99D"/>
+            <circle cx="110" cy="136" r="5" fill="#0a2840"/>
+          </svg>
+        </div>
+        {/* Title + description */}
+        <div style={{ padding: "12px 16px 0", textAlign: "center", width: "100%" }}>
+          <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 700, fontSize: 28, color: "#222b2f", margin: 0, textAlign: "center" }}>Swipe Flex Card</p>
+          <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontSize: 16, color: "#646f7d", margin: "8px 0 0", lineHeight: 1.5, textAlign: "center" }}>
+            Swipe the member&apos;s Flex Card through the card reader at the top of the Terminal.
+          </p>
+        </div>
+        {/* Other Methods */}
+        <div style={{ padding: "24px 16px 0", width: "100%" }}>
+          <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 700, fontSize: 16, color: "#222b2f", margin: "0 0 16px" }}>Other Methods</p>
+          <div style={{ display: "flex", gap: 16 }}>
+            {[
+              {
+                label: "Enter PAN",
+                icon: (
+                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                    <rect x="4" y="10" width="32" height="20" rx="3" stroke="#002843" strokeWidth="1.8" fill="none"/>
+                    <rect x="8" y="17" width="5" height="3" rx="1" fill="#002843"/>
+                    <rect x="15" y="17" width="5" height="3" rx="1" fill="#002843"/>
+                    <rect x="22" y="17" width="5" height="3" rx="1" fill="#002843"/>
+                    <rect x="8" y="22" width="5" height="3" rx="1" fill="#002843"/>
+                    <rect x="22" y="22" width="5" height="3" rx="1" fill="#00A99D"/>
+                  </svg>
+                ),
+              },
+              {
+                label: "Scan QR",
+                icon: (
+                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                    <rect x="5" y="5" width="12" height="12" rx="2" stroke="#002843" strokeWidth="1.8" fill="none"/>
+                    <rect x="8" y="8" width="6" height="6" rx="1" fill="#002843"/>
+                    <rect x="23" y="5" width="12" height="12" rx="2" stroke="#002843" strokeWidth="1.8" fill="none"/>
+                    <rect x="26" y="8" width="6" height="6" rx="1" fill="#002843"/>
+                    <rect x="5" y="23" width="12" height="12" rx="2" stroke="#002843" strokeWidth="1.8" fill="none"/>
+                    <rect x="8" y="26" width="6" height="6" rx="1" fill="#002843"/>
+                    <rect x="23" y="23" width="4" height="4" fill="#002843"/>
+                    <rect x="29" y="23" width="4" height="4" fill="#002843"/>
+                    <rect x="23" y="29" width="4" height="4" fill="#002843"/>
+                    <rect x="29" y="29" width="4" height="4" fill="#002843"/>
+                  </svg>
+                ),
+              },
+              {
+                label: "Scan Card",
+                icon: (
+                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                    <rect x="4" y="10" width="32" height="20" rx="3" stroke="#002843" strokeWidth="1.8" fill="none"/>
+                    <rect x="4" y="17" width="32" height="3" fill="#002843" opacity="0.15"/>
+                    <line x1="12" y1="10" x2="12" y2="30" stroke="#00A99D" strokeWidth="1.5" opacity="0.7"/>
+                    <line x1="16" y1="10" x2="16" y2="30" stroke="#00A99D" strokeWidth="1.5" opacity="0.4"/>
+                  </svg>
+                ),
+              },
+            ].map(({ label, icon }) => (
+              <div key={label} style={{
+                background: "white", flex: 1, display: "flex", flexDirection: "column",
+                gap: 8, padding: "16px 12px", borderRadius: 16,
+                boxShadow: "0 3px 5px rgba(0,0,0,0.08)",
+              }}>
+                {icon}
+                <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontSize: 14, color: "#222b2f", margin: 0, lineHeight: "16px" }}>{label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </FigmaScaled>
+  );
+}
+
+// ─── Screen 1: Card Verified ──────────────────────────────────────────────
+function VerifiedScreen() {
+  return (
+    <FigmaScaled>
+      <div style={{ display: "flex", flexDirection: "column", width: 360, height: 760, background: "white" }}>
+        <StatusBar />
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 48 }}>
+          <SpinnerRing showCheck />
+          <div style={{ display: "flex", flexDirection: "column", gap: 16, alignItems: "center", padding: "0 16px", width: "100%" }}>
+            <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 700, fontSize: 32, color: "#222b2f", margin: 0, textAlign: "center" }}>Verified</p>
+            <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontSize: 20, color: "#222b2f", margin: 0, textAlign: "center" }}>Please wait...</p>
+          </div>
+        </div>
+      </div>
+    </FigmaScaled>
   );
 }
 
 // ─── Screen 2: Balance Inquiry ─────────────────────────────────────────────
 function BalanceScreen() {
   const balances = [
-    { label: "Grocery Balance", amount: "$50.04", sub: "Balance available for food items" },
-    { label: "OTC Balance", amount: "$30.35", sub: "Balance available for OTC Products" },
-    { label: "Other Balances", amount: "$25.00", sub: "Balance can be used for Grocery & OTC!" },
-    { label: "Rewards", amount: "$15.00", sub: "Reward points balance" },
+    { label: "Grocery Balance",  amount: "$50.04", sub: "Balance available for food items" },
+    { label: "OTC Balance",      amount: "$30.35", sub: "Balance available for OTC Products" },
+    { label: "Other Balances",   amount: "$25.00", sub: "Balance can be used for Grocery & OTC!" },
+    { label: "Rewards",          amount: "$15.00", sub: "Reward points balance" },
   ];
   return (
-    <PhoneFrame>
-      <StatusBar />
-      {/* Header */}
-      <div className="flex items-center justify-between px-4 py-2">
-        <div className="flex items-center gap-2">
-          <div className="w-5 h-5 rounded-full bg-emerald-500 flex items-center justify-center">
-            <svg className="w-3 h-3 text-white" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2"><path d="M2 6l2.5 2.5L10 3" strokeLinecap="round"/></svg>
-          </div>
-          <span className="text-[14px] font-bold text-[#1a1a1a]">Balance Inquiry</span>
-        </div>
-        <button className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 text-sm">×</button>
-      </div>
-      {/* Balance card */}
-      <div className="mx-4 rounded-2xl bg-[#002843] p-4 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-white/5 -translate-y-8 translate-x-8" />
-        <div className="absolute bottom-0 left-0 w-24 h-24 rounded-full bg-[#00A99D]/10 translate-y-8 -translate-x-8" />
-        <div className="flex justify-between items-start relative z-10">
-          <div>
-            <p className="text-[10px] text-white/60">Current Available Balance</p>
-            <p className="text-[24px] font-bold text-white mt-0.5">$200.00</p>
-          </div>
-          <div className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center">
-            <span className="text-white text-[11px] font-bold">n</span>
-          </div>
-        </div>
-        <p className="text-[10px] text-white/40 mt-3 relative z-10 font-mono">**** **** **** 0886</p>
-      </div>
-      {/* Balance rows */}
-      <div className="px-4 mt-3 space-y-0 overflow-y-auto" style={{ maxHeight: 230 }}>
-        {balances.map((b, i) => (
-          <motion.div
-            key={b.label}
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.1 * i, duration: 0.3 }}
-            className="py-2.5 border-b border-gray-100 last:border-0"
-          >
-            <div className="flex justify-between items-baseline">
-              <span className="text-[12px] font-semibold text-[#1a1a1a]">{b.label}</span>
-              <span className="text-[13px] font-bold text-[#002843]">{b.amount}</span>
+    <FigmaScaled>
+      <div style={{ display: "flex", flexDirection: "column", width: 360, height: 760, background: "white" }}>
+        <StatusBar />
+        {/* Header */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 16px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            {/* Green checkmark */}
+            <div style={{ width: 28, height: 28, borderRadius: "50%", background: "#10b981", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2.5 7l3 3 6-6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
             </div>
-            <p className="text-[10px] text-gray-400 mt-0.5">{b.sub}</p>
-          </motion.div>
-        ))}
+            <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 700, fontSize: 22, color: "#222b2f", margin: 0 }}>Balance Inquiry</p>
+          </div>
+          {/* Close X */}
+          <div style={{ background: "#eef4f6", borderRadius: "50%", width: 32, height: 32, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M1 1l10 10M11 1L1 11" stroke="#646f7d" strokeWidth="1.8" strokeLinecap="round"/>
+            </svg>
+          </div>
+        </div>
+        {/* NB Card */}
+        <div style={{ padding: "0 16px 12px" }}>
+          <NBCard />
+        </div>
+        {/* Balance rows */}
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+          {balances.map((b) => (
+            <div key={b.label} style={{ padding: "10px 16px", borderBottom: "1px solid #dee8ec" }}>
+              <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 600, fontSize: 16, color: "#222b2f", margin: 0 }}>{b.label}</p>
+              <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 700, fontSize: 22, color: "#002843", margin: "2px 0" }}>{b.amount}</p>
+              <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontSize: 13, color: "#646f7d", margin: 0 }}>{b.sub}</p>
+            </div>
+          ))}
+        </div>
+        {/* Footer */}
+        <div style={{ display: "flex", gap: 12, padding: "12px 16px", boxShadow: "0 -2px 8px rgba(45,45,46,0.12)" }}>
+          <button style={{ flex: 1, height: 44, border: "1.5px solid #dee8ec", borderRadius: 8, background: "white", display: "flex", alignItems: "center", justifyContent: "center", gap: 6, cursor: "pointer" }}>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <rect x="2" y="6" width="12" height="8" rx="1.5" stroke="#00497a" strokeWidth="1.5" fill="none"/>
+              <path d="M4 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="#00497a" strokeWidth="1.5" fill="none"/>
+              <rect x="5" y="10" width="6" height="2" rx="0.5" fill="#00497a"/>
+            </svg>
+            <span style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 600, fontSize: 16, color: "#00497a" }}>Print</span>
+          </button>
+          <button style={{ flex: 1, height: 44, borderRadius: 8, background: "#002843", border: "none", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>
+            <span style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 600, fontSize: 16, color: "white" }}>New Sale</span>
+          </button>
+        </div>
       </div>
-      {/* Buttons */}
-      <div className="absolute bottom-0 left-0 right-0 flex gap-2 px-4 pb-4 pt-3 bg-white border-t border-gray-100">
-        <button className="flex-1 border border-gray-200 rounded-xl py-2.5 text-[12px] font-semibold text-[#1a1a1a]">🖨 Print</button>
-        <button className="flex-1 bg-[#002843] rounded-xl py-2.5 text-[12px] font-semibold text-white">New Sale</button>
-      </div>
-    </PhoneFrame>
+    </FigmaScaled>
   );
 }
 
 // ─── Screen 3: New Sale ────────────────────────────────────────────────────
 function NewSaleScreen() {
   const items = [
-    { barcode: "12345678", name: "Naproxen Sodium, 220 mg", price: "$8.00" },
-    { barcode: "12345678", name: "Acetaminophen Plus Aspir...", price: "$15.00" },
-    { barcode: "12345678", name: "Tylenol Extra Strength, 50...", price: "$12.00" },
-    { barcode: "12345678", name: "Advil Liqui-Gels, 200 mg", price: "$10.00" },
-    { barcode: "12345678", name: "Ibuprofen Famotidine", price: "$5.00" },
+    { name: "Naproxen Sodium, 220 mg",      price: "$8.00",  barcode: "12345678" },
+    { name: "Acetaminophen Plus Aspirin...", price: "$15.00", barcode: "12345678" },
+    { name: "Tylenol Extra Strength...",     price: "$12.00", barcode: "12345678" },
+    { name: "Advil Liqui-Gels, 200 mg",     price: "$10.00", barcode: "12345678" },
+    { name: "Ibuprofen Famotidine",          price: "$5.00",  barcode: "12345678" },
   ];
   return (
-    <PhoneFrame>
-      <StatusBar />
-      {/* Header */}
-      <div className="flex items-center gap-2 px-4 py-2">
-        <svg className="w-4 h-4 text-[#1a1a1a]" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M10 13L5 8l5-5"/></svg>
-        <span className="text-[15px] font-bold text-[#1a1a1a]">New Sale</span>
-      </div>
-      {/* Search */}
-      <div className="mx-4 mb-2 flex items-center gap-2 bg-gray-100 rounded-xl px-3 py-2">
-        <svg className="w-3.5 h-3.5 text-gray-400 shrink-0" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5l2.5 2.5" strokeLinecap="round"/></svg>
-        <span className="text-[11px] text-gray-400">Enter Barcode Manually</span>
-      </div>
-      {/* Subtotal */}
-      <div className="flex justify-between items-baseline px-4 py-1.5 border-b border-gray-100">
-        <div>
-          <span className="text-[13px] font-bold text-[#002843]">Subtotal</span>
-          <span className="text-[10px] text-gray-400 ml-1.5">Items (15)</span>
+    <FigmaScaled>
+      <div style={{ display: "flex", flexDirection: "column", width: 360, height: 760, background: "white" }}>
+        <StatusBar />
+        {/* Header */}
+        <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "12px 16px" }}>
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M11 14L6 9l5-5" stroke="#222b2f" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 700, fontSize: 22, color: "#222b2f", margin: 0 }}>New Sale</p>
         </div>
-        <span className="text-[15px] font-bold text-[#1a1a1a]">$76.23</span>
-      </div>
-      {/* Item list */}
-      <div className="overflow-y-hidden">
-        {items.map((item, i) => (
-          <motion.div
-            key={item.name}
-            initial={{ opacity: 0, x: -8 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.05 * i }}
-            className="px-4 py-2 border-b border-gray-50"
-          >
-            <div className="flex items-start justify-between">
-              <div className="flex-1 min-w-0 pr-2">
-                <p className="text-[10px] text-gray-400">{item.barcode}</p>
-                <p className="text-[11.5px] font-medium text-[#1a1a1a] truncate">{item.name}</p>
-                <p className="text-[12px] font-bold text-[#002843] mt-0.5">{item.price} <span className="text-[10px] font-normal text-gray-400 ml-1">✏</span></p>
+        {/* Search bar */}
+        <div style={{ display: "flex", alignItems: "center", gap: 8, background: "#f0f4f5", margin: "0 16px 8px", padding: "10px 12px", borderRadius: 8 }}>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <circle cx="6.5" cy="6.5" r="5" stroke="#9aa5ad" strokeWidth="1.6"/>
+            <path d="M11 11l3 3" stroke="#9aa5ad" strokeWidth="1.6" strokeLinecap="round"/>
+          </svg>
+          <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontSize: 14, color: "#9aa5ad", margin: 0 }}>Enter Barcode Manually</p>
+        </div>
+        {/* Subtotal */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "12px 16px", borderBottom: "1px solid #dee8ec" }}>
+          <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 700, fontSize: 17, color: "#222b2f", margin: 0 }}>
+            Subtotal <span style={{ fontWeight: 400, fontSize: 14, color: "#646f7d" }}>Items (15)</span>
+          </p>
+          <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 700, fontSize: 20, color: "#222b2f", margin: 0 }}>$76.23</p>
+        </div>
+        {/* Item list */}
+        <div style={{ flex: 1, overflow: "hidden" }}>
+          {items.map((item) => (
+            <div key={item.name} style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", padding: "10px 16px", borderBottom: "1px solid #f0f4f5" }}>
+              <div style={{ flex: 1, minWidth: 0, paddingRight: 8 }}>
+                <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontSize: 12, color: "#9aa5ad", margin: 0 }}>{item.barcode}</p>
+                <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 500, fontSize: 14, color: "#222b2f", margin: "2px 0", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{item.name}</p>
+                <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                  <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 700, fontSize: 14, color: "#002843", margin: 0 }}>{item.price}</p>
+                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                    <path d="M8.5 1.5l3 3-7 7-3.5.5.5-3.5 7-7z" stroke="#9aa5ad" strokeWidth="1.3" fill="none"/>
+                  </svg>
+                </div>
               </div>
-              <div className="flex items-center gap-1.5 shrink-0 mt-1">
-                <button className="w-5 h-5 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 text-[11px]">−</button>
-                <span className="text-[11px] font-medium w-4 text-center">1</span>
-                <button className="w-5 h-5 rounded-full border border-gray-300 flex items-center justify-center text-gray-500 text-[11px]">+</button>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
+                <div style={{ border: "1.5px solid #dee8ec", borderRadius: "50%", width: 24, height: 24, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <span style={{ color: "#646f7d", fontSize: 14, lineHeight: 1 }}>&#8722;</span>
+                </div>
+                <span style={{ fontFamily: "'Proxima Nova', sans-serif", fontSize: 14, fontWeight: 500, width: 16, textAlign: "center", color: "#222b2f" }}>1</span>
+                <div style={{ background: "#002843", borderRadius: "50%", width: 24, height: 24, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                  <span style={{ color: "white", fontSize: 14, lineHeight: 1 }}>+</span>
+                </div>
               </div>
             </div>
-          </motion.div>
-        ))}
+          ))}
+        </div>
+        {/* CTA */}
+        <div style={{ padding: "12px 16px" }}>
+          <button style={{ width: "100%", height: 48, background: "#002843", border: "none", borderRadius: 8, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <span style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 600, fontSize: 16, color: "white" }}>Confirm Sale</span>
+          </button>
+        </div>
       </div>
-      {/* CTA */}
-      <div className="absolute bottom-0 left-0 right-0 px-4 pb-4 pt-2 bg-white border-t border-gray-100">
-        <button className="w-full bg-[#002843] text-white rounded-xl py-3 text-[13px] font-semibold">Confirm Sale</button>
-      </div>
-    </PhoneFrame>
+    </FigmaScaled>
   );
 }
 
 // ─── Screen 4: Coverage Verified ──────────────────────────────────────────
 function CoverageVerifiedScreen() {
   return (
-    <PhoneFrame>
-      <StatusBar />
-      {/* Header */}
-      <div className="flex items-center justify-between px-4 py-1.5">
-        <div className="flex items-center gap-2">
-          <div className="w-5 h-5 rounded-full bg-emerald-500 flex items-center justify-center">
-            <svg className="w-3 h-3 text-white" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2"><path d="M2 6l2.5 2.5L10 3" strokeLinecap="round"/></svg>
-          </div>
-          <span className="text-[13px] font-bold text-[#1a1a1a]">Coverage Verified</span>
-        </div>
-        <span className="text-[11px] text-[#002843] font-semibold">✏ Edit</span>
-      </div>
-      {/* Total */}
-      <div className="flex justify-between items-baseline px-4 pb-1.5">
-        <div>
-          <span className="text-[11px] font-semibold text-[#002843]">Total Sale</span>
-          <span className="text-[9px] text-gray-400 ml-1.5">Items (15)</span>
-        </div>
-        <span className="text-[16px] font-bold text-[#1a1a1a]">$162.07</span>
-      </div>
-      {/* Balance card */}
-      <div className="mx-4 rounded-xl bg-[#002843] p-3 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-24 h-24 rounded-full bg-white/5 -translate-y-6 translate-x-6" />
-        <div className="flex justify-between items-start">
-          <div>
-            <p className="text-[9px] text-white/60">Current Balance</p>
-            <p className="text-[20px] font-bold text-white">$200.00</p>
-          </div>
-          <div className="w-7 h-7 bg-white/10 rounded-lg flex items-center justify-center">
-            <span className="text-white text-[10px] font-bold">n</span>
-          </div>
-        </div>
-        <p className="text-[9px] text-white/40 mt-1.5 font-mono">**** **** **** 0886</p>
-      </div>
-      {/* Declined */}
-      <div className="px-4 mt-2">
-        <div className="flex justify-between items-center mb-1.5">
-          <span className="text-[11px] font-semibold text-gray-700">Declined (2)</span>
-          <span className="text-[10px] text-red-400 font-medium">🗑 Remove All</span>
-        </div>
-        {[
-          { name: "Ibuprofen Famotidine", price: "$7.00" },
-          { name: "Naproxen Sodium, 220 mg", price: "$3.00" },
-        ].map((item) => (
-          <div key={item.name} className="py-1.5 border-b border-gray-100">
-            <div className="flex justify-between">
-              <span className="text-[11px] font-medium text-[#1a1a1a]">{item.name}</span>
-              <span className="text-[11px] font-bold text-red-500">{item.price}</span>
+    <FigmaScaled>
+      <div style={{ display: "flex", flexDirection: "column", width: 360, height: 760, background: "white" }}>
+        <StatusBar />
+        {/* Header */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 16px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+            <div style={{ width: 28, height: 28, borderRadius: "50%", background: "#10b981", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M2.5 7l3 3 6-6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
             </div>
-            <p className="text-[9px] text-gray-400">1 COUNT</p>
-            <p className="text-[9px] text-red-400">Out-of-pocket ⓘ</p>
+            <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 700, fontSize: 20, color: "#222b2f", margin: 0 }}>Coverage Verified</p>
           </div>
-        ))}
-        <p className="text-[11px] font-semibold text-gray-700 mt-1.5 mb-1">Partially Covered (2)</p>
-        <div className="py-1.5 border-b border-gray-100">
-          <div className="flex justify-between">
-            <span className="text-[11px] font-medium text-[#1a1a1a]">Bayer® Aspirin, 325 mg</span>
-            <span className="text-[11px] font-bold text-[#1a1a1a]">$12.00</span>
+          <button style={{ display: "flex", alignItems: "center", gap: 4, background: "none", border: "none", cursor: "pointer" }}>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M9 1.5l3 3-7 7-3.5.5.5-3.5 7-7z" stroke="#00497a" strokeWidth="1.4" fill="none"/>
+            </svg>
+            <span style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 600, fontSize: 14, color: "#00497a" }}>Edit</span>
+          </button>
+        </div>
+        {/* Total row */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0 16px 10px" }}>
+          <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 600, fontSize: 16, color: "#222b2f", margin: 0 }}>
+            Total Sale <span style={{ fontWeight: 400, fontSize: 14, color: "#646f7d" }}>Items (15)</span>
+          </p>
+          <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 700, fontSize: 20, color: "#222b2f", margin: 0 }}>$162.07</p>
+        </div>
+        {/* NB Card */}
+        <div style={{ padding: "0 16px 12px" }}>
+          <NBCard />
+        </div>
+        {/* Declined section */}
+        <div style={{ flex: 1, overflow: "hidden", padding: "0 16px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+            <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 600, fontSize: 15, color: "#222b2f", margin: 0 }}>Declined (2)</p>
+            <button style={{ background: "none", border: "none", cursor: "pointer" }}>
+              <span style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 600, fontSize: 13, color: "#e53935" }}>Remove All</span>
+            </button>
           </div>
-          <p className="text-[9px] text-gray-400">1 COUNT</p>
+          {[
+            { name: "Ibuprofen Famotidine",    price: "$7.00" },
+            { name: "Naproxen Sodium, 220 mg", price: "$3.00" },
+          ].map((item) => (
+            <div key={item.name} style={{ padding: "8px 0", borderBottom: "1px solid #f0f4f5" }}>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 500, fontSize: 14, color: "#222b2f", margin: 0 }}>{item.name}</p>
+                <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 700, fontSize: 14, color: "#e53935", margin: 0 }}>{item.price}</p>
+              </div>
+              <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontSize: 12, color: "#646f7d", margin: "2px 0" }}>1 COUNT</p>
+              <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontSize: 12, color: "#e53935", margin: 0 }}>Out-of-pocket</p>
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <circle cx="7" cy="7" r="6" stroke="#9aa5ad" strokeWidth="1.3"/>
+                  <line x1="7" y1="5" x2="7" y2="9.5" stroke="#9aa5ad" strokeWidth="1.3" strokeLinecap="round"/>
+                  <circle cx="7" cy="3.5" r="0.8" fill="#9aa5ad"/>
+                </svg>
+              </div>
+            </div>
+          ))}
+          <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 600, fontSize: 15, color: "#222b2f", margin: "10px 0 8px" }}>Partially Covered (2)</p>
+          <div style={{ padding: "8px 0", borderBottom: "1px solid #f0f4f5" }}>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 500, fontSize: 14, color: "#222b2f", margin: 0 }}>Bayer&#174; Aspirin, 325 mg</p>
+              <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 700, fontSize: 14, color: "#222b2f", margin: 0 }}>$12.00</p>
+            </div>
+            <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontSize: 12, color: "#646f7d", margin: "2px 0 0" }}>1 COUNT</p>
+          </div>
+        </div>
+        {/* CTA */}
+        <div style={{ padding: "12px 16px" }}>
+          <button style={{ width: "100%", height: 48, background: "#002843", border: "none", borderRadius: 8, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <span style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 600, fontSize: 16, color: "white" }}>Confirm Basket</span>
+          </button>
         </div>
       </div>
-      {/* CTA */}
-      <div className="absolute bottom-0 left-0 right-0 px-4 pb-4 pt-2 bg-white border-t border-gray-100">
-        <button className="w-full bg-[#002843] text-white rounded-xl py-3 text-[12px] font-semibold">Confirm Basket</button>
-      </div>
-    </PhoneFrame>
+    </FigmaScaled>
   );
 }
 
 // ─── Screen 5: Analyzing Basket ────────────────────────────────────────────
 function AnalyzingScreen() {
-  const r = 72; const circ = 2 * Math.PI * r;
   return (
-    <PhoneFrame>
-      <StatusBar />
-      <div className="flex flex-col items-center justify-center h-[510px]">
-        <div className="relative w-[184px] h-[184px]">
-          <svg width="184" height="184" className="absolute inset-0">
-            <circle cx="92" cy="92" r={r} fill="none" stroke="#e5e7eb" strokeWidth="7" />
-            <motion.circle
-              cx="92" cy="92" r={r} fill="none" stroke="#3b82f6" strokeWidth="7"
-              strokeDasharray={`${circ * 0.15} ${circ * 0.85}`}
-              animate={{ rotate: [0, 360] }}
-              transition={{ duration: 1.4, repeat: Infinity, ease: "linear" }}
-              style={{ transformOrigin: "92px 92px" }}
-              strokeLinecap="round"
-            />
-          </svg>
+    <FigmaScaled>
+      <div style={{ display: "flex", flexDirection: "column", width: 360, height: 760, background: "white" }}>
+        <StatusBar />
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 48 }}>
+          <SpinnerRing spinning />
+          <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 700, fontSize: 32, color: "#222b2f", margin: 0, textAlign: "center" }}>
+            Analyzing Basket..
+          </p>
         </div>
-        <motion.p
-          animate={{ opacity: [1, 0.4, 1] }}
-          transition={{ duration: 1.6, repeat: Infinity }}
-          className="text-[18px] font-bold text-[#1a1a1a] mt-6"
-        >
-          Analyzing Basket..
-        </motion.p>
       </div>
-    </PhoneFrame>
+    </FigmaScaled>
   );
 }
 
 // ─── Screen 6: Approved ────────────────────────────────────────────────────
 function ApprovedScreen() {
-  const r = 68; const circ = 2 * Math.PI * r;
   return (
-    <PhoneFrame>
-      <StatusBar />
-      <div className="flex flex-col items-center justify-center h-[500px]">
-        <div className="relative w-[172px] h-[172px]">
-          <svg width="172" height="172" className="absolute inset-0">
-            <circle cx="86" cy="86" r={r} fill="none" stroke="#e5e7eb" strokeWidth="7" />
-            <motion.circle
-              cx="86" cy="86" r={r} fill="none" stroke="#10b981" strokeWidth="7"
-              strokeDasharray={circ} strokeDashoffset={circ}
-              animate={{ strokeDashoffset: 0 }}
-              transition={{ duration: 0.9, ease: "easeOut" }}
-              transform="rotate(-90 86 86)" strokeLinecap="round"
-            />
-            <circle cx={86 + r} cy="86" r="4" fill="#3b82f6" opacity="0.8" />
-          </svg>
-          <motion.svg
-            className="absolute inset-0 w-full h-full" viewBox="0 0 172 172"
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.6, duration: 0.4, type: "spring" }}
-          >
-            <path d="M56 86l20 20 40-40" stroke="#10b981" strokeWidth="7" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-          </motion.svg>
+    <FigmaScaled>
+      <div style={{ display: "flex", flexDirection: "column", width: 360, height: 760, background: "white" }}>
+        <StatusBar />
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 48 }}>
+          <SpinnerRing showCheck />
+          <div style={{ display: "flex", flexDirection: "column", gap: 16, alignItems: "center", padding: "0 16px" }}>
+            <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 700, fontSize: 32, color: "#222b2f", margin: 0, textAlign: "center" }}>Approved</p>
+            <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontSize: 20, color: "#222b2f", margin: 0, textAlign: "center" }}>Please wait...</p>
+          </div>
         </div>
-        <motion.h3
-          initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }}
-          className="text-[22px] font-bold text-[#1a1a1a] mt-6"
-        >
-          Approved
-        </motion.h3>
-        <motion.p
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.0 }}
-          className="text-[13px] text-gray-400 mt-2"
-        >
-          Please wait...
-        </motion.p>
       </div>
-    </PhoneFrame>
+    </FigmaScaled>
   );
 }
 
 // ─── Screen 7: Transaction Successful ─────────────────────────────────────
 function TransactionSuccessScreen() {
   const rows = [
-    { label: "Card Last 4", value: "*1234" },
-    { label: "Authorized Amount", value: "$56.07" },
-    { label: "Tax Collected", value: "$6.07" },
-    { label: "Out-of-Pocket Amount ⓘ", value: "$63.62" },
+    { label: "Card Last 4",          value: "*1234" },
+    { label: "Authorized Amount",    value: "$56.07" },
+    { label: "Tax Collected",        value: "$6.07" },
+    { label: "Out-of-Pocket Amount", value: "$63.62", hasInfo: true },
   ];
   return (
-    <PhoneFrame>
-      <StatusBar />
-      <button className="absolute top-10 right-4 w-7 h-7 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 text-sm">×</button>
-      <div className="flex flex-col items-center px-5 pt-3">
-        {/* Success icon */}
-        <motion.div
-          initial={{ scale: 0.5, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ type: "spring", stiffness: 200, damping: 16 }}
-          className="w-14 h-14 rounded-full bg-emerald-100 flex items-center justify-center"
-        >
-          <div className="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center">
-            <svg className="w-5 h-5 text-white" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M3 8l3.5 3.5L13 4.5"/></svg>
-          </div>
-        </motion.div>
-        <motion.h3 initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-          className="text-[16px] font-bold text-[#1a1a1a] mt-3"
-        >Transaction Successful</motion.h3>
-        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }}
-          className="text-[28px] font-bold text-[#1a1a1a] mt-1"
-        >$162.07</motion.p>
-        <p className="text-[10px] text-gray-400 mt-0.5">Processed via card ****1234</p>
-        {/* Details */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
-          className="w-full mt-4 bg-gray-50 rounded-xl p-3 space-y-2"
-        >
-          {rows.map((row) => (
-            <div key={row.label} className="flex justify-between items-center">
-              <span className="text-[10px] text-gray-500">{row.label}</span>
-              <span className="text-[11px] font-semibold text-[#1a1a1a]">{row.value}</span>
+    <FigmaScaled>
+      <div style={{ display: "flex", flexDirection: "column", width: 360, height: 760, background: "white" }}>
+        <StatusBar />
+        {/* Close button top-right */}
+        <div style={{ display: "flex", justifyContent: "flex-end", padding: "4px 16px 0" }}>
+          <div style={{ background: "#f8fafb", padding: 4, borderRadius: 24, display: "flex" }}>
+            <div style={{ background: "#e8f3f7", borderRadius: "50%", width: 28, height: 28, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+                <path d="M1 1l9 9M10 1L1 10" stroke="#646f7d" strokeWidth="1.7" strokeLinecap="round"/>
+              </svg>
             </div>
-          ))}
-        </motion.div>
-        <button className="mt-3 text-[11px] font-semibold text-[#002843] underline">View Receipt &rsaquo;</button>
+          </div>
+        </div>
+        {/* Content */}
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", padding: "16px 16px 0", gap: 12 }}>
+          {/* Success icon */}
+          <div style={{ background: "#ecf3ed", borderRadius: 72, width: 88, height: 88, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ background: "#0a9773", borderRadius: 56, width: 64, height: 64, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+                <path d="M5 14l6.5 6.5L23 8" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+          </div>
+          <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 600, fontSize: 20, color: "#222b2f", margin: 0, textAlign: "center" }}>Transaction Successful</p>
+          <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 600, fontSize: 40, color: "#222b2f", margin: 0, textAlign: "center" }}>$162.07</p>
+          <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontSize: 14, color: "#646f7d", margin: 0, textAlign: "center" }}>Processed via card ****1234</p>
+          {/* Receipt table */}
+          <div style={{ background: "#f8fafb", borderRadius: 8, width: 328, display: "flex", flexDirection: "column" }}>
+            {rows.map((row, i) => (
+              <div key={row.label} style={{
+                display: "flex", alignItems: "center", justifyContent: "space-between",
+                padding: "10px 16px",
+                borderBottom: i < rows.length - 1 ? "1px solid #dee8ec" : "none",
+              }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                  <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontSize: 14, color: "#222b2f", margin: 0 }}>{row.label}</p>
+                  {row.hasInfo && (
+                    <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+                      <circle cx="7.5" cy="7.5" r="6.5" stroke="#9aa5ad" strokeWidth="1.2"/>
+                      <line x1="7.5" y1="5.5" x2="7.5" y2="10.5" stroke="#9aa5ad" strokeWidth="1.2" strokeLinecap="round"/>
+                      <circle cx="7.5" cy="3.8" r="0.9" fill="#9aa5ad"/>
+                    </svg>
+                  )}
+                </div>
+                <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 600, fontSize: 14, color: "#222b2f", margin: 0 }}>{row.value}</p>
+              </div>
+            ))}
+            {/* View receipt link */}
+            <div style={{ display: "flex", alignItems: "center", padding: "12px 16px" }}>
+              <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 600, fontSize: 14, color: "#00497a", margin: 0, textDecoration: "underline" }}>View Receipt</p>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ marginLeft: 4 }}>
+                <path d="M4 7h7M8 4l3 3-3 3" stroke="#00497a" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        {/* Share button */}
+        <div style={{ padding: "12px 16px" }}>
+          <button style={{ width: "100%", height: 40, background: "#00497a", border: "none", borderRadius: 8, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <span style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 600, fontSize: 16, color: "white" }}>Share</span>
+          </button>
+        </div>
       </div>
-      {/* Bottom button */}
-      <div className="absolute bottom-0 left-0 right-0 px-4 pb-4 pt-2 bg-white border-t border-gray-100">
-        <button className="w-full bg-[#002843] text-white rounded-xl py-3 text-[12px] font-semibold">Share</button>
-      </div>
-    </PhoneFrame>
+    </FigmaScaled>
   );
 }
 
@@ -647,7 +765,7 @@ export default function StickyFeatures() {
             <div className="flex flex-col gap-8">
               <AnimatePresence mode="wait">
                 <motion.div
-                  key={activeSectionIndex}
+                  key={sectionIndex}
                   initial={{ opacity: 0, y: 24 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -16 }}

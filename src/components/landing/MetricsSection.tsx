@@ -101,31 +101,132 @@ function MetricCard({
   );
 }
 
-// Mini bar chart
-function BarChart() {
-  const data = [40, 55, 48, 70, 65, 80, 90, 75, 95, 88, 100, 94];
+// Animated SVG line chart
+function LineChart() {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const inView = useInView(wrapRef, { once: true, margin: "-80px" });
+
+  // Monthly revenue data ($ thousands) — growth trend Jan → Dec
+  const data = [14.2, 15.8, 15.1, 17.4, 16.9, 19.6, 21.3, 19.0, 23.1, 21.8, 25.4, 24.38];
   const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true });
+
+  const W = 760;
+  const H = 180;
+  const padT = 24;
+  const padB = 8;
+  const chartH = H - padT - padB;
+  const min = Math.min(...data) - 3;
+  const max = Math.max(...data) + 3;
+
+  const xOf = (i: number) => (i / (data.length - 1)) * W;
+  const yOf = (v: number) => padT + (1 - (v - min) / (max - min)) * chartH;
+
+  const points = data.map((v, i) => ({ x: xOf(i), y: yOf(v) }));
+
+  // Smooth cubic bezier path through all points
+  let linePath = `M ${points[0].x.toFixed(2)} ${points[0].y.toFixed(2)}`;
+  for (let i = 1; i < points.length; i++) {
+    const prev = points[i - 1];
+    const curr = points[i];
+    const dx = (curr.x - prev.x) * 0.38;
+    linePath += ` C ${(prev.x + dx).toFixed(2)} ${prev.y.toFixed(2)}, ${(curr.x - dx).toFixed(2)} ${curr.y.toFixed(2)}, ${curr.x.toFixed(2)} ${curr.y.toFixed(2)}`;
+  }
+
+  const areaPath =
+    linePath +
+    ` L ${points[points.length - 1].x} ${H} L ${points[0].x} ${H} Z`;
+
+  // Horizontal grid lines (3 evenly spaced)
+  const gridValues = [min + (max - min) * 0.25, min + (max - min) * 0.5, min + (max - min) * 0.75];
 
   return (
-    <div ref={ref} className="flex items-end gap-2 h-32">
-      {data.map((h, i) => (
-        <div key={i} className="flex flex-col items-center gap-1 flex-1">
-          <motion.div
-            initial={{ scaleY: 0 }}
-            animate={inView ? { scaleY: 1 } : {}}
-            transition={{ duration: 0.5, delay: i * 0.06, ease: [0.16, 1, 0.3, 1] }}
-            style={{ height: `${h}%` }}
-            className={`w-full rounded-t-sm origin-bottom ${
-              i === data.length - 1 || i === data.length - 2
-                ? "bg-[#00497A]"
-                : "bg-[#DEE8EC]"
-            }`}
+    <div ref={wrapRef} className="w-full">
+      <svg
+        viewBox={`0 0 ${W} ${H}`}
+        width="100%"
+        height="auto"
+        className="overflow-visible"
+        style={{ display: "block" }}
+      >
+        <defs>
+          <linearGradient id="lineAreaGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#00497A" stopOpacity="0.18" />
+            <stop offset="100%" stopColor="#00497A" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+
+        {/* Horizontal grid lines */}
+        {gridValues.map((v, i) => (
+          <line
+            key={i}
+            x1={0}
+            y1={yOf(v)}
+            x2={W}
+            y2={yOf(v)}
+            stroke="#DEE8EC"
+            strokeWidth="1"
+            strokeDasharray="4 4"
           />
-          <span className="text-[8px] text-[#646F7D]">{months[i]}</span>
-        </div>
-      ))}
+        ))}
+
+        {/* Area fill — fades in after line draws */}
+        <motion.path
+          d={areaPath}
+          fill="url(#lineAreaGrad)"
+          initial={{ opacity: 0 }}
+          animate={inView ? { opacity: 1 } : {}}
+          transition={{ duration: 1.0, delay: 0.7 }}
+        />
+
+        {/* Animated line — draws left to right */}
+        <motion.path
+          d={linePath}
+          fill="none"
+          stroke="#00497A"
+          strokeWidth="2.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          initial={{ pathLength: 0 }}
+          animate={inView ? { pathLength: 1 } : {}}
+          transition={{ duration: 1.9, ease: [0.16, 1, 0.3, 1] }}
+        />
+
+        {/* Data point dots — pop in sequentially */}
+        {points.map((p, i) => (
+          <motion.circle
+            key={i}
+            cx={p.x}
+            cy={p.y}
+            r="5"
+            fill="white"
+            stroke="#00497A"
+            strokeWidth="2.2"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={inView ? { scale: 1, opacity: 1 } : {}}
+            transition={{ duration: 0.35, delay: 1.3 + i * 0.08, ease: "backOut" }}
+          />
+        ))}
+
+        {/* Highlight last point */}
+        <motion.circle
+          cx={points[points.length - 1].x}
+          cy={points[points.length - 1].y}
+          r="7"
+          fill="#00497A"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={inView ? { scale: 1, opacity: 1 } : {}}
+          transition={{ duration: 0.4, delay: 2.25, ease: "backOut" }}
+        />
+      </svg>
+
+      {/* X-axis month labels */}
+      <div className="flex justify-between mt-2 px-0">
+        {months.map((m) => (
+          <span key={m} className="text-[11px] text-[#9aabb5] w-[63px] text-center">
+            {m}
+          </span>
+        ))}
+      </div>
     </div>
   );
 }
@@ -186,7 +287,7 @@ export default function MetricsSection() {
               </span>
             </div>
           </div>
-          <BarChart />
+          <LineChart />
         </motion.div>
       </div>
     </section>
