@@ -173,14 +173,28 @@ export default function HeroSection() {
               transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
               className="w-fit"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src="/bpos-icon.svg"
-                alt="Benefits POS"
-                width={70}
-                height={68}
-                className="block"
-              />
+              <div
+                style={{
+                  width: "70px",
+                  height: "68px",
+                  borderRadius: "15.24px",
+                  padding: "2px",
+                  background:
+                    "linear-gradient(138deg, rgba(45,211,255,0.74) 0%, rgba(0,73,122,0.18) 43.2%, rgba(0,73,122,1) 80.2%, rgba(0,240,255,0.2) 100%)",
+                }}
+              >
+                <div
+                  className="w-full h-full overflow-hidden"
+                  style={{ borderRadius: "13.24px" }}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/bpos-icon.svg"
+                    alt="Benefits POS"
+                    className="block w-full h-full object-cover"
+                  />
+                </div>
+              </div>
             </motion.div>
 
             {/* Headline */}
@@ -293,12 +307,12 @@ export default function HeroSection() {
               </div>
             </motion.div>
 
-            {/* Floating basket card — dark glass style, Figma data */}
+            {/* Floating basket card — behind terminal, dark glass style, Figma data */}
             <motion.div
-              initial={{ opacity: 0, x: 40, y: -10 }}
-              animate={{ opacity: 1, x: 0, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.9 }}
-              className="absolute -left-4 top-8 lg:-left-16 glass-card rounded-2xl p-4 w-64 shadow-2xl animate-float-slow"
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.9, delay: 1.0, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute right-[360px] top-14 z-[5] glass-card rounded-2xl p-4 w-64 shadow-2xl animate-float-slow"
               style={{ animationDelay: "1s" }}
             >
               <div className="flex items-center justify-between mb-3">
