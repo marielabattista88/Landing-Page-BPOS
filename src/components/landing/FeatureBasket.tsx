@@ -284,7 +284,7 @@ export default function FeatureBasket() {
                 whileInView={{ opacity: 1, scale: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.5, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                className="absolute -left-6 top-[150px] z-20"
+                className="absolute -left-8 top-[92px] z-20"
               >
                 <div className="animate-float-slow bg-white rounded-2xl shadow-[0_12px_40px_rgba(0,40,67,0.16)] border border-[#E6EDF0] px-3.5 py-2.5 flex items-center gap-2.5">
                   <span className="w-7 h-7 rounded-full bg-[#0A9773]/12 flex items-center justify-center shrink-0">

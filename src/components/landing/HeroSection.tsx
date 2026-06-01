@@ -4,16 +4,6 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 
-const heroItems = [
-  { name: "Acetaminophen Plus Aspirin & Caffeine", barcode: "123456789",   unit: "Count", price: "$3.00",  tax: "0.80 %", eligible: true,  setPrice: false, inactive: false },
-  { name: "Antibiotic ointment",                  barcode: "12345906980", unit: "Count", price: "$12.00", tax: "0.80 %", eligible: true,  setPrice: false, inactive: false },
-  { name: "Apple",                                barcode: "12345",       unit: "KL",    price: null,     tax: null,      eligible: true,  setPrice: true,  inactive: false },
-  { name: "Alka-Seltzer (Inactive)",              barcode: "1234567",    unit: "Count", price: "$15.30", tax: "0.80 %", eligible: false, setPrice: false, inactive: true  },
-  { name: "Banana",                               barcode: "12345",       unit: "Count", price: null,     tax: null,      eligible: true,  setPrice: true,  inactive: false },
-  { name: "Benadryl",                             barcode: "123456789",  unit: "Count", price: "$8.75",  tax: "0.80 %", eligible: true,  setPrice: false, inactive: false },
-  { name: "Claritin",                             barcode: "123456789",  unit: "Count", price: "$6.90",  tax: "0.80 %", eligible: true,  setPrice: false, inactive: false },
-];
-
 export default function HeroSection() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
@@ -279,7 +269,7 @@ export default function HeroSection() {
 
           {/* Right column – Animated device + floating cards */}
           <div className="relative flex justify-center lg:justify-end items-center">
-            {/* Device — Figma composite (bg + device layered) */}
+            {/* Device — Figma composite with 3D tilt */}
             <motion.div
               style={{ y: deviceY }}
               initial={{ opacity: 0, scale: 0.9, y: 40 }}
@@ -287,6 +277,17 @@ export default function HeroSection() {
               transition={{ duration: 0.9, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
               className="relative z-10 animate-float"
             >
+              <motion.div
+                animate={{
+                  rotateY: [-14, 14, -14],
+                  rotateX: [4, -4, 4],
+                }}
+                transition={{
+                  rotateY: { duration: 9, repeat: Infinity, ease: "easeInOut" },
+                  rotateX: { duration: 7, repeat: Infinity, ease: "easeInOut" },
+                }}
+                style={{ transformPerspective: 1400 }}
+              >
               <div className="relative w-[420px] h-[608px]">
                 {/* Background atmosphere layer */}
                 <Image
@@ -305,80 +306,7 @@ export default function HeroSection() {
                   priority
                 />
               </div>
-            </motion.div>
-
-            {/* Floating basket card — behind terminal, dark glass style, Figma data */}
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.9, delay: 1.0, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute right-[360px] top-14 z-[5] glass-card rounded-2xl p-4 w-64 shadow-2xl animate-float-slow"
-              style={{ animationDelay: "1s" }}
-            >
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-xs text-white/50 font-medium uppercase tracking-wider">Current Basket</span>
-                <span className="text-xs text-emerald-400 font-semibold">6 eligible</span>
-              </div>
-              {heroItems.slice(0, 5).map((item, i) => (
-                <motion.div
-                  key={item.name}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 1.1 + i * 0.1, duration: 0.4, ease: "easeOut" }}
-                  className="flex items-center justify-between py-2.5 border-b border-white/10 last:border-0"
-                >
-                  <div className="flex items-center gap-2.5 min-w-0 flex-1 pr-2">
-                    <div className={`w-2 h-2 rounded-full shrink-0 ${
-                      item.inactive ? "bg-white/20" : item.eligible ? "bg-emerald-400" : "bg-white/30"
-                    }`} />
-                    <span className={`text-sm font-medium truncate ${item.inactive ? "text-white/30" : "text-white/80"}`}>
-                      {item.name}
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2 shrink-0">
-                    {item.setPrice ? (
-                      <span className="text-xs text-white/40 italic">Set Price</span>
-                    ) : (
-                      <span className={`text-sm ${item.inactive ? "text-white/30" : "text-white/60"}`}>{item.price}</span>
-                    )}
-                    {item.eligible && !item.inactive && (
-                      <span className="text-xs bg-emerald-400/20 text-emerald-400 px-2 py-0.5 rounded-full font-medium">
-                        Eligible
-                      </span>
-                    )}
-                  </div>
-                </motion.div>
-              ))}
-              <div className="mt-3 pt-3 border-t border-white/10 flex justify-between items-center">
-                <span className="text-sm text-white/70">Benefits applied</span>
-                <span className="text-sm font-bold text-emerald-400">-$30.65</span>
-              </div>
-            </motion.div>
-
-            {/* Floating success badge */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: 1.5 }}
-              className="absolute -right-4 bottom-24 lg:-right-8 glass-card rounded-2xl p-3.5 shadow-xl"
-            >
-              <div className="flex items-center gap-2.5">
-                <div className="w-8 h-8 rounded-full bg-emerald-400/20 flex items-center justify-center">
-                  <svg
-                    className="w-4 h-4 text-emerald-400"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                  >
-                    <path d="M3 8l3.5 3.5L13 4.5" strokeLinecap="round" />
-                  </svg>
-                </div>
-                <div>
-                  <div className="text-xs font-bold text-white">Transaction Approved</div>
-                  <div className="text-xs text-white/50">$162.07 in 2.3s</div>
-                </div>
-              </div>
+              </motion.div>
             </motion.div>
           </div>
         </div>

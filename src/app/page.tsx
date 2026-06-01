@@ -2,9 +2,8 @@ import Navbar from "@/components/landing/Navbar";
 import HeroSection from "@/components/landing/HeroSection";
 import StatsMarquee from "@/components/landing/StatsMarquee";
 import TrustedBy from "@/components/landing/TrustedBy";
-import FeatureBasket from "@/components/landing/FeatureBasket";
-import FeatureCheckout from "@/components/landing/FeatureCheckout";
 import FeaturePortal from "@/components/landing/FeaturePortal";
+import StickyFeatures from "@/components/landing/StickyFeatures";
 import MetricsSection from "@/components/landing/MetricsSection";
 import HardwareSection from "@/components/landing/HardwareSection";
 import TestimonialsSection from "@/components/landing/TestimonialsSection";
@@ -20,8 +19,7 @@ export default function Home() {
         <HeroSection />
         <StatsMarquee />
         <TrustedBy />
-        <FeatureBasket />
-        <FeatureCheckout />
+        <StickyFeatures />
         <FeaturePortal />
         <MetricsSection />
         <HardwareSection />
