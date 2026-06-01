@@ -36,16 +36,14 @@ export default function Navbar() {
       <nav className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center group">
-          <div className="bg-white/95 backdrop-blur-sm rounded-lg px-3 py-1.5 shadow-sm group-hover:bg-white transition-colors duration-200">
-            <Image
-              src="/nb-logo.svg"
-              alt="NationsBenefits"
-              width={148}
-              height={22}
-              className="h-[22px] w-auto"
-              priority
-            />
-          </div>
+          <Image
+            src="/nb-logo-dark.svg"
+            alt="NationsBenefits"
+            width={148}
+            height={22}
+            className="h-[22px] w-auto opacity-95 group-hover:opacity-100 transition-opacity duration-200"
+            priority
+          />
         </Link>
 
         {/* Desktop links */}
