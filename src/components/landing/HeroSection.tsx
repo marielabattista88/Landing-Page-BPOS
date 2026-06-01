@@ -202,6 +202,38 @@ export default function HeroSection() {
               </span>
             </motion.div>
 
+            {/* App Icon */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.85, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="w-fit"
+            >
+              <div
+                style={{
+                  width: "68px",
+                  height: "66px",
+                  borderRadius: "14.8px",
+                  padding: "2px",
+                  background:
+                    "linear-gradient(135deg, rgba(45,211,255,0.9) 0%, rgba(45,211,255,0.5) 45%, rgba(45,211,255,0.3) 100%)",
+                }}
+              >
+                <div
+                  className="relative overflow-hidden w-full h-full"
+                  style={{ borderRadius: "12.8px" }}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/bpos-icon.svg"
+                    alt="Benefits POS"
+                    className="block w-full h-full object-cover"
+                    style={{ transform: "scale(1.25)" }}
+                  />
+                </div>
+              </div>
+            </motion.div>
+
             {/* Headline */}
             <motion.div
               initial={{ opacity: 0, y: 30 }}
@@ -209,9 +241,9 @@ export default function HeroSection() {
               transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             >
               <h1 className="heading-display text-5xl sm:text-6xl lg:text-7xl text-white">
-                Benefit payments
+                A Modern Fintech Solution
                 <br />
-                <span className="gradient-text">made effortless.</span>
+                <span className="gradient-text">for Independent Retailers</span>
               </h1>
             </motion.div>
 
@@ -222,8 +254,7 @@ export default function HeroSection() {
               transition={{ duration: 0.6, delay: 0.35 }}
               className="text-lg text-white/60 max-w-md leading-relaxed"
             >
-              Analyze baskets, apply eligible benefits, and complete transactions
-              in seconds — with zero manual work.
+              Analyze baskets instantly, identify eligible products, apply benefits automatically, and complete payments in seconds. Manage sales, settlements, and store performance from one powerful platform.
             </motion.p>
 
             {/* CTAs */}

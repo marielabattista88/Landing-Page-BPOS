@@ -4,13 +4,13 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const items = [
-  { name: "Naproxen Sodium 220mg", price: "$8.00", eligible: true, category: "OTC" },
-  { name: "Tylenol Extra Strength", price: "$12.00", eligible: true, category: "OTC" },
-  { name: "Advil Liqui-Gels 200mg", price: "$10.00", eligible: true, category: "OTC" },
-  { name: "Vitamin D3 2000IU", price: "$9.00", eligible: true, category: "Supplement" },
-  { name: "Coca-Cola 12oz", price: "$2.50", eligible: false, category: "Beverage" },
-  { name: "Doritos Chips 2oz", price: "$1.99", eligible: false, category: "Snack" },
-  { name: "Ibuprofen Famotidine", price: "$5.00", eligible: true, category: "OTC" },
+  { name: "Acetaminophen Plus Aspirin & Caffeine", barcode: "123456789", unit: "Count", price: "$3.00",  tax: "0.80 %", eligible: true,  setPrice: false, inactive: false },
+  { name: "Antibiotic ointment",                  barcode: "12345906980", unit: "Count", price: "$12.00", tax: "0.80 %", eligible: true,  setPrice: false, inactive: false },
+  { name: "Apple",                                barcode: "12345",       unit: "KL",    price: null,     tax: null,      eligible: true,  setPrice: true,  inactive: false },
+  { name: "Alka-Seltzer (Inactive)",              barcode: "1234567",    unit: "Count", price: "$15.30", tax: "0.80 %", eligible: false, setPrice: false, inactive: true  },
+  { name: "Banana",                               barcode: "12345",       unit: "Count", price: null,     tax: null,      eligible: true,  setPrice: true,  inactive: false },
+  { name: "Benadryl",                             barcode: "123456789",  unit: "Count", price: "$8.75",  tax: "0.80 %", eligible: true,  setPrice: false, inactive: false },
+  { name: "Claritin",                             barcode: "123456789",  unit: "Count", price: "$6.90",  tax: "0.80 %", eligible: true,  setPrice: false, inactive: false },
 ];
 
 function FeatureItem({ icon, title, desc }: { icon: React.ReactNode; title: string; desc: string }) {
