@@ -29,9 +29,6 @@ function FeatureItem({ icon, title, desc }: { icon: React.ReactNode; title: stri
 
 export default function FeatureBasket() {
   const [highlighted, setHighlighted] = useState<number | null>(null);
-  const eligible = items.filter((i) => i.eligible);
-  const total = items.reduce((s, i) => s + parseFloat(i.price.replace("$", "")), 0);
-  const covered = eligible.reduce((s, i) => s + parseFloat(i.price.replace("$", "")), 0);
 
   return (
     <section id="features" className="section-py bg-[#F8FAFB]">
@@ -115,78 +112,77 @@ export default function FeatureBasket() {
             <div className="absolute inset-0 bg-[#00497A]/5 blur-3xl rounded-3xl" />
 
             <div className="relative glass-card-light rounded-3xl shadow-[0_20px_80px_rgba(0,40,67,0.12)] overflow-hidden border border-[#DEE8EC]">
-              {/* Card header */}
-              <div className="px-6 py-4 border-b border-[#DEE8EC] bg-white flex items-center justify-between">
-                <div>
-                  <div className="text-sm font-semibold text-[#222B2F]">New Sale</div>
-                  <div className="text-xs text-[#646F7D]">K&M Drugs · Clewiston, FL</div>
+              {/* Screen header */}
+              <div className="px-4 pt-3 pb-0 bg-white border-b border-[#DEE8EC]">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <svg className="w-4 h-4 text-[#222B2F]" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M10 13L5 8l5-5"/></svg>
+                    <div>
+                      <div className="text-base font-bold text-[#222B2F] leading-tight">Items</div>
+                      <div className="text-[11px] text-[#646F7D]">John&#39;s Doe Store</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <svg className="w-4 h-4 text-[#646F7D]" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M2 4h12M4 8h8M6 12h4" strokeLinecap="round"/></svg>
+                    <svg className="w-4 h-4 text-[#646F7D]" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="3" r="1.2"/><circle cx="8" cy="8" r="1.2"/><circle cx="8" cy="13" r="1.2"/></svg>
+                  </div>
                 </div>
-                <div className="flex items-center gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="text-xs text-[#646F7D] font-medium">Live</span>
+                {/* Search bar */}
+                <div className="flex items-center gap-2 bg-[#FAFAFA] border border-[#EEF0F1] rounded-full px-3 py-1.5 mb-3">
+                  <svg className="w-3.5 h-3.5 text-[#B1B9C1] shrink-0" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5l2.5 2.5" strokeLinecap="round"/></svg>
+                  <span className="text-xs text-[#B1B9C1]">Search</span>
+                </div>
+                {/* Filter chips */}
+                <div className="flex gap-2 pb-3">
+                  <span className="bg-[#00497A] text-white text-xs font-semibold px-4 py-1 rounded-full">All</span>
+                  <span className="border border-[#D9E4E9] text-[#00497A] text-xs font-semibold px-4 py-1 rounded-full">Barcode</span>
+                  <span className="border border-[#D9E4E9] text-[#00497A] text-xs font-semibold px-4 py-1 rounded-full">PLUs</span>
                 </div>
               </div>
 
-              {/* Basket items */}
-              <div className="px-6 py-4 bg-white max-h-72 overflow-y-auto">
+              {/* Item rows */}
+              <div className="bg-white max-h-72 overflow-y-auto">
                 <AnimatePresence>
                   {items.map((item, i) => (
                     <motion.div
                       key={item.name}
-                      initial={{ opacity: 0, y: 10 }}
+                      initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: i * 0.08, duration: 0.3 }}
+                      transition={{ delay: i * 0.07, duration: 0.3 }}
                       onMouseEnter={() => setHighlighted(i)}
                       onMouseLeave={() => setHighlighted(null)}
-                      className={`flex items-center justify-between py-3 border-b border-[#DEE8EC]/60 last:border-0 rounded-lg px-3 -mx-3 cursor-pointer transition-colors duration-200 ${
+                      className={`flex items-center justify-between px-4 py-2.5 border-b border-[#D9E4E9]/60 last:border-0 cursor-pointer transition-colors duration-150 ${
                         highlighted === i ? "bg-[#EEF4F6]" : ""
-                      }`}
+                      } ${item.inactive ? "opacity-50" : ""}`}
                     >
-                      <div className="flex items-center gap-2.5">
-                        <div
-                          className={`w-2 h-2 rounded-full shrink-0 ${
-                            item.eligible ? "bg-emerald-400" : "bg-[#DEE8EC]"
-                          }`}
-                        />
-                        <div>
-                          <div className="text-sm font-medium text-[#222B2F]">{item.name}</div>
-                          <div className="text-xs text-[#646F7D]">{item.category}</div>
+                      <div className="flex flex-col gap-0.5 flex-1 min-w-0 pr-3">
+                        <span className={`text-[13px] font-semibold truncate leading-tight ${item.inactive ? "text-[#B1B1B1]" : "text-[#222B2F]"}`}>
+                          {item.name}
+                        </span>
+                        <div className="flex items-center gap-1.5">
+                          <span className={`text-[11px] ${item.inactive ? "text-[#B1B1B1]" : "text-[#646F7D]"}`}>{item.barcode}</span>
+                          {item.eligible && !item.inactive && (
+                            <svg className="w-3 h-3 text-[#00497A] shrink-0" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2.5 2.5L11 6" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                          )}
+                          {item.inactive && (
+                            <svg className="w-3 h-3 text-[#B1B1B1] shrink-0" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="8" cy="8" r="6"/><path d="M5 8l2.5 2.5L11 6" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                          )}
                         </div>
+                        <span className={`text-[11px] ${item.inactive ? "text-[#B1B1B1]" : "text-[#B1B1B1]"}`}>{item.unit}</span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-sm font-semibold text-[#222B2F]">{item.price}</span>
-                        {item.eligible ? (
-                          <span className="text-xs bg-emerald-50 text-emerald-600 border border-emerald-100 px-2 py-0.5 rounded-full font-medium">
-                            ✓
-                          </span>
+                      <div className="flex flex-col items-end shrink-0">
+                        {item.setPrice ? (
+                          <span className="text-[13px] font-semibold text-[#F25D4A] underline">Set Price</span>
                         ) : (
-                          <span className="text-xs bg-[#F8FAFB] text-[#646F7D] border border-[#DEE8EC] px-2 py-0.5 rounded-full font-medium">
-                            —
-                          </span>
+                          <>
+                            <span className={`text-[13px] font-semibold leading-tight ${item.inactive ? "text-[#B1B1B1]" : "text-[#00497A]"}`}>{item.price}</span>
+                            <span className="text-[10px] text-[#B1B1B1]">Tax {item.tax}</span>
+                          </>
                         )}
                       </div>
                     </motion.div>
                   ))}
                 </AnimatePresence>
-              </div>
-
-              {/* Summary footer */}
-              <div className="px-6 py-5 bg-[#EEF4F6] border-t border-[#DEE8EC]">
-                <div className="flex justify-between text-sm text-[#646F7D] mb-2">
-                  <span>Subtotal ({items.length} items)</span>
-                  <span className="font-medium text-[#222B2F]">${total.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between text-sm mb-3">
-                  <span className="text-[#646F7D]">Benefits covered ({eligible.length} items)</span>
-                  <span className="font-semibold text-emerald-600">-${covered.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between text-base font-bold text-[#002843] pt-3 border-t border-[#DEE8EC]">
-                  <span>Customer pays</span>
-                  <span>${(total - covered).toFixed(2)}</span>
-                </div>
-                <button className="mt-4 w-full bg-[#002843] hover:bg-[#00497A] text-white font-semibold py-3 rounded-xl text-sm transition-colors duration-200">
-                  Confirm Basket
-                </button>
               </div>
             </div>
           </motion.div>
