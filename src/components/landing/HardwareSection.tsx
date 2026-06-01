@@ -74,11 +74,11 @@ export default function HardwareSection() {
                 className="relative z-10"
               >
                 <Image
-                  src="/terminal-hero.png"
+                  src="/device-home.png"
                   alt="Benefits POS Terminal"
-                  width={300}
-                  height={560}
-                  className="object-contain mix-blend-multiply drop-shadow-[0_32px_64px_rgba(0,0,0,0.45)] max-h-[560px] w-auto"
+                  width={290}
+                  height={450}
+                  className="object-contain drop-shadow-[0_32px_64px_rgba(0,0,0,0.45)] max-h-[520px] w-auto"
                   priority
                 />
               </motion.div>
