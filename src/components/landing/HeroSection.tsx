@@ -45,77 +45,70 @@ export default function HeroSection() {
           preserveAspectRatio="xMidYMid slice"
           aria-hidden
         >
-          {/* Arc 1: Rounded rectangle frame (left + bottom edge of the frame shape) */}
-          {/* Thin bright line */}
-          <motion.path
-            d="M 210,195 C 80,195 80,300 80,420 L 80,1210 C 80,1330 80,1435 210,1435 L 1380,1435"
-            fill="none"
-            stroke="#A8D8FF"
-            strokeWidth="3"
-            strokeLinecap="round"
-            strokeDasharray="220 3200"
-            animate={{ strokeDashoffset: [220, -3200] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-          />
-          {/* Soft glow halo */}
-          <motion.path
-            d="M 210,195 C 80,195 80,300 80,420 L 80,1210 C 80,1330 80,1435 210,1435 L 1380,1435"
-            fill="none"
-            stroke="#58A1FF"
-            strokeWidth="12"
-            strokeLinecap="round"
-            strokeOpacity="0.25"
-            strokeDasharray="220 3200"
-            animate={{ strokeDashoffset: [220, -3200] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-          />
+          {/* Traveling lights that orbit the background's circular forms.
+              Circles are the equal-radius rings of the bpos logo baked into
+              hero-bg-blue.png (mapped 1:1 to this 2612×1632 viewBox). */}
+          {[
+            { cx: 1242, cy: 536, r: 881, dur: 7, delay: 0 },
+            { cx: 1410, cy: 728, r: 881, dur: 9, delay: 2.2 },
+            { cx: 1050, cy: 968, r: 881, dur: 8, delay: 1.1 },
+          ].map((ring) => (
+            <g key={`${ring.cx}-${ring.cy}`}>
+              {/* Soft glow halo */}
+              <motion.circle
+                cx={ring.cx}
+                cy={ring.cy}
+                r={ring.r}
+                pathLength={1}
+                fill="none"
+                stroke="#58A1FF"
+                strokeWidth="14"
+                strokeOpacity="0.22"
+                strokeLinecap="round"
+                strokeDasharray="0.13 0.87"
+                animate={{ strokeDashoffset: [0, -1] }}
+                transition={{ duration: ring.dur, repeat: Infinity, ease: "linear", delay: ring.delay }}
+              />
+              {/* Thin bright line */}
+              <motion.circle
+                cx={ring.cx}
+                cy={ring.cy}
+                r={ring.r}
+                pathLength={1}
+                fill="none"
+                stroke="#CDEBFF"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeDasharray="0.13 0.87"
+                animate={{ strokeDashoffset: [0, -1] }}
+                transition={{ duration: ring.dur, repeat: Infinity, ease: "linear", delay: ring.delay }}
+              />
+            </g>
+          ))}
 
-          {/* Arc 2: Large circular arc (upper-center sweeping to lower-right) */}
-          {/* Thin bright line */}
+          {/* Rounded-rectangle frame (left + bottom edge of the logo frame) */}
           <motion.path
-            d="M 520,180 C 900,80 1500,100 1900,400 C 2300,700 2420,1100 2350,1480"
-            fill="none"
-            stroke="#A8D8FF"
-            strokeWidth="3"
-            strokeLinecap="round"
-            strokeDasharray="220 3600"
-            animate={{ strokeDashoffset: [220, -3600] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "linear", delay: 1.5 }}
-          />
-          {/* Soft glow halo */}
-          <motion.path
-            d="M 520,180 C 900,80 1500,100 1900,400 C 2300,700 2420,1100 2350,1480"
+            d="M 360,150 C 150,150 150,300 150,470 L 150,1180 C 150,1360 150,1500 360,1500 L 1500,1500"
             fill="none"
             stroke="#58A1FF"
-            strokeWidth="12"
-            strokeLinecap="round"
-            strokeOpacity="0.25"
-            strokeDasharray="220 3600"
-            animate={{ strokeDashoffset: [220, -3600] }}
-            transition={{ duration: 5, repeat: Infinity, ease: "linear", delay: 1.5 }}
-          />
-
-          {/* Arc 3: Bottom horizontal glow line */}
-          <motion.path
-            d="M 80,1430 L 1380,1430"
-            fill="none"
-            stroke="#A8D8FF"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeDasharray="160 1400"
-            animate={{ strokeDashoffset: [160, -1400] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "linear", delay: 0.8 }}
-          />
-          <motion.path
-            d="M 80,1430 L 1380,1430"
-            fill="none"
-            stroke="#58A1FF"
-            strokeWidth="10"
-            strokeLinecap="round"
+            strokeWidth="13"
             strokeOpacity="0.2"
-            strokeDasharray="160 1400"
-            animate={{ strokeDashoffset: [160, -1400] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "linear", delay: 0.8 }}
+            strokeLinecap="round"
+            pathLength={1}
+            strokeDasharray="0.16 0.84"
+            animate={{ strokeDashoffset: [0, -1] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "linear", delay: 0.6 }}
+          />
+          <motion.path
+            d="M 360,150 C 150,150 150,300 150,470 L 150,1180 C 150,1360 150,1500 360,1500 L 1500,1500"
+            fill="none"
+            stroke="#CDEBFF"
+            strokeWidth="3"
+            strokeLinecap="round"
+            pathLength={1}
+            strokeDasharray="0.16 0.84"
+            animate={{ strokeDashoffset: [0, -1] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "linear", delay: 0.6 }}
           />
         </motion.svg>
 

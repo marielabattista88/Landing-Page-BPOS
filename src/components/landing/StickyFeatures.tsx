@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 
 // ─── Shared: Status Bar ────────────────────────────────────────────────────
@@ -499,8 +499,12 @@ const SCREENS = [
   TransactionSuccessScreen,
 ];
 
-// Which section each screen belongs to
-const SECTION_MAP = [0, 0, 0, 1, 1, 2, 2, 2];
+// Screens grouped by section
+const SECTION_SCREENS = [
+  [0, 1, 2],  // Section 01: Member Verification
+  [3, 4],     // Section 02: Smart Basket
+  [5, 6, 7],  // Section 03: Smart Checkout
+];
 
 // Dot labels per screen (shown under the progress dots)
 const SCREEN_LABELS = [
@@ -508,6 +512,9 @@ const SCREEN_LABELS = [
   "Scanning Items", "Coverage Check",
   "Processing", "Approved", "Complete",
 ];
+
+// Auto-cycle duration per screen (ms)
+const CYCLE_MS = 2800;
 
 const SECTIONS = [
   {
@@ -569,28 +576,35 @@ const SECTIONS = [
 // ─── Main Component ────────────────────────────────────────────────────────
 export default function StickyFeatures() {
   const ref = useRef<HTMLDivElement>(null);
-  const [screenIndex, setScreenIndex] = useState(0);
+  const [sectionIndex, setSectionIndex] = useState(0);
+  const [screenInSection, setScreenInSection] = useState(0);
 
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end end"],
   });
 
+  // Scroll only advances sections (01 → 02 → 03)
   useMotionValueEvent(scrollYProgress, "change", (v) => {
-    const idx = Math.min(Math.floor(v * SCREENS.length), SCREENS.length - 1);
-    setScreenIndex(idx);
+    const newSection = Math.min(Math.floor(v * SECTIONS.length), SECTIONS.length - 1);
+    setSectionIndex(newSection);
   });
 
-  const activeSectionIndex = SECTION_MAP[screenIndex];
-  const activeSection = SECTIONS[activeSectionIndex];
+  // Auto-cycle screens within the active section
+  useEffect(() => {
+    setScreenInSection(0);
+    const id = setInterval(() => {
+      setScreenInSection((prev) => (prev + 1) % SECTION_SCREENS[sectionIndex].length);
+    }, CYCLE_MS);
+    return () => clearInterval(id);
+  }, [sectionIndex]);
+
+  const screenIndex = SECTION_SCREENS[sectionIndex][screenInSection];
+  const activeSection = SECTIONS[sectionIndex];
   const ScreenComponent = SCREENS[screenIndex];
 
-  // Sub-progress within current section (for progress bar)
-  const sectionScreens = SCREENS.filter((_, i) => SECTION_MAP[i] === activeSectionIndex);
-  const screenWithinSection = screenIndex - SECTION_MAP.indexOf(activeSectionIndex);
-
   return (
-    <div ref={ref} style={{ height: `${SCREENS.length * 100}vh` }} id="features">
+    <div ref={ref} style={{ height: `${SECTIONS.length * 100}vh` }} id="features">
       {/* Sticky viewport */}
       <div className="sticky top-0 h-screen overflow-hidden bg-[#F8FAFB] flex items-stretch">
 
@@ -600,10 +614,9 @@ export default function StickyFeatures() {
             <button
               key={s.step}
               onClick={() => {
-                // Scroll to the start of this section
                 const el = ref.current;
                 if (el) {
-                  const startFrac = SECTION_MAP.indexOf(i) / SCREENS.length;
+                  const startFrac = i / SECTIONS.length;
                   const scrollTop = el.offsetTop + startFrac * el.offsetHeight;
                   window.scrollTo({ top: scrollTop, behavior: "smooth" });
                 }
@@ -612,14 +625,14 @@ export default function StickyFeatures() {
             >
               <motion.div
                 animate={{
-                  width: activeSectionIndex === i ? 3 : 2,
-                  height: activeSectionIndex === i ? 36 : 20,
-                  backgroundColor: activeSectionIndex === i ? "#00497A" : "#cbd5e1",
+                  width: sectionIndex === i ? 3 : 2,
+                  height: sectionIndex === i ? 36 : 20,
+                  backgroundColor: sectionIndex === i ? "#00497A" : "#cbd5e1",
                 }}
                 transition={{ duration: 0.3 }}
                 className="rounded-full"
               />
-              <span className={`text-[9px] font-bold tracking-widest ${activeSectionIndex === i ? "text-[#00497A]" : "text-slate-400"}`}>
+              <span className={`text-[9px] font-bold tracking-widest ${sectionIndex === i ? "text-[#00497A]" : "text-slate-400"}`}>
                 {s.step}
               </span>
             </button>
@@ -711,45 +724,59 @@ export default function StickyFeatures() {
                 </AnimatePresence>
               </div>
 
-              {/* Screen progress dots */}
-              <div className="flex items-center gap-2">
-                {SCREENS.map((_, i) => {
-                  const sameSection = SECTION_MAP[i] === activeSectionIndex;
-                  const isActive = i === screenIndex;
-                  if (!sameSection) return null;
-                  return (
-                    <motion.div
-                      key={i}
-                      animate={{
-                        width: isActive ? 20 : 6,
-                        backgroundColor: isActive ? "#00497A" : "#cbd5e1",
-                        opacity: 1,
-                      }}
-                      className="h-1.5 rounded-full"
-                      transition={{ duration: 0.25 }}
-                    />
-                  );
-                })}
-              </div>
+              {/* Screen progress dots with timing bar */}
+              <div className="flex flex-col items-center gap-2">
+                <div className="flex items-center gap-2">
+                  {SECTION_SCREENS[sectionIndex].map((globalIdx, dotIdx) => {
+                    const isActive = dotIdx === screenInSection;
+                    return (
+                      <button
+                        key={globalIdx}
+                        onClick={() => setScreenInSection(dotIdx)}
+                        className="relative overflow-hidden rounded-full"
+                      >
+                        <motion.div
+                          animate={{
+                            width: isActive ? 28 : 6,
+                            backgroundColor: isActive ? "#00497A" : "#cbd5e1",
+                          }}
+                          className="h-1.5 rounded-full"
+                          transition={{ duration: 0.25 }}
+                        />
+                        {/* Timing progress fill on active dot */}
+                        {isActive && (
+                          <motion.div
+                            key={`${sectionIndex}-${dotIdx}`}
+                            className="absolute inset-y-0 left-0 rounded-full bg-[#00A99D]/60"
+                            initial={{ width: "0%" }}
+                            animate={{ width: "100%" }}
+                            transition={{ duration: CYCLE_MS / 1000, ease: "linear" }}
+                          />
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
 
-              {/* Current screen label */}
-              <AnimatePresence mode="wait">
-                <motion.p
-                  key={screenIndex}
-                  initial={{ opacity: 0, y: 4 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -4 }}
-                  className="text-[11px] font-semibold text-[#646F7D] uppercase tracking-widest"
-                >
-                  {SCREEN_LABELS[screenIndex]}
-                </motion.p>
-              </AnimatePresence>
+                {/* Current screen label */}
+                <AnimatePresence mode="wait">
+                  <motion.p
+                    key={screenIndex}
+                    initial={{ opacity: 0, y: 4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    className="text-[11px] font-semibold text-[#646F7D] uppercase tracking-widest"
+                  >
+                    {SCREEN_LABELS[screenIndex]}
+                  </motion.p>
+                </AnimatePresence>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Scroll hint — shown only when at the very start */}
-        {screenIndex === 0 && (
+        {sectionIndex === 0 && screenInSection === 0 && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
