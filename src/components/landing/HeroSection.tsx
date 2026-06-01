@@ -54,6 +54,7 @@ export default function HeroSection() {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const deviceY = useTransform(scrollYProgress, [0, 1], [0, 80]);
+  const bgY = useTransform(scrollYProgress, [0, 1], [0, -50]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
   return (
@@ -61,15 +62,116 @@ export default function HeroSection() {
       ref={ref}
       className="relative min-h-screen flex flex-col overflow-hidden gradient-hero"
     >
-      {/* Background orbs */}
+      {/* Hero background — blue PNG + animated SVG arc lights */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-[#00497A]/20 blur-[120px] animate-pulse-glow" />
+
+        {/* Base image with breathing scale + scroll parallax */}
+        <motion.div
+          style={{ y: bgY }}
+          animate={{ scale: [1, 1.06, 1] }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute inset-[-8%] w-[116%] h-[116%]"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/hero-bg-blue.png"
+            alt=""
+            aria-hidden
+            className="absolute inset-0 w-full h-full object-cover object-center"
+          />
+        </motion.div>
+
+        {/* SVG animated traveling-light arcs — traces the cyan lines in the image */}
+        <motion.svg
+          style={{ y: bgY }}
+          animate={{ scale: [1, 1.06, 1] }}
+          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute inset-[-8%] w-[116%] h-[116%] pointer-events-none"
+          viewBox="0 0 2612 1632"
+          preserveAspectRatio="xMidYMid slice"
+          aria-hidden
+        >
+          {/* Arc 1: Rounded rectangle frame (left + bottom edge of the frame shape) */}
+          {/* Thin bright line */}
+          <motion.path
+            d="M 210,195 C 80,195 80,300 80,420 L 80,1210 C 80,1330 80,1435 210,1435 L 1380,1435"
+            fill="none"
+            stroke="#A8D8FF"
+            strokeWidth="3"
+            strokeLinecap="round"
+            strokeDasharray="220 3200"
+            animate={{ strokeDashoffset: [220, -3200] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+          />
+          {/* Soft glow halo */}
+          <motion.path
+            d="M 210,195 C 80,195 80,300 80,420 L 80,1210 C 80,1330 80,1435 210,1435 L 1380,1435"
+            fill="none"
+            stroke="#58A1FF"
+            strokeWidth="12"
+            strokeLinecap="round"
+            strokeOpacity="0.25"
+            strokeDasharray="220 3200"
+            animate={{ strokeDashoffset: [220, -3200] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+          />
+
+          {/* Arc 2: Large circular arc (upper-center sweeping to lower-right) */}
+          {/* Thin bright line */}
+          <motion.path
+            d="M 520,180 C 900,80 1500,100 1900,400 C 2300,700 2420,1100 2350,1480"
+            fill="none"
+            stroke="#A8D8FF"
+            strokeWidth="3"
+            strokeLinecap="round"
+            strokeDasharray="220 3600"
+            animate={{ strokeDashoffset: [220, -3600] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "linear", delay: 1.5 }}
+          />
+          {/* Soft glow halo */}
+          <motion.path
+            d="M 520,180 C 900,80 1500,100 1900,400 C 2300,700 2420,1100 2350,1480"
+            fill="none"
+            stroke="#58A1FF"
+            strokeWidth="12"
+            strokeLinecap="round"
+            strokeOpacity="0.25"
+            strokeDasharray="220 3600"
+            animate={{ strokeDashoffset: [220, -3600] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "linear", delay: 1.5 }}
+          />
+
+          {/* Arc 3: Bottom horizontal glow line */}
+          <motion.path
+            d="M 80,1430 L 1380,1430"
+            fill="none"
+            stroke="#A8D8FF"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeDasharray="160 1400"
+            animate={{ strokeDashoffset: [160, -1400] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "linear", delay: 0.8 }}
+          />
+          <motion.path
+            d="M 80,1430 L 1380,1430"
+            fill="none"
+            stroke="#58A1FF"
+            strokeWidth="10"
+            strokeLinecap="round"
+            strokeOpacity="0.2"
+            strokeDasharray="160 1400"
+            animate={{ strokeDashoffset: [160, -1400] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "linear", delay: 0.8 }}
+          />
+        </motion.svg>
+
+        {/* Left-side text overlay for legibility */}
         <div
-          className="absolute top-1/3 right-1/4 w-72 h-72 rounded-full bg-[#00A99D]/10 blur-[100px] animate-pulse-glow"
-          style={{ animationDelay: "1.5s" }}
+          className="absolute inset-0"
+          style={{ background: "linear-gradient(to right, #001829e0 0%, #00182980 45%, transparent 75%)" }}
         />
-        <div className="absolute bottom-1/4 left-1/3 w-64 h-64 rounded-full bg-[#00497A]/15 blur-[80px]" />
-        {/* Grid pattern */}
+
+        {/* Subtle grid */}
         <div
           className="absolute inset-0 opacity-[0.03]"
           style={{
@@ -183,12 +285,7 @@ export default function HeroSection() {
 
           {/* Right column – Animated device + floating cards */}
           <div className="relative flex justify-center lg:justify-end items-center">
-            {/* Glow behind device */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-72 h-72 rounded-full bg-[#00497A]/30 blur-[80px] animate-pulse-glow" />
-            </div>
-
-            {/* Device */}
+            {/* Device — Figma composite (bg + device layered) */}
             <motion.div
               style={{ y: deviceY }}
               initial={{ opacity: 0, scale: 0.9, y: 40 }}
@@ -196,14 +293,24 @@ export default function HeroSection() {
               transition={{ duration: 0.9, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
               className="relative z-10 animate-float"
             >
-              <Image
-                src="/device.png"
-                alt="Benefits POS Terminal"
-                width={280}
-                height={500}
-                className="drop-shadow-2xl"
-                priority
-              />
+              <div className="relative w-[420px] h-[608px]">
+                {/* Background atmosphere layer */}
+                <Image
+                  src="/terminal-bg.png"
+                  alt=""
+                  fill
+                  className="object-contain"
+                  aria-hidden
+                />
+                {/* Terminal device layer */}
+                <Image
+                  src="/terminal-device.png"
+                  alt="Benefits POS Terminal"
+                  fill
+                  className="object-contain"
+                  priority
+                />
+              </div>
             </motion.div>
 
             {/* Floating basket card */}

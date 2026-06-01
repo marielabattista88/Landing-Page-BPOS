@@ -57,13 +57,21 @@ export default function HardwareSection() {
               transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
               className="relative z-10"
             >
-              <Image
-                src="/device.png"
-                alt="Benefits POS Terminal hardware"
-                width={260}
-                height={460}
-                className="drop-shadow-[0_30px_60px_rgba(0,40,67,0.25)]"
-              />
+              <div className="relative w-[280px] h-[406px]">
+                <Image
+                  src="/terminal-bg.png"
+                  alt=""
+                  fill
+                  className="object-contain"
+                  aria-hidden
+                />
+                <Image
+                  src="/terminal-device.png"
+                  alt="Benefits POS Terminal hardware"
+                  fill
+                  className="object-contain"
+                />
+              </div>
             </motion.div>
 
             {/* Floating spec badges */}

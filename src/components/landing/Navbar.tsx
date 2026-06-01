@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 
 const navLinks = [
@@ -34,20 +35,17 @@ export default function Navbar() {
     >
       <nav className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="w-8 h-8 rounded-lg bg-[#00497A] flex items-center justify-center shadow-md group-hover:shadow-[#00497A]/40 transition-shadow duration-300">
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path
-                d="M3 3h5v5H3V3zm7 0h5v5h-5V3zm0 7h5v5h-5v-5zM3 10h5v5H3v-5z"
-                fill="white"
-                opacity="0.9"
-              />
-              <circle cx="13.5" cy="4.5" r="1" fill="white" />
-            </svg>
+        <Link href="/" className="flex items-center group">
+          <div className="bg-white/95 backdrop-blur-sm rounded-lg px-3 py-1.5 shadow-sm group-hover:bg-white transition-colors duration-200">
+            <Image
+              src="/nb-logo.svg"
+              alt="NationsBenefits"
+              width={148}
+              height={22}
+              className="h-[22px] w-auto"
+              priority
+            />
           </div>
-          <span className="text-white font-semibold text-base tracking-tight">
-            Benefits<span className="text-[#60b8ff]">POS</span>
-          </span>
         </Link>
 
         {/* Desktop links */}
