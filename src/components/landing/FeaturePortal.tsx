@@ -161,7 +161,10 @@ export default function FeaturePortal() {
               transition={{ duration: 7, ease: "easeInOut", repeat: Infinity, delay: 0.5 }}
               className="absolute -top-6 -right-3 sm:-right-6 w-40 rounded-2xl border border-white/10 bg-white/6 backdrop-blur-2xl p-3.5 shadow-[0_16px_40px_rgba(0,0,0,0.5)]"
             >
-              <div className="text-[10px] text-white/50 mb-2">New Users</div>
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-[10px] text-white/50">Sales This Year</span>
+                <span className="text-[10px] font-semibold text-teal tabular-nums">$2.3M</span>
+              </div>
               <div className="flex items-end gap-1 h-12">
                 {miniBars.map((h, i) => (
                   <div
