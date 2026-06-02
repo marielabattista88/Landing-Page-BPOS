@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import FlowLines from "./FlowLines";
 
 const kpis = [
   { label: "Total Revenue", value: "$708.54", delta: "+5%" },
@@ -62,6 +63,7 @@ export default function FeaturePortal() {
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 right-0 w-150 h-150 rounded-full bg-navy/10 blur-[120px]" />
         <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-teal/5 blur-[80px]" />
+        <FlowLines opacity={0.6} />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">

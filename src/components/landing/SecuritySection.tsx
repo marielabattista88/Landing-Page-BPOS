@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import FlowLines from "./FlowLines";
 
 const pillars = [
   {
@@ -76,6 +77,7 @@ export default function SecuritySection() {
             backgroundSize: "60px 60px",
           }}
         />
+        <FlowLines opacity={0.45} />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">

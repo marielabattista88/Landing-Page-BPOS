@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import FlowLines from "./FlowLines";
 
 const appFeatures = [
   {
@@ -51,9 +52,10 @@ const bullets = [
 
 export default function HardwareSection() {
   return (
-    <section id="hardware" className="overflow-hidden bg-[#002843]">
-      <div className="max-w-7xl mx-auto px-6 py-24 lg:py-32">
-        <div className="grid lg:grid-cols-2 gap-16 xl:gap-28 items-center">
+    <section id="hardware" className="relative overflow-hidden bg-[#002843]">
+      <FlowLines opacity={0.5} className="z-0" />
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-24 lg:py-32">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-28 xl:gap-40 items-center">
 
           {/* ── Left: device image with circles ── */}
           <motion.div
@@ -64,10 +66,9 @@ export default function HardwareSection() {
             className="flex justify-center lg:justify-end"
           >
             <div className="relative flex items-center justify-center">
-              {/* Soft halo rings that echo the section background */}
+              {/* Soft halo + teal core glow */}
               <div className="absolute w-130 h-130 rounded-full bg-white/4" />
               <div className="absolute w-100 h-100 rounded-full bg-white/3" />
-              {/* Teal glow — blends the terminal's light into the dark background */}
               <div className="absolute w-85 h-85 rounded-full bg-teal/25 blur-[90px]" />
               <div className="absolute bottom-8 w-65 h-30 rounded-full bg-navy/40 blur-[70px]" />
 
