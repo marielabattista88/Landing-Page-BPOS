@@ -1,11 +1,18 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 
 export default function HeroSection() {
   const ref = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 0.75;
+    }
+  }, []);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const deviceY = useTransform(scrollYProgress, [0, 1], [0, 80]);
   const bgY = useTransform(scrollYProgress, [0, 1], [0, -50]);
@@ -137,18 +144,6 @@ export default function HeroSection() {
           {/* Left column */}
           <div className="flex flex-col gap-8">
             {/* Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="inline-flex items-center gap-2 glass-card rounded-full px-4 py-2 w-fit"
-            >
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-xs text-white/70 font-medium tracking-wide">
-                Trusted by 2,000+ independent retailers
-              </span>
-            </motion.div>
-
             {/* App Icon */}
             <motion.div
               initial={{ opacity: 0, scale: 0.85, y: 10 }}
@@ -269,20 +264,20 @@ export default function HeroSection() {
               transition={{ duration: 0.9, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
               className="relative z-10 animate-float"
             >
-              {/* Float only — video handles all 3D motion */}
+              {/* Gentle float + very slow rotation to complement video's own 3D motion */}
               <motion.div
-                animate={{ y: [0, -12, 0] }}
-                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-                style={{ transformPerspective: 900 }}
+                animate={{ y: [0, -20, 0] }}
+                transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
               >
                 <video
+                  ref={videoRef}
                   autoPlay
                   muted
                   loop
                   playsInline
                   width={406}
                   height={686}
-                  className="w-[365px] h-auto drop-shadow-[0_40px_80px_rgba(0,0,0,0.5)]"
+                  className="w-[330px] h-auto drop-shadow-[0_40px_80px_rgba(0,0,0,0.5)]"
                 >
                   <source src="/hero-animation.webm" type="video/webm" />
                 </video>
