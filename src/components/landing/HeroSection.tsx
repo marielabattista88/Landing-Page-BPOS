@@ -184,7 +184,7 @@ export default function HeroSection() {
               <h1 className="heading-display text-5xl sm:text-6xl lg:text-7xl text-white">
                 A Modern Fintech Solution
                 <br />
-                <span className="gradient-text">for Independent Retailers</span>
+                <span className="text-white">for Retailers</span>
               </h1>
             </motion.div>
 

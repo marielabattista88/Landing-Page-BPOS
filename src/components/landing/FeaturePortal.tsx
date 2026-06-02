@@ -66,16 +66,16 @@ export default function FeaturePortal() {
             {/* Glow */}
             <div className="absolute -inset-4 bg-[#00497A]/20 blur-3xl rounded-3xl" />
 
-            <div className="relative rounded-2xl overflow-hidden shadow-[0_30px_100px_rgba(0,0,0,0.5)] border border-white/10">
+            {/* Figma dashboard mockup — node 9594:125567 */}
+            <div className="relative rounded-2xl overflow-hidden shadow-[0_30px_100px_rgba(0,0,0,0.6)] border border-white/10">
               <Image
-                src="/dashboard.png"
-                alt="BPOS Retailer Portal Dashboard"
-                width={640}
-                height={420}
+                src="/portal-dashboard.png"
+                alt="BPOS Admin Portal Dashboard"
+                width={1366}
+                height={768}
                 className="w-full object-cover"
+                priority
               />
-              {/* Overlay shimmer */}
-              <div className="absolute inset-0 shimmer-bg" />
             </div>
 
             {/* Floating metric card */}

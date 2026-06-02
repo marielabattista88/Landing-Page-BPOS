@@ -106,47 +106,55 @@ function NBCard() {
 
 // ─── Shared: Spinner Ring (CSS/SVG — used by screens 1, 5, 6) ─────────────
 function SpinnerRing({ spinning = false, showCheck = false }: { spinning?: boolean; showCheck?: boolean }) {
-  const ring = (
-    <svg viewBox="0 0 196 196" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
-      {/* Track */}
-      <circle cx="98" cy="98" r="88" fill="none" stroke="#e8f0f5" strokeWidth="10" />
-      {/* Arc */}
-      <circle cx="98" cy="98" r="88"
-        fill="none"
-        stroke={showCheck ? "#10b981" : "#00A99D"}
-        strokeWidth="10"
-        strokeDasharray={showCheck ? "553 0" : "165 388"}
-        strokeLinecap="round"
-        transform="rotate(-90 98 98)"
-      />
-      {/* Leading dot (only when spinning, not check) */}
-      {!showCheck && (
-        <circle cx="186" cy="98" r="7" fill="#3b82f6" />
-      )}
-      {/* Checkmark */}
-      {showCheck && (
-        <path d="M62 98 L87 123 L134 76"
-          stroke="#10b981" strokeWidth="9" fill="none"
-          strokeLinecap="round" strokeLinejoin="round" />
-      )}
-    </svg>
-  );
-
-  return (
-    <div style={{ position: "relative", width: 196, height: 196 }}>
-      {spinning ? (
+  if (spinning) {
+    return (
+      <div style={{ position: "relative", width: 196, height: 196 }}>
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 1.6, repeat: Infinity, ease: "linear" }}
           style={{ position: "absolute", inset: 0, originX: "50%", originY: "50%" }}
         >
-          {ring}
+          <svg viewBox="0 0 196 196" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
+            <circle cx="98" cy="98" r="88" fill="none" stroke="#e8f0f5" strokeWidth="10" />
+            <circle cx="98" cy="98" r="88" fill="none" stroke="#00A99D" strokeWidth="10"
+              strokeDasharray="165 388" strokeLinecap="round" transform="rotate(-90 98 98)" />
+            <circle cx="186" cy="98" r="7" fill="#3b82f6" />
+          </svg>
         </motion.div>
-      ) : (
-        ring
-      )}
-    </div>
-  );
+      </div>
+    );
+  }
+
+  if (showCheck) {
+    return (
+      <div style={{ position: "relative", width: 196, height: 196 }}>
+        <svg viewBox="0 0 196 196" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
+          {/* Track */}
+          <circle cx="98" cy="98" r="88" fill="none" stroke="#e8f0f5" strokeWidth="10" />
+          {/* Ring draws in */}
+          <motion.circle
+            cx="98" cy="98" r="88"
+            fill="none" stroke="#10b981" strokeWidth="10" strokeLinecap="round"
+            transform="rotate(-90 98 98)"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+          />
+          {/* Checkmark draws in after ring */}
+          <motion.path
+            d="M62 98 L87 123 L134 76"
+            stroke="#10b981" strokeWidth="9" fill="none"
+            strokeLinecap="round" strokeLinejoin="round"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: 1 }}
+            transition={{ duration: 0.38, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          />
+        </svg>
+      </div>
+    );
+  }
+
+  return null;
 }
 
 // ─── Screen 0: Swipe Flex Card ─────────────────────────────────────────────
@@ -187,6 +195,20 @@ function SwipeCardScreen() {
             <circle cx="70" cy="136" r="5" fill="#0a2840"/>
             <circle cx="90" cy="136" r="5" fill="#00A99D"/>
             <circle cx="110" cy="136" r="5" fill="#0a2840"/>
+            {/* Animated swiping card */}
+            <defs>
+              <clipPath id="terminalBodyClip">
+                <rect x="40" y="30" width="100" height="118" rx="10"/>
+              </clipPath>
+            </defs>
+            <motion.rect
+              y="115" width="72" height="13" rx="3"
+              fill="#1a5a80" stroke="rgba(0,169,157,0.7)" strokeWidth="1.5"
+              clipPath="url(#terminalBodyClip)"
+              initial={{ x: 125 }}
+              animate={{ x: 28 }}
+              transition={{ duration: 0.65, delay: 0.5, ease: [0.4, 0, 0.2, 1], repeat: Infinity, repeatDelay: 2.2 }}
+            />
           </svg>
         </div>
         {/* Title + description */}
@@ -261,14 +283,40 @@ function SwipeCardScreen() {
 
 // ─── Screen 1: Card Verified ──────────────────────────────────────────────
 function VerifiedScreen() {
+  const [phase, setPhase] = useState<"loading" | "verified">("loading");
+  useEffect(() => {
+    const t = setTimeout(() => setPhase("verified"), 1400);
+    return () => clearTimeout(t);
+  }, []);
   return (
     <FigmaScaled>
       <div style={{ display: "flex", flexDirection: "column", width: 360, height: 760, background: "white" }}>
         <StatusBar />
         <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 48 }}>
-          <SpinnerRing showCheck />
+          <AnimatePresence mode="wait" initial={false}>
+            {phase === "loading" ? (
+              <motion.div key="spinner"
+                initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.85 }} transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}>
+                <SpinnerRing spinning />
+              </motion.div>
+            ) : (
+              <motion.div key="check"
+                initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}>
+                <SpinnerRing showCheck />
+              </motion.div>
+            )}
+          </AnimatePresence>
           <div style={{ display: "flex", flexDirection: "column", gap: 16, alignItems: "center", padding: "0 16px", width: "100%" }}>
-            <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 700, fontSize: 32, color: "#222b2f", margin: 0, textAlign: "center" }}>Verified</p>
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.p key={phase}
+                initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.22, ease: "easeOut" }}
+                style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 700, fontSize: 32, color: "#222b2f", margin: 0, textAlign: "center" }}>
+                {phase === "loading" ? "Verifying..." : "Verified"}
+              </motion.p>
+            </AnimatePresence>
             <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontSize: 20, color: "#222b2f", margin: 0, textAlign: "center" }}>Please wait...</p>
           </div>
         </div>
@@ -313,12 +361,15 @@ function BalanceScreen() {
         </div>
         {/* Balance rows */}
         <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
-          {balances.map((b) => (
-            <div key={b.label} style={{ padding: "10px 16px", borderBottom: "1px solid #dee8ec" }}>
+          {balances.map((b, i) => (
+            <motion.div key={b.label}
+              initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, delay: i * 0.09, ease: [0.16, 1, 0.3, 1] }}
+              style={{ padding: "10px 16px", borderBottom: "1px solid #dee8ec" }}>
               <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 600, fontSize: 16, color: "#222b2f", margin: 0 }}>{b.label}</p>
               <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 700, fontSize: 22, color: "#002843", margin: "2px 0" }}>{b.amount}</p>
               <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontSize: 13, color: "#646f7d", margin: 0 }}>{b.sub}</p>
-            </div>
+            </motion.div>
           ))}
         </div>
         {/* Footer */}
@@ -553,14 +604,27 @@ function TransactionSuccessScreen() {
         </div>
         {/* Content */}
         <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", padding: "16px 16px 0", gap: 12 }}>
-          {/* Success icon */}
-          <div style={{ background: "#ecf3ed", borderRadius: 72, width: 88, height: 88, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          {/* Success icon — scales in on mount */}
+          <motion.div
+            initial={{ scale: 0.4, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            style={{ background: "#ecf3ed", borderRadius: 72, width: 88, height: 88, display: "flex", alignItems: "center", justifyContent: "center" }}
+          >
             <div style={{ background: "#0a9773", borderRadius: 56, width: 64, height: 64, display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-                <path d="M5 14l6.5 6.5L23 8" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+              <motion.svg
+                width="28" height="28" viewBox="0 0 28 28" fill="none"
+              >
+                <motion.path
+                  d="M5 14l6.5 6.5L23 8"
+                  stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 0.4, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                />
+              </motion.svg>
             </div>
-          </div>
+          </motion.div>
           <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 600, fontSize: 20, color: "#222b2f", margin: 0, textAlign: "center" }}>Transaction Successful</p>
           <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 600, fontSize: 40, color: "#222b2f", margin: 0, textAlign: "center" }}>$162.07</p>
           <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontSize: 14, color: "#646f7d", margin: 0, textAlign: "center" }}>Processed via card ****1234</p>
@@ -717,7 +781,9 @@ export default function StickyFeatures() {
     return () => clearInterval(id);
   }, [sectionIndex]);
 
-  const screenIndex = SECTION_SCREENS[sectionIndex][screenInSection];
+  // Clamp screenInSection so it never goes out of bounds during section transitions
+  const safeScreenInSection = Math.min(screenInSection, SECTION_SCREENS[sectionIndex].length - 1);
+  const screenIndex = SECTION_SCREENS[sectionIndex][safeScreenInSection];
   const activeSection = SECTIONS[sectionIndex];
   const ScreenComponent = SCREENS[screenIndex];
 
@@ -766,10 +832,10 @@ export default function StickyFeatures() {
               <AnimatePresence mode="wait">
                 <motion.div
                   key={sectionIndex}
-                  initial={{ opacity: 0, y: 24 }}
+                  initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -16 }}
-                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                  exit={{ opacity: 0, y: -12 }}
+                  transition={{ duration: 0.3, ease: [0.76, 0, 0.24, 1] }}
                   className="flex flex-col gap-6"
                 >
                   {/* Eyebrow */}
@@ -825,17 +891,18 @@ export default function StickyFeatures() {
             {/* ── Right: Phone ── */}
             <div className="flex flex-col items-center justify-center gap-6">
               {/* Phone */}
-              <div className="relative">
+              <div className="relative" style={{ width: 272, height: 578 }}>
                 {/* Ambient glow */}
                 <div className="absolute inset-[-40px] bg-[#00497A]/6 rounded-full blur-3xl pointer-events-none" />
 
-                <AnimatePresence mode="wait">
+                <AnimatePresence mode="sync" initial={false}>
                   <motion.div
                     key={screenIndex}
-                    initial={{ opacity: 0, y: 20, scale: 0.97, filter: "blur(3px)" }}
-                    animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-                    exit={{ opacity: 0, y: -16, scale: 0.97, filter: "blur(3px)" }}
-                    transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.4, ease: "easeInOut" }}
+                    style={{ position: "absolute", top: 0, left: 0, willChange: "opacity" }}
                   >
                     <ScreenComponent />
                   </motion.div>
@@ -880,9 +947,10 @@ export default function StickyFeatures() {
                 <AnimatePresence mode="wait">
                   <motion.p
                     key={screenIndex}
-                    initial={{ opacity: 0, y: 4 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -4 }}
+                    initial={{ opacity: 0, x: 8 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -8 }}
+                    transition={{ duration: 0.25 }}
                     className="text-[11px] font-semibold text-[#646F7D] uppercase tracking-widest"
                   >
                     {SCREEN_LABELS[screenIndex]}
