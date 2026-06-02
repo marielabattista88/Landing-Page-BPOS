@@ -1,7 +1,18 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Image from "next/image";
+
+const kpis = [
+  { label: "Total Revenue", value: "$708.54", delta: "+5%" },
+  { label: "Net Profit", value: "$112.43K", delta: "+9%" },
+  { label: "Transactions", value: "2.3M", delta: "+16%" },
+  { label: "Avg / Retailer", value: "$4,214", delta: "+5.2%" },
+];
+
+// Revenue trend — 12 points, viewBox 300×100 (lower y = higher value)
+const trendPoints = "10,62 35,54 61,58 86,44 112,49 137,37 163,41 188,29 214,35 239,23 265,27 290,15";
+const trendArea = `M10,62 L35,54 L61,58 L86,44 L112,49 L137,37 L163,41 L188,29 L214,35 L239,23 L265,27 L290,15 L290,100 L10,100 Z`;
+const miniBars = [38, 52, 44, 64, 58, 78, 70, 90];
 
 const portalFeatures = [
   {
@@ -46,119 +57,134 @@ const portalFeatures = [
 
 export default function FeaturePortal() {
   return (
-    <section id="portal" className="section-py bg-[#002843] overflow-hidden relative">
-      {/* Background decoration */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full bg-[#00497A]/10 blur-[120px]" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-[#00A99D]/5 blur-[80px]" />
+    <section id="portal" className="section-py bg-night relative">
+      {/* Background decoration — overflow-hidden only here to clip blurs without clipping floating cards */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 right-0 w-150 h-150 rounded-full bg-navy/10 blur-[120px]" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full bg-teal/5 blur-[80px]" />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left: Dashboard mockup — layered composition */}
+        <div className="grid lg:grid-cols-[3fr_2fr] gap-16 items-center">
+
+          {/* LEFT: Native glass dashboard — futuristic fintech mock */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             className="relative order-2 lg:order-1"
-            style={{ overflow: "visible" }}
           >
-            {/* Ambient glow */}
-            <div className="absolute -inset-8 bg-[#00497A]/15 blur-[60px] rounded-full" />
+            {/* Ambient glows */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-24 bg-teal/20 blur-[60px] rounded-full pointer-events-none" />
+            <div className="absolute -top-8 left-1/4 w-1/2 h-32 bg-[#60b8ff]/25 blur-[80px] rounded-full pointer-events-none" />
 
-            {/* Composition container — sized by main dashboard */}
-            <div style={{ position: "relative" }}>
+            {/* Main glass panel — floats gently */}
+            <motion.div
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 6, ease: "easeInOut", repeat: Infinity }}
+              className="relative rounded-2xl border border-white/10 bg-white/4 backdrop-blur-2xl p-5 shadow-[0_32px_64px_rgba(0,0,0,0.6),0_8px_24px_rgba(0,73,122,0.35)] overflow-hidden"
+            >
+              {/* Top sheen */}
+              <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white/30 to-transparent" />
+              <div className="absolute -top-px left-1/4 w-1/2 h-24 bg-[#60b8ff]/10 blur-3xl pointer-events-none" />
 
-              {/* Main dashboard panel — gentle bob */}
-              <motion.div
-                style={{ filter: "drop-shadow(0 24px 48px rgba(0,0,0,0.55))", position: "relative", zIndex: 2 }}
-                animate={{ y: [0, -6, 0] }}
-                transition={{ duration: 5, ease: "easeInOut", repeat: Infinity }}
-              >
-                <Image
-                  src="/portal-card-main.png"
-                  alt="BPOS Admin Portal Dashboard"
-                  width={1016}
-                  height={840}
-                  className="w-full object-contain rounded-xl"
-                  priority
-                />
-              </motion.div>
+              {/* Header */}
+              <div className="flex items-center justify-between mb-5">
+                <div>
+                  <div className="text-[10px] uppercase tracking-[0.2em] text-white/35">Dashboard</div>
+                  <div className="text-sm font-semibold text-white">Overview</div>
+                </div>
+                <div className="inline-flex items-center gap-1.5 bg-teal/15 text-teal text-[10px] font-semibold px-2.5 py-1 rounded-full">
+                  <span className="relative flex h-1.5 w-1.5">
+                    <span className="absolute inline-flex h-full w-full rounded-full bg-teal animate-ping opacity-75" />
+                    <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-teal" />
+                  </span>
+                  Live
+                </div>
+              </div>
 
-              {/* New Users bar chart — slides in + independent float */}
-              <motion.div
-                initial={{ opacity: 0, x: 24 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.5, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                style={{ position: "absolute", top: "0%", right: "-38%", zIndex: 10 }}
-              >
-                <motion.div
-                  animate={{ y: [0, -9, 0] }}
-                  transition={{ duration: 4.2, ease: "easeInOut", repeat: Infinity, delay: 1.3 }}
-                  style={{ filter: "drop-shadow(0 16px 40px rgba(0,0,0,0.5))" }}
-                >
-                  <Image
-                    src="/portal-card-new-users.png"
-                    alt="New Users chart"
-                    width={522}
-                    height={270}
-                    className="rounded-xl"
-                    style={{ width: "65%", height: "auto" }}
+              {/* KPI tiles */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
+                {kpis.map((k) => (
+                  <div key={k.label} className="rounded-xl border border-white/8 bg-white/3 px-3 py-2.5">
+                    <div className="text-[9px] text-white/40 truncate">{k.label}</div>
+                    <div className="text-sm font-bold text-white tabular-nums mt-0.5">{k.value}</div>
+                    <div className="inline-flex items-center gap-0.5 text-[9px] font-semibold text-teal mt-1">
+                      <svg className="w-2.5 h-2.5" viewBox="0 0 10 10" fill="none" stroke="currentColor" strokeWidth="1.5">
+                        <path d="M5 8V2M5 2L2.5 4.5M5 2l2.5 2.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                      {k.delta}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Area chart */}
+              <div className="rounded-xl border border-white/8 bg-white/2 p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <div className="text-xs font-semibold text-white/80">Revenue Trend</div>
+                  <div className="text-[10px] text-white/30">2026</div>
+                </div>
+                <svg viewBox="0 0 300 100" className="w-full h-28" preserveAspectRatio="none">
+                  <defs>
+                    <linearGradient id="portalArea" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#60b8ff" stopOpacity="0.35" />
+                      <stop offset="100%" stopColor="#60b8ff" stopOpacity="0" />
+                    </linearGradient>
+                    <linearGradient id="portalStroke" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0%" stopColor="#00A99D" />
+                      <stop offset="100%" stopColor="#60b8ff" />
+                    </linearGradient>
+                  </defs>
+                  {[20, 40, 60, 80].map((y) => (
+                    <line key={y} x1="0" y1={y} x2="300" y2={y} stroke="white" strokeOpacity="0.05" strokeWidth="0.5" />
+                  ))}
+                  <path d={trendArea} fill="url(#portalArea)" />
+                  <polyline
+                    points={trendPoints}
+                    fill="none"
+                    stroke="url(#portalStroke)"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    style={{ filter: "drop-shadow(0 0 6px rgba(96,184,255,0.5))" }}
                   />
-                </motion.div>
-              </motion.div>
+                  <circle cx="290" cy="15" r="3" fill="#60b8ff" style={{ filter: "drop-shadow(0 0 6px rgba(96,184,255,0.9))" }} />
+                </svg>
+              </div>
+            </motion.div>
 
-              {/* Success Rate card — slides in + float */}
-              <motion.div
-                initial={{ opacity: 0, x: 24 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.8, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                style={{ position: "absolute", top: "47%", right: "-32%", zIndex: 10 }}
-              >
-                <motion.div
-                  animate={{ y: [0, -8, 0] }}
-                  transition={{ duration: 4.8, ease: "easeInOut", repeat: Infinity, delay: 2.1 }}
-                  style={{ filter: "drop-shadow(0 16px 40px rgba(0,0,0,0.5))" }}
-                >
-                  <Image
-                    src="/portal-card-success-rate.png"
-                    alt="Success Rate"
-                    width={400}
-                    height={154}
-                    className="rounded-xl"
-                    style={{ width: "72%", height: "auto" }}
+            {/* Floating card — mini bar chart (top-right) */}
+            <motion.div
+              animate={{ y: [0, -12, 0] }}
+              transition={{ duration: 7, ease: "easeInOut", repeat: Infinity, delay: 0.5 }}
+              className="absolute -top-6 -right-3 sm:-right-6 w-40 rounded-2xl border border-white/10 bg-white/6 backdrop-blur-2xl p-3.5 shadow-[0_16px_40px_rgba(0,0,0,0.5)]"
+            >
+              <div className="text-[10px] text-white/50 mb-2">New Users</div>
+              <div className="flex items-end gap-1 h-12">
+                {miniBars.map((h, i) => (
+                  <div
+                    key={i}
+                    className="flex-1 rounded-sm bg-linear-to-t from-[#60b8ff]/30 to-[#60b8ff]"
+                    style={{ height: `${h}%` }}
                   />
-                </motion.div>
-              </motion.div>
+                ))}
+              </div>
+            </motion.div>
 
-              {/* Growth Efficiency card — fades up + float */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 1.1, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                style={{ position: "absolute", bottom: "-14%", right: "-18%", zIndex: 10 }}
-              >
-                <motion.div
-                  animate={{ y: [0, -7, 0] }}
-                  transition={{ duration: 3.8, ease: "easeInOut", repeat: Infinity, delay: 0.7 }}
-                  style={{ filter: "drop-shadow(0 16px 40px rgba(0,0,0,0.5))" }}
-                >
-                  <Image
-                    src="/portal-card-growth.png"
-                    alt="Growth Efficiency"
-                    width={504}
-                    height={318}
-                    className="rounded-xl"
-                    style={{ width: "78%", height: "auto" }}
-                  />
-                </motion.div>
-              </motion.div>
-
-            </div>
+            {/* Floating card — success rate (bottom-right) */}
+            <motion.div
+              animate={{ y: [0, 10, 0] }}
+              transition={{ duration: 8, ease: "easeInOut", repeat: Infinity, delay: 1 }}
+              className="absolute -bottom-7 right-4 sm:right-10 rounded-2xl border border-white/10 bg-white/6 backdrop-blur-2xl px-4 py-3 shadow-[0_16px_40px_rgba(0,0,0,0.5)]"
+            >
+              <div className="text-[10px] text-white/50">Success Rate</div>
+              <div className="flex items-baseline gap-1.5 mt-0.5">
+                <span className="text-2xl font-black text-teal tabular-nums">98.7%</span>
+              </div>
+              <div className="text-[9px] text-white/35 mt-0.5">12,843 completed</div>
+            </motion.div>
           </motion.div>
 
           {/* Right: Text */}
@@ -192,9 +218,9 @@ export default function FeaturePortal() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.2 + i * 0.1, duration: 0.5 }}
-                  className="glass-card rounded-2xl p-4 hover:bg-white/[0.08] transition-colors duration-200"
+                  className="glass-card rounded-2xl p-4 hover:bg-white/8 transition-colors duration-200"
                 >
-                  <div className="w-9 h-9 rounded-lg bg-[#00497A]/30 text-[#60b8ff] flex items-center justify-center mb-3">
+                  <div className="w-9 h-9 rounded-lg bg-navy/30 text-[#60b8ff] flex items-center justify-center mb-3">
                     {feat.icon}
                   </div>
                   <div className="text-sm font-semibold text-white mb-1">{feat.title}</div>

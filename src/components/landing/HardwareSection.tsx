@@ -64,9 +64,12 @@ export default function HardwareSection() {
             className="flex justify-center lg:justify-end"
           >
             <div className="relative flex items-center justify-center">
-              {/* Background circles */}
-              <div className="absolute w-[500px] h-[500px] rounded-full bg-[#EEF4F6]/10" />
-              <div className="absolute w-[380px] h-[380px] rounded-full bg-[#DEE8EC]/[0.08]" />
+              {/* Soft halo rings that echo the section background */}
+              <div className="absolute w-130 h-130 rounded-full bg-white/4" />
+              <div className="absolute w-100 h-100 rounded-full bg-white/3" />
+              {/* Teal glow — blends the terminal's light into the dark background */}
+              <div className="absolute w-85 h-85 rounded-full bg-teal/25 blur-[90px]" />
+              <div className="absolute bottom-8 w-65 h-30 rounded-full bg-navy/40 blur-[70px]" />
 
               <motion.div
                 animate={{ y: [0, -10, 0] }}
@@ -74,11 +77,11 @@ export default function HardwareSection() {
                 className="relative z-10"
               >
                 <Image
-                  src="/device-home.png"
+                  src="/device-terminal.png"
                   alt="Benefits POS Terminal"
-                  width={290}
-                  height={450}
-                  className="object-contain drop-shadow-[0_32px_64px_rgba(0,0,0,0.45)] max-h-[520px] w-auto"
+                  width={1083}
+                  height={2416}
+                  className="object-contain drop-shadow-[0_32px_64px_rgba(0,0,0,0.55)] max-h-135 w-auto"
                   priority
                 />
               </motion.div>
