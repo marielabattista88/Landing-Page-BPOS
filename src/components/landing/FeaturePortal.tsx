@@ -55,47 +55,110 @@ export default function FeaturePortal() {
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left: Dashboard mockup */}
+          {/* Left: Dashboard mockup — layered composition */}
           <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
             className="relative order-2 lg:order-1"
+            style={{ overflow: "visible" }}
           >
-            {/* Glow */}
-            <div className="absolute -inset-4 bg-[#00497A]/20 blur-3xl rounded-3xl" />
+            {/* Ambient glow */}
+            <div className="absolute -inset-8 bg-[#00497A]/15 blur-[60px] rounded-full" />
 
-            {/* Figma dashboard mockup — node 9594:125567 */}
-            <div className="relative rounded-2xl overflow-hidden shadow-[0_30px_100px_rgba(0,0,0,0.6)] border border-white/10">
-              <Image
-                src="/portal-dashboard.png"
-                alt="BPOS Admin Portal Dashboard"
-                width={1366}
-                height={768}
-                className="w-full object-cover"
-                priority
-              />
+            {/* Composition container — sized by main dashboard */}
+            <div style={{ position: "relative" }}>
+
+              {/* Main dashboard panel — gentle bob */}
+              <motion.div
+                style={{ filter: "drop-shadow(0 24px 48px rgba(0,0,0,0.55))", position: "relative", zIndex: 2 }}
+                animate={{ y: [0, -6, 0] }}
+                transition={{ duration: 5, ease: "easeInOut", repeat: Infinity }}
+              >
+                <Image
+                  src="/portal-card-main.png"
+                  alt="BPOS Admin Portal Dashboard"
+                  width={1016}
+                  height={840}
+                  className="w-full object-contain rounded-xl"
+                  priority
+                />
+              </motion.div>
+
+              {/* New Users bar chart — slides in + independent float */}
+              <motion.div
+                initial={{ opacity: 0, x: 24 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.5, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                style={{ position: "absolute", top: "0%", right: "-38%", zIndex: 10 }}
+              >
+                <motion.div
+                  animate={{ y: [0, -9, 0] }}
+                  transition={{ duration: 4.2, ease: "easeInOut", repeat: Infinity, delay: 1.3 }}
+                  style={{ filter: "drop-shadow(0 16px 40px rgba(0,0,0,0.5))" }}
+                >
+                  <Image
+                    src="/portal-card-new-users.png"
+                    alt="New Users chart"
+                    width={522}
+                    height={270}
+                    className="rounded-xl"
+                    style={{ width: "65%", height: "auto" }}
+                  />
+                </motion.div>
+              </motion.div>
+
+              {/* Success Rate card — slides in + float */}
+              <motion.div
+                initial={{ opacity: 0, x: 24 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.8, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                style={{ position: "absolute", top: "47%", right: "-32%", zIndex: 10 }}
+              >
+                <motion.div
+                  animate={{ y: [0, -8, 0] }}
+                  transition={{ duration: 4.8, ease: "easeInOut", repeat: Infinity, delay: 2.1 }}
+                  style={{ filter: "drop-shadow(0 16px 40px rgba(0,0,0,0.5))" }}
+                >
+                  <Image
+                    src="/portal-card-success-rate.png"
+                    alt="Success Rate"
+                    width={400}
+                    height={154}
+                    className="rounded-xl"
+                    style={{ width: "72%", height: "auto" }}
+                  />
+                </motion.div>
+              </motion.div>
+
+              {/* Growth Efficiency card — fades up + float */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 1.1, duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+                style={{ position: "absolute", bottom: "-14%", right: "-18%", zIndex: 10 }}
+              >
+                <motion.div
+                  animate={{ y: [0, -7, 0] }}
+                  transition={{ duration: 3.8, ease: "easeInOut", repeat: Infinity, delay: 0.7 }}
+                  style={{ filter: "drop-shadow(0 16px 40px rgba(0,0,0,0.5))" }}
+                >
+                  <Image
+                    src="/portal-card-growth.png"
+                    alt="Growth Efficiency"
+                    width={504}
+                    height={318}
+                    className="rounded-xl"
+                    style={{ width: "78%", height: "auto" }}
+                  />
+                </motion.div>
+              </motion.div>
+
             </div>
-
-            {/* Floating metric card */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.5, duration: 0.5 }}
-              className="absolute -bottom-6 -right-4 glass-card rounded-2xl p-4 shadow-2xl border border-white/10 animate-float"
-              style={{ animationDelay: "2s" }}
-            >
-              <div className="text-xs text-white/50 font-medium mb-1">Monthly Revenue</div>
-              <div className="text-2xl font-black text-white">$24,381</div>
-              <div className="flex items-center gap-1 mt-1">
-                <svg className="w-3 h-3 text-emerald-400" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M2 9l3-3 2 2 3-4" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                <span className="text-xs text-emerald-400 font-medium">+18.4% vs last month</span>
-              </div>
-            </motion.div>
           </motion.div>
 
           {/* Right: Text */}
