@@ -65,7 +65,7 @@ export default function FeaturePortal() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-[3fr_2fr] gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 xl:gap-32 items-center">
 
           {/* LEFT: Native glass dashboard — futuristic fintech mock */}
           <motion.div
@@ -73,7 +73,7 @@ export default function FeaturePortal() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="relative order-2 lg:order-1"
+            className="relative order-2 lg:order-1 lg:pr-10 lg:py-8"
           >
             {/* Ambient glows */}
             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-24 bg-teal/20 blur-[60px] rounded-full pointer-events-none" />
@@ -159,7 +159,7 @@ export default function FeaturePortal() {
             <motion.div
               animate={{ y: [0, -12, 0] }}
               transition={{ duration: 7, ease: "easeInOut", repeat: Infinity, delay: 0.5 }}
-              className="absolute -top-6 -right-3 sm:-right-6 w-40 rounded-2xl border border-white/10 bg-white/6 backdrop-blur-2xl p-3.5 shadow-[0_16px_40px_rgba(0,0,0,0.5)]"
+              className="absolute -top-6 -right-2 sm:-right-6 lg:-right-10 w-40 rounded-2xl border border-white/10 bg-white/6 backdrop-blur-2xl p-3.5 shadow-[0_16px_40px_rgba(0,0,0,0.5)]"
             >
               <div className="flex items-center justify-between mb-2">
                 <span className="text-[10px] text-white/50">Sales This Year</span>
@@ -180,7 +180,7 @@ export default function FeaturePortal() {
             <motion.div
               animate={{ y: [0, 10, 0] }}
               transition={{ duration: 8, ease: "easeInOut", repeat: Infinity, delay: 1 }}
-              className="absolute -bottom-7 right-4 sm:right-10 rounded-2xl border border-white/10 bg-white/6 backdrop-blur-2xl px-4 py-3 shadow-[0_16px_40px_rgba(0,0,0,0.5)]"
+              className="absolute -bottom-7 right-0 sm:-right-4 lg:-right-8 rounded-2xl border border-white/10 bg-white/6 backdrop-blur-2xl px-4 py-3 shadow-[0_16px_40px_rgba(0,0,0,0.5)]"
             >
               <div className="text-[10px] text-white/50">Success Rate</div>
               <div className="flex items-baseline gap-1.5 mt-0.5">
