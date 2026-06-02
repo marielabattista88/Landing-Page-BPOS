@@ -260,9 +260,8 @@ export default function HeroSection() {
             </motion.div>
           </div>
 
-          {/* Right column – Animated device + floating cards */}
+          {/* Right column – Terminal video animation */}
           <div className="relative flex justify-center lg:justify-end items-center">
-            {/* Device — Figma composite with 3D tilt */}
             <motion.div
               style={{ y: deviceY }}
               initial={{ opacity: 0, scale: 0.9, y: 40 }}
@@ -270,35 +269,23 @@ export default function HeroSection() {
               transition={{ duration: 0.9, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
               className="relative z-10 animate-float"
             >
+              {/* Float only — video handles all 3D motion */}
               <motion.div
-                animate={{
-                  rotateY: [-14, 14, -14],
-                  rotateX: [4, -4, 4],
-                }}
-                transition={{
-                  rotateY: { duration: 9, repeat: Infinity, ease: "easeInOut" },
-                  rotateX: { duration: 7, repeat: Infinity, ease: "easeInOut" },
-                }}
-                style={{ transformPerspective: 1400 }}
+                animate={{ y: [0, -12, 0] }}
+                transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                style={{ transformPerspective: 900 }}
               >
-              <div className="relative w-[420px] h-[608px]">
-                {/* Background atmosphere layer */}
-                <Image
-                  src="/terminal-bg.png"
-                  alt=""
-                  fill
-                  className="object-contain"
-                  aria-hidden
-                />
-                {/* Terminal device layer */}
-                <Image
-                  src="/terminal-device.png"
-                  alt="Benefits POS Terminal"
-                  fill
-                  className="object-contain"
-                  priority
-                />
-              </div>
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  width={406}
+                  height={686}
+                  className="w-[365px] h-auto drop-shadow-[0_40px_80px_rgba(0,0,0,0.5)]"
+                >
+                  <source src="/hero-animation.webm" type="video/webm" />
+                </video>
               </motion.div>
             </motion.div>
           </div>
