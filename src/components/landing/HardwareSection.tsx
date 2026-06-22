@@ -64,7 +64,7 @@ export default function HardwareSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-            className="flex justify-center lg:justify-end"
+            className="flex justify-center"
           >
             <div className="relative flex items-center justify-center">
               {/* Soft halo + blue core glow */}
