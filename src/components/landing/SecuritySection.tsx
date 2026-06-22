@@ -94,10 +94,10 @@ export default function SecuritySection() {
             Security & Reliability
           </div>
           <h2 className="heading-xl text-4xl sm:text-5xl text-white mb-4">
-            Built for reliability.
+            Enterprise Security. Retail Simplicity.
           </h2>
           <p className="text-lg text-white/50 leading-relaxed">
-            We handle the security, compliance, and infrastructure so you can focus on running your store.
+            Security, compliance, and reliability built into every transaction.
           </p>
         </motion.div>
 

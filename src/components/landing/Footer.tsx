@@ -33,11 +33,13 @@ export default function Footer() {
           {/* Brand */}
           <div className="col-span-2 lg:col-span-1">
             <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-[#00497A] flex items-center justify-center">
-                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <path d="M3 3h5v5H3V3zm7 0h5v5h-5V3zm0 7h5v5h-5v-5zM3 10h5v5H3v-5z" fill="white" opacity="0.9" />
-                  <circle cx="13.5" cy="4.5" r="1" fill="white" />
-                </svg>
+              <div className="w-8 h-8 rounded-lg overflow-hidden">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/bpos-icon.svg"
+                  alt="Benefits POS"
+                  className="block w-full h-full object-cover"
+                />
               </div>
               <span className="text-white font-semibold text-base">
                 Benefits<span className="text-[#60b8ff]">POS</span>

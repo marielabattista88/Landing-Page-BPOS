@@ -69,7 +69,7 @@ export default function FeaturePortal() {
       <div className="max-w-7xl mx-auto px-6 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 xl:gap-32 items-center">
 
-          {/* LEFT: Native glass dashboard — futuristic fintech mock */}
+          {/* LEFT: Native glass dashboard mock */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -206,12 +206,12 @@ export default function FeaturePortal() {
                 Retailer Portal
               </div>
               <h2 className="heading-xl text-4xl sm:text-5xl text-white mb-4">
-                A portal built
+                Manage Every Store
                 <br />
-                <span className="gradient-text">for growth.</span>
+                <span className="gradient-text">From One Dashboard.</span>
               </h2>
               <p className="text-lg text-white/60 leading-relaxed max-w-md">
-                Manage your store's performance from anywhere. See revenue, settlements, and trends in one clean dashboard.
+                Track revenue, settlements, transactions, stores, and cashiers from a single dashboard built for growing retailers.
               </p>
             </div>
 

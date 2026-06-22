@@ -12,7 +12,7 @@ const appFeatures = [
       <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
         <rect x="1" y="5" width="15" height="10" rx="2" stroke="white" strokeWidth="1.6" fill="none" opacity="0.7"/>
         <rect x="1" y="8" width="15" height="2.5" fill="white" opacity="0.2"/>
-        <circle cx="18" cy="7" r="4" fill="#00A99D"/>
+        <circle cx="18" cy="7" r="4" fill="#60b8ff"/>
         <path d="M15.8 7l1.5 1.5 2.5-2.5" stroke="white" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
     ),
@@ -38,16 +38,17 @@ const appFeatures = [
         <rect x="2" y="14" width="4" height="7" rx="1" fill="white" opacity="0.5"/>
         <rect x="7" y="9" width="4" height="12" rx="1" fill="white" opacity="0.7"/>
         <rect x="12" y="5" width="4" height="16" rx="1" fill="white"/>
-        <rect x="17" y="2" width="4" height="19" rx="1" fill="#00A99D"/>
+        <rect x="17" y="2" width="4" height="19" rx="1" fill="#60b8ff"/>
       </svg>
     ),
   },
 ];
 
 const bullets = [
-  "No upfront hardware cost — pay per transaction",
-  "Ships pre-configured and ready to use",
-  "24/7 support included",
+  "Ships ready to use",
+  "No POS integration required",
+  "Same-day settlements",
+  "24/7 support",
 ];
 
 export default function HardwareSection() {
@@ -66,10 +67,10 @@ export default function HardwareSection() {
             className="flex justify-center lg:justify-end"
           >
             <div className="relative flex items-center justify-center">
-              {/* Soft halo + teal core glow */}
+              {/* Soft halo + blue core glow */}
               <div className="absolute w-130 h-130 rounded-full bg-white/4" />
               <div className="absolute w-100 h-100 rounded-full bg-white/3" />
-              <div className="absolute w-85 h-85 rounded-full bg-teal/25 blur-[90px]" />
+              <div className="absolute w-85 h-85 rounded-full bg-[#60b8ff]/20 blur-[90px]" />
               <div className="absolute bottom-8 w-65 h-30 rounded-full bg-navy/40 blur-[70px]" />
 
               <motion.div
@@ -99,16 +100,16 @@ export default function HardwareSection() {
           >
             {/* Label + heading */}
             <div className="flex flex-col gap-4">
-              <span className="inline-flex w-fit items-center gap-2 bg-white/10 text-[#00A99D] text-xs font-semibold px-3 py-1.5 rounded-full">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00A99D]" />
+              <span className="inline-flex w-fit items-center gap-2 bg-white/10 text-[#60b8ff] text-xs font-semibold px-3 py-1.5 rounded-full">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#60b8ff]" />
                 Benefits POS Terminal
               </span>
               <h2 className="text-4xl sm:text-5xl font-black text-white leading-[1.1] tracking-tight">
-                Built for the floor.<br />
-                <span className="text-[#00A99D]">Not the office.</span>
+                Ready To Work<br />
+                <span className="gradient-text">From Day One.</span>
               </h2>
               <p className="text-lg text-white/60 leading-relaxed max-w-md">
-                A rugged Android terminal engineered for high-volume retail — fast scanning, instant approvals, built-in printer.
+                Every terminal ships pre-configured and ready to process benefit payments. No setup headaches. No POS integration required.
               </p>
             </div>
 
@@ -141,7 +142,7 @@ export default function HardwareSection() {
             <div className="flex flex-col gap-2.5">
               {bullets.map((b) => (
                 <div key={b} className="flex items-center gap-3 text-sm text-white/55">
-                  <svg className="w-4 h-4 text-[#00A99D] shrink-0" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
+                  <svg className="w-4 h-4 text-[#60b8ff] shrink-0" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M3 8l3 3 7-6" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                   {b}
@@ -153,7 +154,7 @@ export default function HardwareSection() {
             <div>
               <a
                 href="#cta"
-                className="inline-flex items-center justify-center gap-2 bg-[#00A99D] hover:bg-[#009488] text-white font-semibold px-6 py-3.5 rounded-xl text-sm transition-all duration-200 hover:shadow-[0_4px_20px_rgba(0,169,157,0.35)]"
+                className="inline-flex items-center justify-center gap-2 bg-[#00497A] hover:bg-[#005fa3] text-white font-semibold px-6 py-3.5 rounded-xl text-sm transition-all duration-200 hover:shadow-[0_0_30px_rgba(0,73,122,0.6)]"
               >
                 Request a terminal
                 <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">

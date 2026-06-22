@@ -58,7 +58,7 @@ function StatusBar() {
 }
 
 // ─── Shared: NB Debit Card (CSS recreation of Figma design) ───────────────
-function NBCard() {
+function NBCard({ label = "Current Available Balance" }: { label?: string }) {
   return (
     <div style={{
       position: "relative", width: "100%", height: 168, borderRadius: 16,
@@ -88,7 +88,7 @@ function NBCard() {
       }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
           <div>
-            <p style={{ color: "rgba(255,255,255,0.65)", fontSize: 14, margin: 0, fontFamily: "'Proxima Nova', sans-serif" }}>Current Available Balance</p>
+            <p style={{ color: "rgba(255,255,255,0.65)", fontSize: 14, margin: 0, fontFamily: "'Proxima Nova', sans-serif" }}>{label}</p>
             <p style={{ color: "white", fontWeight: 700, fontSize: 34, lineHeight: 1.1, margin: "2px 0 0", fontFamily: "'Proxima Nova', sans-serif" }}>$200.00</p>
           </div>
           {/* NB logo */}
@@ -483,61 +483,53 @@ function CoverageVerifiedScreen() {
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M9 1.5l3 3-7 7-3.5.5.5-3.5 7-7z" stroke="#00497a" strokeWidth="1.4" fill="none"/>
             </svg>
-            <span style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 600, fontSize: 14, color: "#00497a" }}>Edit</span>
+            <span style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 600, fontSize: 14, color: "#00497a", textDecoration: "underline" }}>Edit</span>
           </button>
         </div>
         {/* Total row */}
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0 16px 10px" }}>
-          <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 600, fontSize: 16, color: "#222b2f", margin: 0 }}>
-            Total Sale <span style={{ fontWeight: 400, fontSize: 14, color: "#646f7d" }}>Items (15)</span>
-          </p>
-          <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 700, fontSize: 20, color: "#222b2f", margin: 0 }}>$162.07</p>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", padding: "0 16px 10px" }}>
+          <div>
+            <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 600, fontSize: 16, color: "#00497a", margin: 0 }}>Total Sale</p>
+            <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 400, fontSize: 13, color: "#222b2f", margin: "2px 0 0" }}>Items (15)</p>
+          </div>
+          <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 700, fontSize: 22, color: "#222b2f", margin: 0 }}>$162.07</p>
         </div>
         {/* NB Card */}
         <div style={{ padding: "0 16px 12px" }}>
-          <NBCard />
+          <NBCard label="Current Balance" />
         </div>
-        {/* Declined section */}
-        <div style={{ flex: 1, overflow: "hidden", padding: "0 16px" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-            <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 600, fontSize: 15, color: "#222b2f", margin: 0 }}>Declined (2)</p>
-            <button style={{ background: "none", border: "none", cursor: "pointer" }}>
-              <span style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 600, fontSize: 13, color: "#e53935" }}>Remove All</span>
-            </button>
+        {/* Approved section */}
+        <div style={{ flex: 1, overflow: "hidden" }}>
+          <div style={{ background: "#f8fafb", padding: "8px 16px" }}>
+            <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 400, fontSize: 14, color: "#222b2f", margin: 0 }}>Approved (6)</p>
           </div>
-          {[
-            { name: "Ibuprofen Famotidine",    price: "$7.00" },
-            { name: "Naproxen Sodium, 220 mg", price: "$3.00" },
-          ].map((item) => (
-            <div key={item.name} style={{ padding: "8px 0", borderBottom: "1px solid #f0f4f5" }}>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 500, fontSize: 14, color: "#222b2f", margin: 0 }}>{item.name}</p>
-                <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 700, fontSize: 14, color: "#e53935", margin: 0 }}>{item.price}</p>
+          <div style={{ padding: "0 16px" }}>
+            {[
+              { name: "Tylenol Extra Strength, 500 mg", price: "$10.00", foot: "Full Approved Amount" },
+              { name: "Tylenol Extra Strength, 500 mg", price: "$10.00", foot: "Full Approved Amount" },
+              { name: "Advil Liqui-Gels, 200 mg",       price: "$4.80",  foot: "Full Amount Deductible" },
+              { name: "Tylenol substitute adults",      price: "$12.00", foot: "Full Approved Amount" },
+            ].map((item, i) => (
+              <div key={`${item.name}-${i}`} style={{ padding: "12px 0", borderBottom: "1px solid #eef0f1" }}>
+                <div style={{ display: "flex", justifyContent: "space-between" }}>
+                  <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 600, fontSize: 14, color: "#222b2f", margin: 0 }}>{item.name}</p>
+                  <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 700, fontSize: 14, color: "#00497a", margin: 0 }}>{item.price}</p>
+                </div>
+                <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontSize: 12, color: "#646f7d", margin: "4px 0 0" }}>1 COUNT</p>
+                <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontSize: 12, color: "#646f7d", margin: "4px 0 0" }}>{item.foot}</p>
               </div>
-              <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontSize: 12, color: "#646f7d", margin: "2px 0" }}>1 COUNT</p>
-              <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontSize: 12, color: "#e53935", margin: 0 }}>Out-of-pocket</p>
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                  <circle cx="7" cy="7" r="6" stroke="#9aa5ad" strokeWidth="1.3"/>
-                  <line x1="7" y1="5" x2="7" y2="9.5" stroke="#9aa5ad" strokeWidth="1.3" strokeLinecap="round"/>
-                  <circle cx="7" cy="3.5" r="0.8" fill="#9aa5ad"/>
-                </svg>
-              </div>
-            </div>
-          ))}
-          <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 600, fontSize: 15, color: "#222b2f", margin: "10px 0 8px" }}>Partially Covered (2)</p>
-          <div style={{ padding: "8px 0", borderBottom: "1px solid #f0f4f5" }}>
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 500, fontSize: 14, color: "#222b2f", margin: 0 }}>Bayer&#174; Aspirin, 325 mg</p>
-              <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 700, fontSize: 14, color: "#222b2f", margin: 0 }}>$12.00</p>
-            </div>
-            <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontSize: 12, color: "#646f7d", margin: "2px 0 0" }}>1 COUNT</p>
+            ))}
           </div>
         </div>
         {/* CTA */}
-        <div style={{ padding: "12px 16px" }}>
-          <button style={{ width: "100%", height: 48, background: "#002843", border: "none", borderRadius: 8, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <span style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 600, fontSize: 16, color: "white" }}>Confirm Basket</span>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 16px", borderTop: "1px solid #eef0f1" }}>
+          <button style={{ width: 48, height: 48, borderRadius: "50%", background: "white", border: "1.5px solid #00497a", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+              <path d="M2 2l10 10M12 2L2 12" stroke="#00497a" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+          </button>
+          <button style={{ flex: 1, height: 48, background: "#00497a", border: "none", borderRadius: 8, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <span style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 600, fontSize: 16, color: "white" }}>Confirm Sale</span>
           </button>
         </div>
       </div>
@@ -701,9 +693,9 @@ const CYCLE_MS = 2800;
 const SECTIONS = [
   {
     eyebrow: "Member Verification",
-    title: ["Verify eligibility", "with a single swipe."],
+    title: ["No More Guessing", "What's Covered."],
     description:
-      "The retailer simply swipes or taps the NationsBenefits card. BPOS instantly verifies member eligibility, retrieves available balances, and confirms coverage before checkout begins.",
+      "BPOS instantly verifies member benefits and tells your cashier exactly what qualifies before checkout begins.",
     features: [
       "Instant member validation",
       "Real-time balance lookup",
@@ -719,9 +711,9 @@ const SECTIONS = [
   },
   {
     eyebrow: "Smart Basket Analysis",
-    title: ["Analyze every basket", "in real time."],
+    title: ["Know Exactly What Qualifies", "Before Checkout."],
     description:
-      "As products are scanned, BPOS automatically identifies eligible items, applies benefit rules, and separates covered and non-covered products — without cashier intervention.",
+      "BPOS automatically identifies covered items, separates non-covered products, and reduces cashier errors.",
     features: [
       "Real-time eligibility detection",
       "Automatic covered item identification",
@@ -737,9 +729,9 @@ const SECTIONS = [
   },
   {
     eyebrow: "Smart Checkout",
-    title: ["Complete payments", "without the complexity."],
+    title: ["Faster Checkouts.", "Happier Customers."],
     description:
-      "BPOS automatically applies available benefits, calculates any remaining balance, and processes split-tender payments — creating a faster experience for retailers and members.",
+      "Automatically apply benefits, calculate remaining balances, and complete transactions in seconds.",
     features: [
       "Automatic benefit application",
       "Split tender support",

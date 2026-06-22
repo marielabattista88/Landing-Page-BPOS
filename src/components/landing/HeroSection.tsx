@@ -140,7 +140,7 @@ export default function HeroSection() {
         style={{ opacity: heroOpacity }}
         className="relative z-10 flex-1 flex items-center max-w-7xl mx-auto w-full px-6 pt-28 pb-16"
       >
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-8 items-center w-full">
+        <div className="grid lg:grid-cols-[1.25fr_0.75fr] gap-12 lg:gap-8 items-center w-full">
           {/* Left column */}
           <div className="flex flex-col gap-8">
             {/* Badge */}
@@ -181,10 +181,10 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             >
-              <h1 className="heading-display text-5xl sm:text-6xl lg:text-7xl text-white">
-                A Modern Fintech Solution
+              <h1 className="heading-display text-4xl sm:text-5xl lg:text-6xl text-white">
+                <span className="lg:whitespace-nowrap">Turn Benefit Members</span>
                 <br />
-                <span className="text-white">for Retailers</span>
+                <span className="lg:whitespace-nowrap text-white">Into Loyal Customers.</span>
               </h1>
             </motion.div>
 
@@ -195,8 +195,30 @@ export default function HeroSection() {
               transition={{ duration: 0.6, delay: 0.35 }}
               className="text-lg text-white/60 max-w-md leading-relaxed"
             >
-              Analyze baskets instantly, identify eligible products, apply benefits automatically, and complete payments in seconds. Manage sales, settlements, and store performance from one powerful platform.
+              Everything you need to grow your store — in one simple platform.
             </motion.p>
+
+            {/* Benefits list */}
+            <motion.ul
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.45 }}
+              className="flex flex-col gap-2.5"
+            >
+              {[
+                "Accept benefit card payments",
+                "No POS integration required",
+                "Ships ready to use",
+                "Same-day settlements",
+              ].map((item) => (
+                <li key={item} className="flex items-center gap-3">
+                  <span className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0">
+                    <svg className="w-3 h-3 text-emerald-400" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M2 6l2.5 2.5L10 3" /></svg>
+                  </span>
+                  <span className="text-sm text-white/80 font-medium">{item}</span>
+                </li>
+              ))}
+            </motion.ul>
 
             {/* CTAs */}
             <motion.div

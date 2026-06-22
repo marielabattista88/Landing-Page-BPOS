@@ -44,9 +44,9 @@ export default function FinalCTA() {
               transition={{ duration: 0.6, delay: 0.15 }}
               className="heading-display text-4xl sm:text-5xl lg:text-6xl text-white mb-5"
             >
-              Start accepting benefits
+              Turn Benefit Members
               <br />
-              <span className="gradient-text">today.</span>
+              <span className="gradient-text">Into Loyal Customers.</span>
             </motion.h2>
 
             <motion.p
@@ -56,7 +56,7 @@ export default function FinalCTA() {
               transition={{ duration: 0.5, delay: 0.25 }}
               className="text-lg text-white/55 mb-10 max-w-xl mx-auto leading-relaxed"
             >
-              Join thousands of retailers growing their business with Benefits POS. No IT team, no integration, no hassle.
+              Join thousands of retailers already growing their business with BPOS.
             </motion.p>
 
             <motion.div
@@ -85,7 +85,7 @@ export default function FinalCTA() {
                 href="#contact"
                 className="inline-flex items-center justify-center gap-2 glass-card text-white/80 hover:text-white font-semibold px-8 py-4 rounded-xl text-sm hover:bg-white/10 transition-all duration-200"
               >
-                Talk to sales
+                Talk to Sales
               </a>
             </motion.div>
 
