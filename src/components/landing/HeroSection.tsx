@@ -297,11 +297,11 @@ export default function HeroSection() {
                   muted
                   loop
                   playsInline
-                  width={406}
-                  height={686}
-                  className="w-[330px] h-auto drop-shadow-[0_40px_80px_rgba(0,0,0,0.5)]"
+                  width={941}
+                  height={685}
+                  className="w-[640px] max-w-full lg:max-w-none h-auto drop-shadow-[0_40px_80px_rgba(0,0,0,0.5)]"
                 >
-                  <source src="/hero-animation.webm" type="video/webm" />
+                  <source src="/terminal-3d.webm" type="video/webm" />
                 </video>
               </motion.div>
             </motion.div>
