@@ -99,10 +99,24 @@ export default function Navbar() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "tween", duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="md:hidden fixed inset-0 z-40 bg-[#002843] flex flex-col"
+            className="md:hidden fixed inset-0 z-[60] bg-[#002843] flex flex-col p-6"
           >
-            {/* Link list (scrollable area below the header bar) */}
-            <div className="flex-1 overflow-y-auto px-6 pt-24 pb-6">
+            {/* Top bar: logo + close */}
+            <div className="flex items-center justify-between shrink-0">
+              <Image src="/nb-logo-dark.svg" alt="NationsBenefits" width={148} height={22} className="h-[22px] w-auto opacity-95" />
+              <button
+                onClick={() => setMobileOpen(false)}
+                aria-label="Close menu"
+                className="p-2 rounded-lg bg-white/10 text-white hover:bg-white/15 transition-colors"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Link list */}
+            <div className="flex-1 overflow-y-auto pt-8">
               {navLinks.map((link) => (
                 <a
                   key={link.label}
@@ -125,8 +139,8 @@ export default function Navbar() {
               </a>
             </div>
 
-            {/* Bottom-pinned CTAs */}
-            <div className="px-6 pb-10 pt-4 flex gap-3">
+            {/* Bottom CTAs */}
+            <div className="flex gap-3 pt-4 shrink-0">
               <a
                 href="#cta"
                 className="flex-1 inline-flex items-center justify-center gap-1.5 bg-[#00497A] hover:bg-[#005fa3] text-white font-semibold px-4 py-3.5 rounded-xl transition-colors"
