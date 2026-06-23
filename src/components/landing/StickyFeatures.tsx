@@ -3,15 +3,15 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 
-// ─── Scale constant (Figma 360px → PhoneFrame 272px) ─────────────────────
-const SCALE = 272 / 360;
+// ─── Scale constant (Figma 360px → PhoneFrame 218px, 20% smaller) ────────
+const SCALE = 218 / 360;
 
 // ─── Shared: Phone Frame ──────────────────────────────────────────────────
 function PhoneFrame({ children, className = "" }: { children: React.ReactNode; className?: string }) {
   return (
     <div
       className={`relative bg-white rounded-[24px] shadow-[0_32px_80px_-12px_rgba(0,0,0,0.18)] overflow-hidden border border-gray-100/80 ${className}`}
-      style={{ width: 272, height: 578 }}
+      style={{ width: 218, height: 462 }}
     >
       {children}
     </div>
@@ -816,7 +816,7 @@ export default function StickyFeatures() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.3, ease: [0.76, 0, 0.24, 1] }}
-                  className="flex flex-col gap-6"
+                  className="flex flex-col gap-6 items-center text-center lg:items-start lg:text-left"
                 >
                   {/* Eyebrow */}
                   <div className="inline-flex items-center gap-2 w-fit">
@@ -834,12 +834,12 @@ export default function StickyFeatures() {
                   </h2>
 
                   {/* Description */}
-                  <p className="text-[16px] text-[#646F7D] leading-relaxed max-w-lg">
+                  <p className="text-[16px] text-[#646F7D] leading-relaxed max-w-lg mx-auto lg:mx-0">
                     {activeSection.description}
                   </p>
 
                   {/* Features */}
-                  <ul className="space-y-2.5">
+                  <ul className="hidden lg:block space-y-2.5">
                     {activeSection.features.map((f) => (
                       <li key={f} className="flex items-center gap-3">
                         <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
@@ -851,7 +851,7 @@ export default function StickyFeatures() {
                   </ul>
 
                   {/* Metrics */}
-                  <div className="flex gap-6">
+                  <div className="hidden lg:flex gap-6">
                     {activeSection.metrics.map((m) => (
                       <div key={m.label} className="bg-white rounded-2xl px-5 py-3.5 shadow-sm border border-[#DEE8EC]">
                         <div className="text-[22px] font-black text-[#002843]">{m.value}</div>
@@ -861,7 +861,7 @@ export default function StickyFeatures() {
                   </div>
 
                   {/* CTA */}
-                  <button className="w-fit text-[14px] font-bold text-[#00497A] hover:text-[#002843] transition-colors flex items-center gap-1">
+                  <button className="w-fit text-[14px] font-bold text-[#00497A] hover:text-[#002843] transition-colors hidden lg:flex items-center gap-1">
                     {activeSection.cta}
                   </button>
                 </motion.div>
@@ -871,7 +871,7 @@ export default function StickyFeatures() {
             {/* ── Right: Phone ── */}
             <div className="flex flex-col items-center justify-center gap-6">
               {/* Phone */}
-              <div className="relative" style={{ width: 272, height: 578 }}>
+              <div className="relative" style={{ width: 218, height: 462 }}>
                 {/* Ambient glow */}
                 <div className="absolute inset-[-40px] bg-[#00497A]/6 rounded-full blur-3xl pointer-events-none" />
 
@@ -947,7 +947,7 @@ export default function StickyFeatures() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none"
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2 pointer-events-none"
           >
             <span className="text-[10px] text-[#646F7D] uppercase tracking-widest font-medium">Scroll to explore</span>
             <motion.div
