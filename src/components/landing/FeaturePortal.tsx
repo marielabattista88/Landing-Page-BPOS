@@ -200,7 +200,7 @@ export default function FeaturePortal() {
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col gap-8 order-1 lg:order-2"
           >
-            <div>
+            <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
               <div className="inline-flex items-center gap-2 bg-white/10 text-white/70 text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
                 <div className="w-1.5 h-1.5 rounded-full bg-[#60b8ff]" />
                 Retailer Portal
@@ -210,7 +210,7 @@ export default function FeaturePortal() {
                 <br />
                 <span className="gradient-text">From One Dashboard.</span>
               </h2>
-              <p className="text-lg text-white/60 leading-relaxed max-w-md">
+              <p className="text-lg text-white/60 leading-relaxed max-w-md mx-auto lg:mx-0">
                 Track revenue, settlements, transactions, stores, and cashiers from a single dashboard built for growing retailers.
               </p>
             </div>
@@ -236,7 +236,7 @@ export default function FeaturePortal() {
 
             <a
               href="#cta"
-              className="inline-flex items-center gap-2 text-[#60b8ff] font-semibold text-sm hover:gap-3 transition-all duration-200"
+              className="inline-flex items-center justify-center lg:justify-start gap-2 text-[#60b8ff] font-semibold text-sm hover:gap-3 transition-all duration-200"
             >
               Explore the portal
               <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
