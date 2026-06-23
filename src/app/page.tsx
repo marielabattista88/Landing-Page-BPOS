@@ -6,7 +6,6 @@ import HowItWorks from "@/components/landing/HowItWorks";
 import StickyFeatures from "@/components/landing/StickyFeatures";
 import FeaturePortal from "@/components/landing/FeaturePortal";
 import RunYourBusiness from "@/components/landing/RunYourBusiness";
-import HardwareSection from "@/components/landing/HardwareSection";
 import SecuritySection from "@/components/landing/SecuritySection";
 import FinalCTA from "@/components/landing/FinalCTA";
 import Footer from "@/components/landing/Footer";
@@ -30,8 +29,6 @@ export default function Home() {
         <FeaturePortal />
         {/* 6. Run Your Business Smarter */}
         <RunYourBusiness />
-        {/* 7. Terminal */}
-        <HardwareSection />
         {/* 8. Security */}
         <SecuritySection />
         {/* 9. Final CTA */}
