@@ -299,7 +299,7 @@ export default function HeroSection() {
                   playsInline
                   width={941}
                   height={685}
-                  className="w-[640px] max-w-full lg:max-w-none h-auto drop-shadow-[0_40px_80px_rgba(0,0,0,0.5)]"
+                  className="w-[640px] max-w-full lg:max-w-none h-auto drop-shadow-[0_40px_80px_rgba(0,0,0,0.5)] lg:translate-x-[130px] lg:translate-y-[50px]"
                 >
                   <source src="/terminal-3d.webm" type="video/webm" />
                 </video>
