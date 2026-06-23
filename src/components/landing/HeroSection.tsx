@@ -59,6 +59,7 @@ export default function HeroSection() {
             { cx: 1242, cy: 536, r: 881, dur: 7, delay: 0 },
             { cx: 1410, cy: 728, r: 881, dur: 9, delay: 2.2 },
             { cx: 1050, cy: 968, r: 881, dur: 8, delay: 1.1 },
+            { cx: 1050, cy: 968, r: 881, dur: 6, delay: 0.6 },
           ].map((ring) => (
             <g key={`${ring.cx}-${ring.cy}`}>
               {/* Soft glow halo */}
@@ -92,31 +93,6 @@ export default function HeroSection() {
               />
             </g>
           ))}
-
-          {/* Rounded-rectangle frame (left + bottom edge of the logo frame) */}
-          <motion.path
-            d="M 360,150 C 150,150 150,300 150,470 L 150,1180 C 150,1360 150,1500 360,1500 L 1500,1500"
-            fill="none"
-            stroke="#58A1FF"
-            strokeWidth="13"
-            strokeOpacity="0.2"
-            strokeLinecap="round"
-            pathLength={1}
-            strokeDasharray="0.16 0.84"
-            animate={{ strokeDashoffset: [0, -1] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "linear", delay: 0.6 }}
-          />
-          <motion.path
-            d="M 360,150 C 150,150 150,300 150,470 L 150,1180 C 150,1360 150,1500 360,1500 L 1500,1500"
-            fill="none"
-            stroke="#CDEBFF"
-            strokeWidth="3"
-            strokeLinecap="round"
-            pathLength={1}
-            strokeDasharray="0.16 0.84"
-            animate={{ strokeDashoffset: [0, -1] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "linear", delay: 0.6 }}
-          />
         </motion.svg>
 
         {/* Left-side text overlay for legibility */}
