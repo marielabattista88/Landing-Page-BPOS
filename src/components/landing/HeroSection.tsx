@@ -210,12 +210,12 @@ export default function HeroSection() {
         </div>
       </motion.div>
 
-      {/* Scroll indicator */}
+      {/* Scroll indicator — pinned to the bottom so it peeks at the fold */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 0.8 }}
-        className="relative z-10 flex flex-col items-center pb-10 gap-2"
+        className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2"
       >
         <span className="text-xs text-white/30 font-medium tracking-widest uppercase">
           Scroll
