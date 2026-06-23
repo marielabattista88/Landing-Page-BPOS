@@ -61,25 +61,34 @@ function StatusBar() {
 function NBCard({ label = "Current Available Balance" }: { label?: string }) {
   return (
     <div style={{
-      position: "relative", width: "100%", height: 168, borderRadius: 16,
-      background: "linear-gradient(140deg, #082e4a 0%, #0d3a5e 55%, #0a3154 100%)",
+      position: "relative", width: "100%", height: 180, borderRadius: 16,
+      background: "linear-gradient(135deg, #0c3a5d 0%, #0a3052 45%, #07273f 100%)",
       overflow: "hidden",
     }}>
-      {/* Large dark orb — bottom left */}
-      <div style={{
-        position: "absolute", width: 230, height: 230, borderRadius: "50%",
-        background: "rgba(3,18,33,0.55)", bottom: -85, left: -45,
-      }} />
-      {/* Smaller orb — upper center-right */}
-      <div style={{
-        position: "absolute", width: 155, height: 155, borderRadius: "50%",
-        background: "rgba(12,48,80,0.45)", top: -25, right: 65,
-      }} />
-      {/* Orange arc */}
+      {/* Organic curved shapes + orange arcs (CSS recreation of Figma card) */}
       <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
-        viewBox="0 0 328 168" preserveAspectRatio="none">
-        <path d="M -18 162 Q 90 48 230 108" stroke="#c75a2c" strokeWidth="2.8"
-          fill="none" strokeLinecap="round" opacity="0.9" />
+        viewBox="0 0 328 180" preserveAspectRatio="xMidYMid slice">
+        <defs>
+          <clipPath id="nbCardClip"><rect width="328" height="180" rx="16" /></clipPath>
+          <filter id="nbBlur" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="13" />
+          </filter>
+        </defs>
+        <g clipPath="url(#nbCardClip)">
+          {/* Soft organic blobs */}
+          <g filter="url(#nbBlur)">
+            <circle cx="232" cy="6" r="138" fill="#15517d" opacity="0.5" />
+            <circle cx="20" cy="188" r="150" fill="#134c74" opacity="0.34" />
+            <circle cx="338" cy="120" r="140" fill="#061f34" opacity="0.6" />
+            <circle cx="150" cy="44" r="92" fill="#104a70" opacity="0.18" />
+          </g>
+          {/* Main orange sweep — bottom-left up to the right */}
+          <path d="M -10 160 C 80 120, 232 76, 344 70" stroke="#c45f2f" strokeWidth="3"
+            fill="none" strokeLinecap="round" />
+          {/* Small orange arc — top-right corner */}
+          <path d="M 250 -8 C 298 6, 324 26, 342 58" stroke="#c45f2f" strokeWidth="3"
+            fill="none" strokeLinecap="round" />
+        </g>
       </svg>
       {/* Card content */}
       <div style={{
