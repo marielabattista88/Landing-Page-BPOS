@@ -57,56 +57,24 @@ function StatusBar() {
   );
 }
 
-// ─── Shared: NB Debit Card (CSS recreation of Figma design) ───────────────
+// ─── Shared: NB Debit Card (exact Figma art baked as image; live balance text) ─
 function NBCard({ label = "Current Available Balance" }: { label?: string }) {
   return (
     <div style={{
-      position: "relative", width: "100%", height: 180, borderRadius: 16,
-      background: "linear-gradient(135deg, #0c3a5d 0%, #0a3052 45%, #07273f 100%)",
+      position: "relative", width: "100%", aspectRatio: "328 / 190", borderRadius: 16,
       overflow: "hidden",
     }}>
-      {/* Organic curved shapes + orange arcs (CSS recreation of Figma card) */}
-      <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
-        viewBox="0 0 328 180" preserveAspectRatio="xMidYMid slice">
-        <defs>
-          <clipPath id="nbCardClip"><rect width="328" height="180" rx="16" /></clipPath>
-          <filter id="nbBlur" x="-30%" y="-30%" width="160%" height="160%">
-            <feGaussianBlur stdDeviation="13" />
-          </filter>
-        </defs>
-        <g clipPath="url(#nbCardClip)">
-          {/* Soft organic blobs */}
-          <g filter="url(#nbBlur)">
-            <circle cx="232" cy="6" r="138" fill="#15517d" opacity="0.5" />
-            <circle cx="20" cy="188" r="150" fill="#134c74" opacity="0.34" />
-            <circle cx="338" cy="120" r="140" fill="#061f34" opacity="0.6" />
-            <circle cx="150" cy="44" r="92" fill="#104a70" opacity="0.18" />
-          </g>
-          {/* Main orange sweep — bottom-left up to the right */}
-          <path d="M -10 160 C 80 120, 232 76, 344 70" stroke="#c45f2f" strokeWidth="3"
-            fill="none" strokeLinecap="round" />
-          {/* Small orange arc — top-right corner */}
-          <path d="M 250 -8 C 298 6, 324 26, 342 58" stroke="#c45f2f" strokeWidth="3"
-            fill="none" strokeLinecap="round" />
-        </g>
-      </svg>
-      {/* Card content */}
-      <div style={{
-        position: "relative", zIndex: 10, padding: 16, height: "100%",
-        display: "flex", flexDirection: "column", justifyContent: "space-between",
-      }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-          <div>
-            <p style={{ color: "rgba(255,255,255,0.65)", fontSize: 14, margin: 0, fontFamily: "'Proxima Nova', sans-serif" }}>{label}</p>
-            <p style={{ color: "white", fontWeight: 700, fontSize: 34, lineHeight: 1.1, margin: "2px 0 0", fontFamily: "'Proxima Nova', sans-serif" }}>$200.00</p>
-          </div>
-          {/* NB logo */}
-          <div style={{ background: "white", borderRadius: 10, width: 44, height: 44, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-            <span style={{ color: "#002843", fontWeight: 900, fontSize: 22, fontFamily: "'Proxima Nova', sans-serif", lineHeight: 1 }}>n</span>
-          </div>
-        </div>
-        <p style={{ color: "rgba(255,255,255,0.45)", fontFamily: "monospace", fontSize: 15, letterSpacing: "0.06em", margin: 0 }}>
-          **** **** **** 0886
+      {/* Exact card artwork (incl. masked number + n logo) exported from Figma */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/nb-card.png" alt="" aria-hidden
+        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }} />
+      {/* Live balance text — overlays the Figma placeholder (Title / $00.00) */}
+      <div style={{ position: "absolute", top: 16, left: 16, right: 16 }}>
+        <p style={{ color: "#fff", fontSize: 14, lineHeight: "16px", letterSpacing: "0.2px", margin: 0, fontFamily: "'Proxima Nova', sans-serif" }}>
+          {label}
+        </p>
+        <p style={{ color: "#fff", fontWeight: 700, fontSize: 28, lineHeight: "normal", letterSpacing: "0.3px", margin: "4px 0 0", whiteSpace: "nowrap", fontFamily: "'Proxima Nova', sans-serif" }}>
+          $200.00
         </p>
       </div>
     </div>

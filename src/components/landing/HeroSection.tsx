@@ -65,7 +65,7 @@ export default function HeroSection() {
       >
         <div className="grid lg:grid-cols-[1.25fr_0.75fr] gap-12 lg:gap-8 items-center w-full">
           {/* Left column */}
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-8 items-center text-center lg:items-start lg:text-left">
             {/* Badge */}
             {/* App Icon */}
             <motion.div
@@ -116,7 +116,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.35 }}
-              className="text-lg text-white/60 max-w-md leading-relaxed"
+              className="text-lg text-white/60 max-w-md leading-relaxed mx-auto lg:mx-0"
             >
               Everything you need to grow your store — in one simple platform.
             </motion.p>
@@ -126,7 +126,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="flex flex-wrap gap-4"
+              className="flex flex-wrap gap-4 justify-center lg:justify-start"
             >
               <a
                 href="#cta"
@@ -163,7 +163,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.65 }}
-              className="flex gap-8 pt-4 border-t border-white/10"
+              className="flex gap-8 pt-4 border-t border-white/10 justify-center lg:justify-start"
             >
               {[
                 { value: "2K+", label: "Retailers" },
