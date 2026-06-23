@@ -42,58 +42,6 @@ export default function HeroSection() {
           />
         </motion.div>
 
-        {/* SVG animated traveling-light arcs — traces the cyan lines in the image */}
-        <motion.svg
-          style={{ y: bgY }}
-          animate={{ scale: [1, 1.06, 1] }}
-          transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute inset-[-8%] w-[116%] h-[116%] pointer-events-none"
-          viewBox="0 0 2612 1632"
-          preserveAspectRatio="xMidYMid slice"
-          aria-hidden
-        >
-          {/* Traveling lights that orbit the background's circular forms.
-              Circles are the equal-radius rings of the bpos logo baked into
-              hero-bg-blue.png (mapped 1:1 to this 2612×1632 viewBox). */}
-          {[
-            { cx: 1242, cy: 536, r: 881, dur: 7, delay: 0 },
-            { cx: 1410, cy: 728, r: 881, dur: 9, delay: 2.2 },
-            { cx: 1050, cy: 968, r: 881, dur: 8, delay: 1.1 },
-          ].map((ring) => (
-            <g key={`${ring.cx}-${ring.cy}`}>
-              {/* Soft glow halo */}
-              <motion.circle
-                cx={ring.cx}
-                cy={ring.cy}
-                r={ring.r}
-                pathLength={1}
-                fill="none"
-                stroke="#58A1FF"
-                strokeWidth="14"
-                strokeOpacity="0.22"
-                strokeLinecap="round"
-                strokeDasharray="0.13 0.87"
-                animate={{ strokeDashoffset: [0, -1] }}
-                transition={{ duration: ring.dur, repeat: Infinity, ease: "linear", delay: ring.delay }}
-              />
-              {/* Thin bright line */}
-              <motion.circle
-                cx={ring.cx}
-                cy={ring.cy}
-                r={ring.r}
-                pathLength={1}
-                fill="none"
-                stroke="#CDEBFF"
-                strokeWidth="3"
-                strokeLinecap="round"
-                strokeDasharray="0.13 0.87"
-                animate={{ strokeDashoffset: [0, -1] }}
-                transition={{ duration: ring.dur, repeat: Infinity, ease: "linear", delay: ring.delay }}
-              />
-            </g>
-          ))}
-        </motion.svg>
-
         {/* Left-side text overlay for legibility */}
         <div
           className="absolute inset-0"
