@@ -157,124 +157,136 @@ function SpinnerRing({ spinning = false, showCheck = false }: { spinning?: boole
   return null;
 }
 
-// ─── Screen 0: Swipe Flex Card ─────────────────────────────────────────────
-function SwipeCardScreen() {
+// ─── Shared: Benefits Mastercard Prepaid Card (mini, CSS recreation) ──────
+function PrepaidCardMini() {
+  return (
+    <div style={{
+      position: "relative", width: 150, height: 95, borderRadius: 8,
+      background: "white", overflow: "hidden", boxShadow: "0 6px 16px rgba(0,0,0,0.22)",
+    }}>
+      {/* faint wavy line pattern */}
+      <svg style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
+        viewBox="0 0 150 95" preserveAspectRatio="none" fill="none" stroke="#E7ECEF" strokeWidth="0.8">
+        <path d="M-10 38 C 28 22, 64 54, 100 34 S 166 30, 196 46" />
+        <path d="M-10 50 C 28 34, 64 66, 100 46 S 166 42, 196 58" />
+        <path d="M-10 62 C 28 46, 64 78, 100 58 S 166 54, 196 70" />
+        <path d="M-10 74 C 28 58, 64 90, 100 70 S 166 66, 196 82" />
+      </svg>
+      <div style={{ position: "relative", height: "100%", padding: 9, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+        {/* top: LOGO + nations benefits */}
+        <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 3, color: "#9AA6AE" }}>
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+              <rect x="0.5" y="0.5" width="10" height="10" rx="1.5" stroke="#C5CDD3" />
+              <path d="M3 8L6 3M5 8L8 3" stroke="#C5CDD3" strokeWidth="1" />
+            </svg>
+            <span style={{ fontSize: 7, fontWeight: 500, letterSpacing: "0.04em" }}>LOGO</span>
+          </div>
+          <div style={{ textAlign: "right", lineHeight: 0.95, color: "#1B2A36" }}>
+            <div style={{ fontSize: 7, fontWeight: 300 }}>nations</div>
+            <div style={{ fontSize: 7, fontWeight: 700 }}>benefits</div>
+          </div>
+        </div>
+        {/* debit */}
+        <div style={{ textAlign: "right", fontSize: 7, fontWeight: 500, color: "#5B6770" }}>debit</div>
+        {/* bottom: label + mastercard */}
+        <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between" }}>
+          <div style={{ color: "#1B2A36" }}>
+            <div style={{ fontSize: 6.5, fontWeight: 600, lineHeight: 1.15 }}>[Benefits Mastercard&reg;<br />Prepaid Card]</div>
+            <div style={{ fontSize: 5.5, color: "#7A858D", marginTop: 2 }}>Limited Use Card</div>
+          </div>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <span style={{ width: 15, height: 15, borderRadius: "50%", background: "#EB001B" }} />
+            <span style={{ width: 15, height: 15, borderRadius: "50%", background: "#F79E1B", marginLeft: -6, mixBlendMode: "multiply" }} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ─── Screen 0: Verification Methods ───────────────────────────────────────
+function VerificationMethodsScreen() {
+  const methods = [
+    {
+      label: "Enter PAN",
+      icon: (
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#15293B" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="4" y="11" width="32" height="20" rx="3" />
+          <rect x="8" y="16" width="6" height="4.5" rx="1" fill="#15293B" stroke="none" />
+          <path d="M8 26h4M15 26h4M22 26h4M29 26h3" />
+        </svg>
+      ),
+    },
+    {
+      label: "Scan QR",
+      icon: (
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="#15293B">
+          <path fillRule="evenodd" d="M5 5h13v13H5V5Zm3 3v7h7V8H8Z" />
+          <rect x="10" y="10" width="3" height="3" />
+          <path fillRule="evenodd" d="M22 5h13v13H22V5Zm3 3v7h7V8h-7Z" />
+          <rect x="27" y="10" width="3" height="3" />
+          <path fillRule="evenodd" d="M5 22h13v13H5V22Zm3 3v7h7v-7H8Z" />
+          <rect x="10" y="27" width="3" height="3" />
+          <rect x="22" y="22" width="4" height="4" />
+          <rect x="31" y="22" width="4" height="4" />
+          <rect x="26.5" y="26.5" width="4" height="4" />
+          <rect x="22" y="31" width="4" height="4" />
+          <rect x="31" y="31" width="4" height="4" />
+        </svg>
+      ),
+    },
+    {
+      label: "Enter PAN",
+      icon: (
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="#15293B" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round">
+          {/* scan corner brackets */}
+          <path d="M5 11V7a2 2 0 0 1 2-2h4" />
+          <path d="M29 5h4a2 2 0 0 1 2 2v4" />
+          <path d="M35 29v4a2 2 0 0 1-2 2h-4" />
+          <path d="M11 35H7a2 2 0 0 1-2-2v-4" />
+          {/* inner card */}
+          <rect x="11" y="14" width="18" height="12" rx="2" />
+          <rect x="14" y="17" width="4" height="3" rx="0.7" fill="#15293B" stroke="none" />
+          <path d="M14 22.5h3M19 22.5h3M24 22.5h2" />
+        </svg>
+      ),
+    },
+  ];
   return (
     <FigmaScaled>
-      <div className="flex flex-col items-start w-[360px]" style={{ height: 760, background: "white" }}>
+      <div style={{ display: "flex", flexDirection: "column", width: 360, height: 760, background: "white" }}>
         <StatusBar />
-        {/* Close button */}
-        <div style={{ display: "flex", justifyContent: "flex-end", padding: "4px 16px 0" }}>
-          <div style={{ background: "#f8fafb", padding: 4, borderRadius: 24, display: "flex" }}>
-            <div style={{ background: "#e8f3f7", borderRadius: "50%", width: 24, height: 24, display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                <path d="M1 1l8 8M9 1l-8 8" stroke="#646f7d" strokeWidth="1.8" strokeLinecap="round"/>
-              </svg>
+        {/* Close button top-right */}
+        <div style={{ display: "flex", justifyContent: "flex-end", padding: "6px 16px 0" }}>
+          <div style={{ background: "#E8F0F5", borderRadius: "50%", width: 44, height: 44, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M2 2l14 14M16 2L2 16" stroke="#15293B" strokeWidth="2.2" strokeLinecap="round"/>
+            </svg>
+          </div>
+        </div>
+        {/* Navy circle with prepaid card */}
+        <div style={{ display: "flex", justifyContent: "center", marginTop: 30 }}>
+          <div style={{ width: 226, height: 226, borderRadius: "50%", background: "#0A2A45", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <PrepaidCardMini />
+          </div>
+        </div>
+        {/* Title */}
+        <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 700, fontSize: 30, color: "#15293B", textAlign: "center", margin: "34px 0 0" }}>
+          Verification Methods
+        </p>
+        {/* Methods */}
+        <div style={{ display: "flex", gap: 14, padding: "34px 16px 0" }}>
+          {methods.map(({ label, icon }, i) => (
+            <div key={i} style={{
+              flex: 1, display: "flex", flexDirection: "column", alignItems: "center",
+              gap: 12, background: "#F8FAFB", borderRadius: 16, padding: "24px 6px",
+              boxShadow: "0 3px 12px rgba(15,41,59,0.05)",
+            }}>
+              {icon}
+              <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontSize: 15, color: "#15293B", margin: 0 }}>{label}</p>
             </div>
-          </div>
-        </div>
-        {/* Terminal SVG illustration */}
-        <div style={{ display: "flex", justifyContent: "center", marginTop: 16, width: "100%" }}>
-          <svg width="180" height="180" viewBox="0 0 180 180" fill="none">
-            {/* Base / stand */}
-            <rect x="70" y="148" width="40" height="8" rx="4" fill="#e0e8ed"/>
-            <rect x="60" y="155" width="60" height="6" rx="3" fill="#d0dae0"/>
-            {/* Terminal body */}
-            <rect x="40" y="30" width="100" height="118" rx="10" fill="#0d2f4a"/>
-            <rect x="44" y="34" width="92" height="80" rx="6" fill="#1a4060"/>
-            {/* Screen glow */}
-            <rect x="48" y="38" width="84" height="72" rx="4" fill="#0a2840" opacity="0.8"/>
-            {/* Screen content */}
-            <text x="90" y="72" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="10" fontFamily="monospace">SWIPE CARD</text>
-            <rect x="60" y="80" width="60" height="4" rx="2" fill="rgba(255,255,255,0.15)"/>
-            <rect x="65" y="88" width="50" height="4" rx="2" fill="rgba(255,255,255,0.1)"/>
-            {/* Card slot */}
-            <rect x="50" y="120" width="80" height="6" rx="3" fill="#0a2438"/>
-            <rect x="52" y="121" width="76" height="4" rx="2" fill="#082030"/>
-            {/* Buttons row */}
-            <circle cx="70" cy="136" r="5" fill="#0a2840"/>
-            <circle cx="90" cy="136" r="5" fill="#00A99D"/>
-            <circle cx="110" cy="136" r="5" fill="#0a2840"/>
-            {/* Animated swiping card */}
-            <defs>
-              <clipPath id="terminalBodyClip">
-                <rect x="40" y="30" width="100" height="118" rx="10"/>
-              </clipPath>
-            </defs>
-            <motion.rect
-              y="115" width="72" height="13" rx="3"
-              fill="#1a5a80" stroke="rgba(0,169,157,0.7)" strokeWidth="1.5"
-              clipPath="url(#terminalBodyClip)"
-              initial={{ x: 125 }}
-              animate={{ x: 28 }}
-              transition={{ duration: 0.65, delay: 0.5, ease: [0.4, 0, 0.2, 1], repeat: Infinity, repeatDelay: 2.2 }}
-            />
-          </svg>
-        </div>
-        {/* Title + description */}
-        <div style={{ padding: "12px 16px 0", textAlign: "center", width: "100%" }}>
-          <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 700, fontSize: 28, color: "#222b2f", margin: 0, textAlign: "center" }}>Swipe Flex Card</p>
-          <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontSize: 16, color: "#646f7d", margin: "8px 0 0", lineHeight: 1.5, textAlign: "center" }}>
-            Swipe the member&apos;s Flex Card through the card reader at the top of the Terminal.
-          </p>
-        </div>
-        {/* Other Methods */}
-        <div style={{ padding: "24px 16px 0", width: "100%" }}>
-          <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontWeight: 700, fontSize: 16, color: "#222b2f", margin: "0 0 16px" }}>Other Methods</p>
-          <div style={{ display: "flex", gap: 16 }}>
-            {[
-              {
-                label: "Enter PAN",
-                icon: (
-                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                    <rect x="4" y="10" width="32" height="20" rx="3" stroke="#002843" strokeWidth="1.8" fill="none"/>
-                    <rect x="8" y="17" width="5" height="3" rx="1" fill="#002843"/>
-                    <rect x="15" y="17" width="5" height="3" rx="1" fill="#002843"/>
-                    <rect x="22" y="17" width="5" height="3" rx="1" fill="#002843"/>
-                    <rect x="8" y="22" width="5" height="3" rx="1" fill="#002843"/>
-                    <rect x="22" y="22" width="5" height="3" rx="1" fill="#00A99D"/>
-                  </svg>
-                ),
-              },
-              {
-                label: "Scan QR",
-                icon: (
-                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                    <rect x="5" y="5" width="12" height="12" rx="2" stroke="#002843" strokeWidth="1.8" fill="none"/>
-                    <rect x="8" y="8" width="6" height="6" rx="1" fill="#002843"/>
-                    <rect x="23" y="5" width="12" height="12" rx="2" stroke="#002843" strokeWidth="1.8" fill="none"/>
-                    <rect x="26" y="8" width="6" height="6" rx="1" fill="#002843"/>
-                    <rect x="5" y="23" width="12" height="12" rx="2" stroke="#002843" strokeWidth="1.8" fill="none"/>
-                    <rect x="8" y="26" width="6" height="6" rx="1" fill="#002843"/>
-                    <rect x="23" y="23" width="4" height="4" fill="#002843"/>
-                    <rect x="29" y="23" width="4" height="4" fill="#002843"/>
-                    <rect x="23" y="29" width="4" height="4" fill="#002843"/>
-                    <rect x="29" y="29" width="4" height="4" fill="#002843"/>
-                  </svg>
-                ),
-              },
-              {
-                label: "Scan Card",
-                icon: (
-                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                    <rect x="4" y="10" width="32" height="20" rx="3" stroke="#002843" strokeWidth="1.8" fill="none"/>
-                    <rect x="4" y="17" width="32" height="3" fill="#002843" opacity="0.15"/>
-                    <line x1="12" y1="10" x2="12" y2="30" stroke="#00A99D" strokeWidth="1.5" opacity="0.7"/>
-                    <line x1="16" y1="10" x2="16" y2="30" stroke="#00A99D" strokeWidth="1.5" opacity="0.4"/>
-                  </svg>
-                ),
-              },
-            ].map(({ label, icon }) => (
-              <div key={label} style={{
-                background: "white", flex: 1, display: "flex", flexDirection: "column",
-                gap: 8, padding: "16px 12px", borderRadius: 16,
-                boxShadow: "0 3px 5px rgba(0,0,0,0.08)",
-              }}>
-                {icon}
-                <p style={{ fontFamily: "'Proxima Nova', sans-serif", fontSize: 14, color: "#222b2f", margin: 0, lineHeight: "16px" }}>{label}</p>
-              </div>
-            ))}
-          </div>
+          ))}
         </div>
       </div>
     </FigmaScaled>
@@ -663,7 +675,7 @@ function TransactionSuccessScreen() {
 
 // ─── Data ──────────────────────────────────────────────────────────────────
 const SCREENS = [
-  SwipeCardScreen,
+  VerificationMethodsScreen,
   VerifiedScreen,
   BalanceScreen,
   NewSaleScreen,
@@ -682,7 +694,7 @@ const SECTION_SCREENS = [
 
 // Dot labels per screen (shown under the progress dots)
 const SCREEN_LABELS = [
-  "Swipe Card", "Verifying", "Balance",
+  "Verification", "Verifying", "Balance",
   "Scanning Items", "Coverage Check",
   "Processing", "Approved", "Complete",
 ];
