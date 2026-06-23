@@ -23,6 +23,7 @@ export default function Navbar() {
   }, []);
 
   return (
+    <>
     <motion.header
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
@@ -88,8 +89,9 @@ export default function Navbar() {
           </svg>
         </button>
       </nav>
+    </motion.header>
 
-      {/* Mobile menu — full-height slide-in modal */}
+      {/* Mobile menu — sibling of header so `fixed` maps to the viewport */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
@@ -97,7 +99,7 @@ export default function Navbar() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "tween", duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="md:hidden fixed inset-0 z-0 bg-[#002843] flex flex-col"
+            className="md:hidden fixed inset-0 z-40 bg-[#002843] flex flex-col"
           >
             {/* Link list (scrollable area below the header bar) */}
             <div className="flex-1 overflow-y-auto px-6 pt-24 pb-6">
@@ -146,6 +148,6 @@ export default function Navbar() {
           </motion.div>
         )}
       </AnimatePresence>
-    </motion.header>
+    </>
   );
 }
