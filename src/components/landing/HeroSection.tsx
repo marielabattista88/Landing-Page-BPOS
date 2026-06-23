@@ -59,7 +59,6 @@ export default function HeroSection() {
             { cx: 1242, cy: 536, r: 881, dur: 7, delay: 0 },
             { cx: 1410, cy: 728, r: 881, dur: 9, delay: 2.2 },
             { cx: 1050, cy: 968, r: 881, dur: 8, delay: 1.1 },
-            { cx: 1050, cy: 968, r: 881, dur: 6, delay: 0.6 },
           ].map((ring) => (
             <g key={`${ring.cx}-${ring.cy}`}>
               {/* Soft glow halo */}
