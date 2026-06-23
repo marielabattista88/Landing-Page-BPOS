@@ -198,28 +198,6 @@ export default function HeroSection() {
               Everything you need to grow your store — in one simple platform.
             </motion.p>
 
-            {/* Benefits list */}
-            <motion.ul
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.45 }}
-              className="flex flex-col gap-2.5"
-            >
-              {[
-                "Accept benefit card payments",
-                "No POS integration required",
-                "Ships ready to use",
-                "Same-day settlements",
-              ].map((item) => (
-                <li key={item} className="flex items-center gap-3">
-                  <span className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center shrink-0">
-                    <svg className="w-3 h-3 text-emerald-400" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"><path d="M2 6l2.5 2.5L10 3" /></svg>
-                  </span>
-                  <span className="text-sm text-white/80 font-medium">{item}</span>
-                </li>
-              ))}
-            </motion.ul>
-
             {/* CTAs */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
