@@ -109,10 +109,9 @@ function SpinnerRing({ spinning = false, showCheck = false }: { spinning?: boole
   if (spinning) {
     return (
       <div style={{ position: "relative", width: 196, height: 196 }}>
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 1.6, repeat: Infinity, ease: "linear" }}
-          style={{ position: "absolute", inset: 0, originX: "50%", originY: "50%" }}
+        <div
+          className="animate-spin"
+          style={{ position: "absolute", inset: 0, transformOrigin: "center", animationDuration: "1.6s" }}
         >
           <svg viewBox="0 0 196 196" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
             <circle cx="98" cy="98" r="88" fill="none" stroke="#e8f0f5" strokeWidth="10" />
@@ -120,7 +119,7 @@ function SpinnerRing({ spinning = false, showCheck = false }: { spinning?: boole
               strokeDasharray="165 388" strokeLinecap="round" transform="rotate(-90 98 98)" />
             <circle cx="186" cy="98" r="7" fill="#3b82f6" />
           </svg>
-        </motion.div>
+        </div>
       </div>
     );
   }
