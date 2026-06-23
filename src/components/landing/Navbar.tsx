@@ -22,11 +22,19 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Lock background scroll while the mobile menu is open
+  // Lock background scroll while the mobile menu is open (html + body)
   useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    const { documentElement: html, body } = document;
+    if (mobileOpen) {
+      html.style.overflow = "hidden";
+      body.style.overflow = "hidden";
+    } else {
+      html.style.overflow = "";
+      body.style.overflow = "";
+    }
     return () => {
-      document.body.style.overflow = "";
+      html.style.overflow = "";
+      body.style.overflow = "";
     };
   }, [mobileOpen]);
 
@@ -42,9 +50,9 @@ export default function Navbar() {
         {/* Logo */}
         <Link href="/" className="flex items-center group">
           <Image
-            src="/nb-logo-dark.svg"
+            src="/nations-benefits-logo.svg"
             alt="NationsBenefits"
-            width={148}
+            width={146}
             height={22}
             className="h-[22px] w-auto opacity-95 group-hover:opacity-100 transition-opacity duration-200"
             priority
@@ -107,11 +115,11 @@ export default function Navbar() {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "tween", duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-            className="md:hidden fixed inset-0 z-[60] bg-[#002843] flex flex-col p-6"
+            className="md:hidden fixed inset-0 z-[60] bg-[#002843] flex flex-col p-6 overflow-hidden"
           >
             {/* Top bar: logo + close */}
             <div className="flex items-center justify-between shrink-0">
-              <Image src="/nb-logo-dark.svg" alt="NationsBenefits" width={148} height={22} className="h-[22px] w-auto opacity-95" />
+              <Image src="/nations-benefits-logo.svg" alt="NationsBenefits" width={146} height={22} className="h-[22px] w-auto opacity-95" />
               <button
                 onClick={() => setMobileOpen(false)}
                 aria-label="Close menu"
@@ -124,7 +132,7 @@ export default function Navbar() {
             </div>
 
             {/* Link list */}
-            <div className="flex-1 overflow-y-auto pt-8">
+            <div className="flex-1 min-h-0 overflow-y-auto pt-8">
               {navLinks.map((link) => (
                 <a
                   key={link.label}
