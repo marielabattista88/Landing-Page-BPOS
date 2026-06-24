@@ -210,7 +210,7 @@ export default function HeroSection() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 0.8 }}
-        className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2"
+        className="absolute bottom-3 left-1/2 -translate-x-1/2 z-20 hidden desk:flex flex-col items-center gap-2"
       >
         <span className="text-xs text-white/30 font-medium tracking-widest uppercase">
           Scroll
