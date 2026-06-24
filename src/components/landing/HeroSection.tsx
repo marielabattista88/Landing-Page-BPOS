@@ -194,6 +194,9 @@ export default function HeroSection() {
                   height={685}
                   className="w-[400px] tabport:w-[480px] max-w-full desk:w-[640px] desk:max-w-none h-auto drop-shadow-[0_40px_80px_rgba(0,0,0,0.5)] translate-x-[17%] desk:translate-x-[130px] desk:translate-y-[50px]"
                 >
+                  {/* Safari/iOS (incl. Chrome on iPhone): HEVC with alpha */}
+                  <source src="/terminal-3d-loop.mov" type="video/quicktime" />
+                  {/* Chrome/Firefox/Edge: VP9 WebM with alpha */}
                   <source src="/terminal-3d-loop-v2.webm" type="video/webm" />
                 </video>
               </motion.div>
