@@ -233,16 +233,6 @@ export default function FeaturePortal() {
                 </motion.div>
               ))}
             </div>
-
-            <a
-              href="#cta"
-              className="inline-flex items-center justify-center desk:justify-start gap-2 text-[#60b8ff] font-semibold text-sm hover:gap-3 transition-all duration-200"
-            >
-              Explore the portal
-              <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M3 8h10M9 4l4 4-4 4" />
-              </svg>
-            </a>
           </motion.div>
         </div>
       </div>
