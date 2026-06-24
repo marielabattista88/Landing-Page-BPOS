@@ -768,9 +768,9 @@ export default function StickyFeatures() {
   const ScreenComponent = SCREENS[screenIndex];
 
   return (
-    <div ref={ref} style={{ height: `${SECTIONS.length * 100}vh` }} id="features">
+    <div ref={ref} style={{ height: `${SECTIONS.length * 100}svh` }} id="features">
       {/* Sticky viewport */}
-      <div className="sticky top-0 h-screen overflow-hidden bg-[#F8FAFB] flex items-stretch">
+      <div className="sticky top-0 h-svh overflow-hidden bg-[#F8FAFB] flex items-stretch">
 
         {/* Left: section step indicator bar */}
         <div className="hidden desk:flex flex-col justify-center items-center w-16 shrink-0 gap-4 pl-4">
