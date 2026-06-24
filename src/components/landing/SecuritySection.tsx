@@ -93,10 +93,10 @@ export default function SecuritySection() {
             <div className="w-1.5 h-1.5 rounded-full bg-white/60" />
             Security & Reliability
           </div>
-          <h2 className="heading-xl text-4xl desk:text-5xl text-white mb-4">
+          <h2 className="heading-xl text-4xl tabport:text-[2.7rem] desk:text-5xl text-white mb-4">
             Enterprise Security. Retail Simplicity.
           </h2>
-          <p className="text-lg text-white/50 leading-relaxed">
+          <p className="text-lg tabport:text-[1.35rem] text-white/50 leading-relaxed">
             Security, compliance, and reliability built into every transaction.
           </p>
         </motion.div>

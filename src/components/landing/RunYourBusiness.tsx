@@ -79,11 +79,11 @@ export default function RunYourBusiness() {
             <div className="w-1.5 h-1.5 rounded-full bg-[#00497A]" />
             One Platform
           </div>
-          <h2 className="heading-xl text-4xl desk:text-5xl text-[#002843] mb-4">
+          <h2 className="heading-xl text-4xl tabport:text-[2.7rem] desk:text-5xl text-[#002843] mb-4">
             Everything You Need{" "}
             <span className="text-[#00497A]">To Run Your Stores.</span>
           </h2>
-          <p className="text-lg text-[#646F7D] leading-relaxed">
+          <p className="text-lg tabport:text-[1.35rem] text-[#646F7D] leading-relaxed">
             Monitor performance, manage operations, and track revenue from one centralized platform.
           </p>
         </motion.div>

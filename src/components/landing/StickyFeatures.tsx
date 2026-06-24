@@ -827,14 +827,14 @@ export default function StickyFeatures() {
                   </div>
 
                   {/* Title */}
-                  <h2 className="text-4xl desk:text-[44px] font-black text-[#002843] leading-[1.12] tracking-tight">
+                  <h2 className="text-4xl tabport:text-[2.7rem] desk:text-[44px] font-black text-[#002843] leading-[1.12] tracking-tight">
                     {activeSection.title[0]}
                     <br />
                     <span className="text-[#00497A]">{activeSection.title[1]}</span>
                   </h2>
 
                   {/* Description */}
-                  <p className="text-[16px] text-[#646F7D] leading-relaxed max-w-lg mx-auto desk:mx-0">
+                  <p className="text-[16px] tabport:text-[1.2rem] text-[#646F7D] leading-relaxed max-w-lg mx-auto desk:mx-0">
                     {activeSection.description}
                   </p>
 
@@ -869,7 +869,7 @@ export default function StickyFeatures() {
             </div>
 
             {/* ── Right: Phone ── */}
-            <div className="flex flex-col items-center justify-center gap-6">
+            <div className="flex flex-col items-center justify-center gap-6 tabport:scale-[1.2]">
               {/* Phone */}
               <div className="relative" style={{ width: 218, height: 462 }}>
                 {/* Ambient glow */}

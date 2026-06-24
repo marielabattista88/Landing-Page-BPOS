@@ -96,7 +96,7 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             >
-              <h1 className="heading-display text-[clamp(1.25rem,8vw,2.25rem)] desk:text-6xl text-white">
+              <h1 className="heading-display text-[clamp(1.25rem,8vw,2.25rem)] tabport:text-[2.7rem] desk:text-6xl text-white">
                 <span className="whitespace-nowrap">Turn Benefit Members</span>
                 <br />
                 <span className="whitespace-nowrap text-white">Into Loyal Customers.</span>
@@ -108,7 +108,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.35 }}
-              className="text-lg text-white/60 max-w-md leading-relaxed mx-auto desk:mx-0"
+              className="text-lg tabport:text-[1.35rem] text-white/60 max-w-md tabport:max-w-xl leading-relaxed mx-auto desk:mx-0"
             >
               Everything you need to grow your store — in one simple platform.
             </motion.p>
@@ -163,8 +163,8 @@ export default function HeroSection() {
                 { value: "< 3s", label: "Avg. checkout" },
               ].map((stat) => (
                 <div key={stat.label}>
-                  <div className="text-xl font-bold text-white">{stat.value}</div>
-                  <div className="text-xs text-white/50 mt-0.5">{stat.label}</div>
+                  <div className="text-xl tabport:text-2xl font-bold text-white">{stat.value}</div>
+                  <div className="text-xs tabport:text-sm text-white/50 mt-0.5">{stat.label}</div>
                 </div>
               ))}
             </motion.div>
@@ -192,7 +192,7 @@ export default function HeroSection() {
                   playsInline
                   width={941}
                   height={685}
-                  className="w-[400px] max-w-full desk:w-[640px] desk:max-w-none h-auto drop-shadow-[0_40px_80px_rgba(0,0,0,0.5)] translate-x-[17%] desk:translate-x-[130px] desk:translate-y-[50px]"
+                  className="w-[400px] tabport:w-[480px] max-w-full desk:w-[640px] desk:max-w-none h-auto drop-shadow-[0_40px_80px_rgba(0,0,0,0.5)] translate-x-[17%] desk:translate-x-[130px] desk:translate-y-[50px]"
                 >
                   <source src="/terminal-3d-loop-v2.webm" type="video/webm" />
                 </video>

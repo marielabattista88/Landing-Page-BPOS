@@ -11,6 +11,13 @@
   }
 }
 
+/* Tablet portrait (iPad incl. Pro): mobile layout, but content scaled ~20% up. */
+@custom-variant tabport {
+  @media (min-width: 768px) and (orientation: portrait) {
+    @slot;
+  }
+}
+
 /* ─── BPOS Design System ─────────────────────────────────── */
 :root {
   /* Brand Colors */

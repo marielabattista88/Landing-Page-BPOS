@@ -205,12 +205,12 @@ export default function FeaturePortal() {
                 <div className="w-1.5 h-1.5 rounded-full bg-[#60b8ff]" />
                 Retailer Portal
               </div>
-              <h2 className="heading-xl text-4xl desk:text-5xl text-white mb-4">
+              <h2 className="heading-xl text-4xl tabport:text-[2.7rem] desk:text-5xl text-white mb-4">
                 Manage Every Store
                 <br />
                 <span className="gradient-text">From One Dashboard.</span>
               </h2>
-              <p className="text-lg text-white/60 leading-relaxed max-w-md mx-auto desk:mx-0">
+              <p className="text-lg tabport:text-[1.35rem] text-white/60 leading-relaxed max-w-md mx-auto desk:mx-0">
                 Track revenue, settlements, transactions, stores, and cashiers from a single dashboard built for growing retailers.
               </p>
             </div>

@@ -247,11 +247,11 @@ export default function MetricsSection() {
             <div className="w-1.5 h-1.5 rounded-full bg-[#00497A]" />
             Business Impact
           </div>
-          <h2 className="heading-xl text-4xl desk:text-5xl text-[#002843] mb-4">
+          <h2 className="heading-xl text-4xl tabport:text-[2.7rem] desk:text-5xl text-[#002843] mb-4">
             Turn benefit members into{" "}
             <span className="text-[#00497A]">loyal customers.</span>
           </h2>
-          <p className="text-lg text-[#646F7D] leading-relaxed">
+          <p className="text-lg tabport:text-[1.35rem] text-[#646F7D] leading-relaxed">
             Retailers who add BPOS see immediate improvements in transaction volume, basket size, and customer loyalty.
           </p>
         </motion.div>

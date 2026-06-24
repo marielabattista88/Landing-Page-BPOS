@@ -42,7 +42,7 @@ export default function FinalCTA() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.15 }}
-              className="heading-display text-4xl desk:text-6xl text-white mb-5"
+              className="heading-display text-4xl tabport:text-[2.7rem] desk:text-6xl text-white mb-5"
             >
               Turn Benefit Members
               <br />
@@ -54,7 +54,7 @@ export default function FinalCTA() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.25 }}
-              className="text-lg text-white/55 mb-10 max-w-xl mx-auto leading-relaxed"
+              className="text-lg tabport:text-[1.35rem] text-white/55 mb-10 max-w-xl mx-auto leading-relaxed"
             >
               Join thousands of retailers already growing their business with BPOS.
             </motion.p>

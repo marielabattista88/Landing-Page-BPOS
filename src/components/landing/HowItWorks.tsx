@@ -58,7 +58,7 @@ export default function HowItWorks() {
             <div className="w-1.5 h-1.5 rounded-full bg-[#60b8ff]" />
             How It Works
           </div>
-          <h2 className="heading-xl text-4xl desk:text-5xl text-white">
+          <h2 className="heading-xl text-4xl tabport:text-[2.7rem] desk:text-5xl text-white">
             Start Accepting Benefits in{" "}
             <span className="gradient-text">3 Simple Steps</span>
           </h2>
