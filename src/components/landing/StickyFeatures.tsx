@@ -869,7 +869,7 @@ export default function StickyFeatures() {
             </div>
 
             {/* ── Right: Phone ── */}
-            <div className="flex flex-col items-center justify-center gap-6 tabport:scale-[1.2]">
+            <div className="flex flex-col items-center justify-center gap-6 tabport:zoom-[1.2]">
               {/* Phone */}
               <div className="relative" style={{ width: 218, height: 462 }}>
                 {/* Ambient glow */}
