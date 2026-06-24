@@ -42,7 +42,7 @@ export default function FinalCTA() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.15 }}
-              className="heading-display text-4xl sm:text-5xl lg:text-6xl text-white mb-5"
+              className="heading-display text-4xl lg:text-6xl text-white mb-5"
             >
               Turn Benefit Members
               <br />
@@ -64,7 +64,7 @@ export default function FinalCTA() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.35 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center"
+              className="flex flex-col lg:flex-row gap-4 justify-center"
             >
               <a
                 href="#contact"

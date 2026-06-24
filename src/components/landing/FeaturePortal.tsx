@@ -107,7 +107,7 @@ export default function FeaturePortal() {
               </div>
 
               {/* KPI tiles */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-4">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mb-4">
                 {kpis.map((k) => (
                   <div key={k.label} className="rounded-xl border border-white/8 bg-white/3 px-3 py-2.5">
                     <div className="text-[9px] text-white/40 truncate">{k.label}</div>
@@ -161,7 +161,7 @@ export default function FeaturePortal() {
             <motion.div
               animate={{ y: [0, -12, 0] }}
               transition={{ duration: 7, ease: "easeInOut", repeat: Infinity, delay: 0.5 }}
-              className="absolute -top-6 -right-2 sm:-right-6 lg:-right-10 w-40 rounded-2xl border border-white/10 bg-white/6 backdrop-blur-2xl p-3.5 shadow-[0_16px_40px_rgba(0,0,0,0.5)]"
+              className="absolute -top-6 -right-2 lg:-right-6 lg:-right-10 w-40 rounded-2xl border border-white/10 bg-white/6 backdrop-blur-2xl p-3.5 shadow-[0_16px_40px_rgba(0,0,0,0.5)]"
             >
               <div className="flex items-center justify-between mb-2">
                 <span className="text-[10px] text-white/50">Sales This Year</span>
@@ -182,7 +182,7 @@ export default function FeaturePortal() {
             <motion.div
               animate={{ y: [0, 10, 0] }}
               transition={{ duration: 8, ease: "easeInOut", repeat: Infinity, delay: 1 }}
-              className="absolute -bottom-7 right-0 sm:-right-4 lg:-right-8 rounded-2xl border border-white/10 bg-white/6 backdrop-blur-2xl px-4 py-3 shadow-[0_16px_40px_rgba(0,0,0,0.5)]"
+              className="absolute -bottom-7 right-0 lg:-right-4 lg:-right-8 rounded-2xl border border-white/10 bg-white/6 backdrop-blur-2xl px-4 py-3 shadow-[0_16px_40px_rgba(0,0,0,0.5)]"
             >
               <div className="text-[10px] text-white/50">Success Rate</div>
               <div className="flex items-baseline gap-1.5 mt-0.5">
@@ -205,7 +205,7 @@ export default function FeaturePortal() {
                 <div className="w-1.5 h-1.5 rounded-full bg-[#60b8ff]" />
                 Retailer Portal
               </div>
-              <h2 className="heading-xl text-4xl sm:text-5xl text-white mb-4">
+              <h2 className="heading-xl text-4xl lg:text-5xl text-white mb-4">
                 Manage Every Store
                 <br />
                 <span className="gradient-text">From One Dashboard.</span>
@@ -215,7 +215,7 @@ export default function FeaturePortal() {
               </p>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-5">
+            <div className="grid lg:grid-cols-2 gap-5">
               {portalFeatures.map((feat, i) => (
                 <motion.div
                   key={feat.title}

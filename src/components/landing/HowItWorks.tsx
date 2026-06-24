@@ -58,14 +58,14 @@ export default function HowItWorks() {
             <div className="w-1.5 h-1.5 rounded-full bg-[#60b8ff]" />
             How It Works
           </div>
-          <h2 className="heading-xl text-4xl sm:text-5xl text-white">
+          <h2 className="heading-xl text-4xl lg:text-5xl text-white">
             Start Accepting Benefits in{" "}
             <span className="gradient-text">3 Simple Steps</span>
           </h2>
         </motion.div>
 
         {/* Steps */}
-        <div className="grid sm:grid-cols-3 gap-6">
+        <div className="grid lg:grid-cols-3 gap-6">
           {steps.map((s, i) => (
             <motion.div
               key={s.step}

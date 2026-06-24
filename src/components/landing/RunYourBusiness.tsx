@@ -79,7 +79,7 @@ export default function RunYourBusiness() {
             <div className="w-1.5 h-1.5 rounded-full bg-[#00497A]" />
             One Platform
           </div>
-          <h2 className="heading-xl text-4xl sm:text-5xl text-[#002843] mb-4">
+          <h2 className="heading-xl text-4xl lg:text-5xl text-[#002843] mb-4">
             Everything You Need{" "}
             <span className="text-[#00497A]">To Run Your Stores.</span>
           </h2>
@@ -89,7 +89,7 @@ export default function RunYourBusiness() {
         </motion.div>
 
         {/* Capability cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid lg:grid-cols-3 gap-6">
           {capabilities.map((c, i) => (
             <motion.div
               key={c.title}

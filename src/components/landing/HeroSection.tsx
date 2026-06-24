@@ -96,10 +96,10 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             >
-              <h1 className="heading-display text-4xl sm:text-5xl lg:text-6xl text-white">
-                <span className="lg:whitespace-nowrap">Turn Benefit Members</span>
+              <h1 className="heading-display text-[clamp(1.25rem,8vw,2.25rem)] lg:text-6xl text-white">
+                <span className="whitespace-nowrap">Turn Benefit Members</span>
                 <br />
-                <span className="lg:whitespace-nowrap text-white">Into Loyal Customers.</span>
+                <span className="whitespace-nowrap text-white">Into Loyal Customers.</span>
               </h1>
             </motion.div>
 
