@@ -2,7 +2,14 @@
 
 /* Content "desktop" layout: tablet-landscape (>=1024) or large screens.
    iPad portrait (incl. 12.9" at 1024px wide) stays on the mobile layout. */
-@custom-variant desk (@media (min-width: 1024px) and (orientation: landscape), (min-width: 1280px));
+@custom-variant desk {
+  @media (min-width: 1024px) and (orientation: landscape) {
+    @slot;
+  }
+  @media (min-width: 1280px) {
+    @slot;
+  }
+}
 
 /* ─── BPOS Design System ─────────────────────────────────── */
 :root {
