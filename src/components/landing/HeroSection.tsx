@@ -21,7 +21,7 @@ export default function HeroSection() {
   return (
     <section
       ref={ref}
-      className="relative min-h-screen flex flex-col overflow-hidden gradient-hero"
+      className="relative min-h-dvh flex flex-col overflow-hidden gradient-hero"
     >
       {/* Hero background — blue PNG + animated SVG arc lights */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
