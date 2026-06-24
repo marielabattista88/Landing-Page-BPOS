@@ -12,7 +12,7 @@ import Footer from "@/components/landing/Footer";
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen font-sans bg-[#F8FAFB]">
+    <div className="flex flex-col min-h-screen font-sans bg-[#F8FAFB] overflow-x-clip">
       <Navbar />
       <main className="flex-1">
         {/* 1. Hero */}
