@@ -804,8 +804,8 @@ export default function StickyFeatures() {
         </div>
 
         {/* Main content */}
-        <div className="flex-1 flex items-center justify-center max-w-7xl mx-auto w-full px-6 desk:px-12 py-20">
-          <div className="grid desk:grid-cols-2 gap-12 desk:gap-20 items-center w-full">
+        <div className="flex-1 flex items-center justify-center max-w-7xl mx-auto w-full px-6 desk:px-12 py-6 desk:py-20">
+          <div className="grid desk:grid-cols-2 gap-5 desk:gap-20 items-center w-full">
 
             {/* ── Left: Text ── */}
             <div className="flex flex-col gap-8">
@@ -869,7 +869,7 @@ export default function StickyFeatures() {
             </div>
 
             {/* ── Right: Phone ── */}
-            <div className="flex flex-col items-center justify-center gap-6 tabport:zoom-[1.2]">
+            <div className="flex flex-col items-center justify-center gap-4 zoom-[0.72] tabport:zoom-[1.2] desk:zoom-[1] desk:gap-6">
               {/* Phone */}
               <div className="relative" style={{ width: 218, height: 462 }}>
                 {/* Ambient glow */}
