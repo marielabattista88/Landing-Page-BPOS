@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,11 +15,31 @@ const navLinks = [
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [hidden, setHidden] = useState(false); // mobile-only: hide on scroll up
+  const lastY = useRef(0);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 20);
+      // Scroll-direction hide/show — mobile only
+      if (window.innerWidth >= 768) {
+        setHidden(false);
+      } else if (y < 10) {
+        setHidden(false); // always visible at the very top
+      } else if (y > lastY.current + 4) {
+        setHidden(true); // scrolling DOWN → hide
+      } else if (y < lastY.current - 4) {
+        setHidden(false); // scrolling UP → show
+      }
+      lastY.current = y;
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   // Lock background scroll while the mobile menu is open (html + body)
@@ -42,8 +62,8 @@ export default function Navbar() {
     <>
     <motion.header
       initial={{ y: -80, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      animate={{ y: hidden ? "-100%" : 0, opacity: 1 }}
+      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
       className="fixed top-0 left-0 right-0 z-50 bg-[#001829]/80 backdrop-blur-md py-5"
     >
       <nav className="relative z-10 max-w-7xl mx-auto px-6 flex items-center justify-between">
