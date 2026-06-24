@@ -48,14 +48,6 @@ export default function HeroSection() {
           style={{ background: "linear-gradient(to right, #001829e0 0%, #00182980 45%, transparent 75%)" }}
         />
 
-        {/* Subtle grid */}
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)`,
-            backgroundSize: "60px 60px",
-          }}
-        />
       </div>
 
       {/* Main content */}
@@ -202,7 +194,7 @@ export default function HeroSection() {
                   height={685}
                   className="w-[400px] max-w-full lg:w-[640px] lg:max-w-none h-auto drop-shadow-[0_40px_80px_rgba(0,0,0,0.5)] translate-x-[60px] lg:translate-x-[130px] lg:translate-y-[50px]"
                 >
-                  <source src="/terminal-3d-loop.webm" type="video/webm" />
+                  <source src="/terminal-3d-loop-v2.webm" type="video/webm" />
                 </video>
               </motion.div>
             </motion.div>
