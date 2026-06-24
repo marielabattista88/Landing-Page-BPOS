@@ -29,9 +29,9 @@ export default function Footer() {
   return (
     <footer className="bg-[#002843] border-t border-white/10">
       <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+        <div className="grid grid-cols-2 desk:grid-cols-4 gap-12 mb-16">
           {/* Brand */}
-          <div className="col-span-2 lg:col-span-1">
+          <div className="col-span-2 desk:col-span-1">
             <div className="flex items-center gap-2.5 mb-4">
               <div className="w-8 h-8 rounded-lg overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -77,7 +77,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-white/10 pt-8 flex flex-col lg:flex-row items-center justify-between gap-4">
+        <div className="border-t border-white/10 pt-8 flex flex-col desk:flex-row items-center justify-between gap-4">
           <p className="text-xs text-white/30">
             © 2026 NationsBenefits. All rights reserved.
           </p>

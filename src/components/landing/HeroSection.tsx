@@ -55,9 +55,9 @@ export default function HeroSection() {
         style={{ opacity: heroOpacity }}
         className="relative z-10 flex-1 flex items-center max-w-7xl mx-auto w-full px-6 pt-28 pb-16"
       >
-        <div className="grid lg:grid-cols-[1.25fr_0.75fr] gap-12 lg:gap-8 items-center w-full">
+        <div className="grid desk:grid-cols-[1.25fr_0.75fr] gap-12 desk:gap-8 items-center w-full">
           {/* Left column */}
-          <div className="flex flex-col gap-8 items-center text-center lg:items-start lg:text-left">
+          <div className="flex flex-col gap-8 items-center text-center desk:items-start desk:text-left">
             {/* Badge */}
             {/* App Icon */}
             <motion.div
@@ -96,7 +96,7 @@ export default function HeroSection() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             >
-              <h1 className="heading-display text-[clamp(1.25rem,8vw,2.25rem)] lg:text-6xl text-white">
+              <h1 className="heading-display text-[clamp(1.25rem,8vw,2.25rem)] desk:text-6xl text-white">
                 <span className="whitespace-nowrap">Turn Benefit Members</span>
                 <br />
                 <span className="whitespace-nowrap text-white">Into Loyal Customers.</span>
@@ -108,7 +108,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.35 }}
-              className="text-lg text-white/60 max-w-md leading-relaxed mx-auto lg:mx-0"
+              className="text-lg text-white/60 max-w-md leading-relaxed mx-auto desk:mx-0"
             >
               Everything you need to grow your store — in one simple platform.
             </motion.p>
@@ -118,7 +118,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="flex flex-wrap gap-4 justify-center lg:justify-start"
+              className="flex flex-wrap gap-4 justify-center desk:justify-start"
             >
               <a
                 href="#cta"
@@ -155,7 +155,7 @@ export default function HeroSection() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.65 }}
-              className="flex gap-8 pt-4 border-t border-white/10 justify-center lg:justify-start"
+              className="flex gap-8 pt-4 border-t border-white/10 justify-center desk:justify-start"
             >
               {[
                 { value: "2K+", label: "Retailers" },
@@ -171,7 +171,7 @@ export default function HeroSection() {
           </div>
 
           {/* Right column – Terminal video animation */}
-          <div className="relative flex justify-center lg:justify-end items-center">
+          <div className="relative flex justify-center desk:justify-end items-center">
             <motion.div
               style={{ y: deviceY }}
               initial={{ opacity: 0, scale: 0.9, y: 40 }}
@@ -192,7 +192,7 @@ export default function HeroSection() {
                   playsInline
                   width={941}
                   height={685}
-                  className="w-[400px] max-w-full lg:w-[640px] lg:max-w-none h-auto drop-shadow-[0_40px_80px_rgba(0,0,0,0.5)] translate-x-[17%] lg:translate-x-[130px] lg:translate-y-[50px]"
+                  className="w-[400px] max-w-full desk:w-[640px] desk:max-w-none h-auto drop-shadow-[0_40px_80px_rgba(0,0,0,0.5)] translate-x-[17%] desk:translate-x-[130px] desk:translate-y-[50px]"
                 >
                   <source src="/terminal-3d-loop-v2.webm" type="video/webm" />
                 </video>

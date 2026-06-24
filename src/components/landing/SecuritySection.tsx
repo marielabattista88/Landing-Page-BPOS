@@ -93,7 +93,7 @@ export default function SecuritySection() {
             <div className="w-1.5 h-1.5 rounded-full bg-white/60" />
             Security & Reliability
           </div>
-          <h2 className="heading-xl text-4xl lg:text-5xl text-white mb-4">
+          <h2 className="heading-xl text-4xl desk:text-5xl text-white mb-4">
             Enterprise Security. Retail Simplicity.
           </h2>
           <p className="text-lg text-white/50 leading-relaxed">
@@ -102,7 +102,7 @@ export default function SecuritySection() {
         </motion.div>
 
         {/* Pillars grid */}
-        <div className="grid lg:grid-cols-3 gap-5 mb-16">
+        <div className="grid desk:grid-cols-3 gap-5 mb-16">
           {pillars.map((p, i) => (
             <motion.div
               key={p.title}

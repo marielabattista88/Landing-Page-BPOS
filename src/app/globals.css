@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* Content "desktop" layout: tablet-landscape (>=1024) or large screens.
+   iPad portrait (incl. 12.9" at 1024px wide) stays on the mobile layout. */
+@custom-variant desk (@media (min-width: 1024px) and (orientation: landscape), (min-width: 1280px));
+
 /* ─── BPOS Design System ─────────────────────────────────── */
 :root {
   /* Brand Colors */

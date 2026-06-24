@@ -247,7 +247,7 @@ export default function MetricsSection() {
             <div className="w-1.5 h-1.5 rounded-full bg-[#00497A]" />
             Business Impact
           </div>
-          <h2 className="heading-xl text-4xl lg:text-5xl text-[#002843] mb-4">
+          <h2 className="heading-xl text-4xl desk:text-5xl text-[#002843] mb-4">
             Turn benefit members into{" "}
             <span className="text-[#00497A]">loyal customers.</span>
           </h2>
@@ -257,7 +257,7 @@ export default function MetricsSection() {
         </motion.div>
 
         {/* Metric cards */}
-        <div className="grid lg:grid-cols-4 gap-6 mb-16">
+        <div className="grid desk:grid-cols-4 gap-6 mb-16">
           {metrics.map((m, i) => (
             <MetricCard key={m.label} {...m} index={i} />
           ))}
@@ -271,7 +271,7 @@ export default function MetricsSection() {
           transition={{ duration: 0.7 }}
           className="bg-white rounded-3xl border border-[#DEE8EC] p-8 shadow-sm"
         >
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 mb-8">
+          <div className="flex flex-col desk:flex-row desk:items-center justify-between gap-6 mb-8">
             <div>
               <h3 className="text-xl font-bold text-[#002843]">Avg. retailer revenue growth</h3>
               <p className="text-sm text-[#646F7D] mt-1">After 12 months on Benefits POS</p>

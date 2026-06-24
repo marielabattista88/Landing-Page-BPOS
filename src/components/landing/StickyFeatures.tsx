@@ -773,7 +773,7 @@ export default function StickyFeatures() {
       <div className="sticky top-0 h-screen overflow-hidden bg-[#F8FAFB] flex items-stretch">
 
         {/* Left: section step indicator bar */}
-        <div className="hidden lg:flex flex-col justify-center items-center w-16 shrink-0 gap-4 pl-4">
+        <div className="hidden desk:flex flex-col justify-center items-center w-16 shrink-0 gap-4 pl-4">
           {SECTIONS.map((s, i) => (
             <button
               key={s.step}
@@ -804,8 +804,8 @@ export default function StickyFeatures() {
         </div>
 
         {/* Main content */}
-        <div className="flex-1 flex items-center justify-center max-w-7xl mx-auto w-full px-6 lg:px-12 py-20">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center w-full">
+        <div className="flex-1 flex items-center justify-center max-w-7xl mx-auto w-full px-6 desk:px-12 py-20">
+          <div className="grid desk:grid-cols-2 gap-12 desk:gap-20 items-center w-full">
 
             {/* ── Left: Text ── */}
             <div className="flex flex-col gap-8">
@@ -816,7 +816,7 @@ export default function StickyFeatures() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.3, ease: [0.76, 0, 0.24, 1] }}
-                  className="flex flex-col gap-6 items-center text-center lg:items-start lg:text-left"
+                  className="flex flex-col gap-6 items-center text-center desk:items-start desk:text-left"
                 >
                   {/* Eyebrow */}
                   <div className="inline-flex items-center gap-2 w-fit">
@@ -827,19 +827,19 @@ export default function StickyFeatures() {
                   </div>
 
                   {/* Title */}
-                  <h2 className="text-4xl lg:text-[44px] font-black text-[#002843] leading-[1.12] tracking-tight">
+                  <h2 className="text-4xl desk:text-[44px] font-black text-[#002843] leading-[1.12] tracking-tight">
                     {activeSection.title[0]}
                     <br />
                     <span className="text-[#00497A]">{activeSection.title[1]}</span>
                   </h2>
 
                   {/* Description */}
-                  <p className="text-[16px] text-[#646F7D] leading-relaxed max-w-lg mx-auto lg:mx-0">
+                  <p className="text-[16px] text-[#646F7D] leading-relaxed max-w-lg mx-auto desk:mx-0">
                     {activeSection.description}
                   </p>
 
                   {/* Features */}
-                  <ul className="hidden lg:block space-y-2.5">
+                  <ul className="hidden desk:block space-y-2.5">
                     {activeSection.features.map((f) => (
                       <li key={f} className="flex items-center gap-3">
                         <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center shrink-0">
@@ -851,7 +851,7 @@ export default function StickyFeatures() {
                   </ul>
 
                   {/* Metrics */}
-                  <div className="hidden lg:flex gap-6">
+                  <div className="hidden desk:flex gap-6">
                     {activeSection.metrics.map((m) => (
                       <div key={m.label} className="bg-white rounded-2xl px-5 py-3.5 shadow-sm border border-[#DEE8EC]">
                         <div className="text-[22px] font-black text-[#002843]">{m.value}</div>
@@ -861,7 +861,7 @@ export default function StickyFeatures() {
                   </div>
 
                   {/* CTA */}
-                  <button className="w-fit text-[14px] font-bold text-[#00497A] hover:text-[#002843] transition-colors hidden lg:flex items-center gap-1">
+                  <button className="w-fit text-[14px] font-bold text-[#00497A] hover:text-[#002843] transition-colors hidden desk:flex items-center gap-1">
                     {activeSection.cta}
                   </button>
                 </motion.div>
@@ -947,7 +947,7 @@ export default function StickyFeatures() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2 pointer-events-none"
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden desk:flex flex-col items-center gap-2 pointer-events-none"
           >
             <span className="text-[10px] text-[#646F7D] uppercase tracking-widest font-medium">Scroll to explore</span>
             <motion.div

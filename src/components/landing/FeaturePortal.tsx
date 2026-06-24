@@ -67,7 +67,7 @@ export default function FeaturePortal() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 xl:gap-32 items-center">
+        <div className="grid desk:grid-cols-2 gap-16 desk:gap-24 xl:gap-32 items-center">
 
           {/* LEFT: Native glass dashboard mock */}
           <motion.div
@@ -75,7 +75,7 @@ export default function FeaturePortal() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="relative order-2 lg:order-1 lg:pr-10 lg:py-8"
+            className="relative order-2 desk:order-1 desk:pr-10 desk:py-8"
           >
             {/* Ambient glows */}
             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-24 bg-teal/20 blur-[60px] rounded-full pointer-events-none" />
@@ -107,7 +107,7 @@ export default function FeaturePortal() {
               </div>
 
               {/* KPI tiles */}
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mb-4">
+              <div className="grid grid-cols-2 desk:grid-cols-4 gap-2 mb-4">
                 {kpis.map((k) => (
                   <div key={k.label} className="rounded-xl border border-white/8 bg-white/3 px-3 py-2.5">
                     <div className="text-[9px] text-white/40 truncate">{k.label}</div>
@@ -161,7 +161,7 @@ export default function FeaturePortal() {
             <motion.div
               animate={{ y: [0, -12, 0] }}
               transition={{ duration: 7, ease: "easeInOut", repeat: Infinity, delay: 0.5 }}
-              className="absolute -top-6 -right-2 lg:-right-6 lg:-right-10 w-40 rounded-2xl border border-white/10 bg-white/6 backdrop-blur-2xl p-3.5 shadow-[0_16px_40px_rgba(0,0,0,0.5)]"
+              className="absolute -top-6 -right-2 desk:-right-6 desk:-right-10 w-40 rounded-2xl border border-white/10 bg-white/6 backdrop-blur-2xl p-3.5 shadow-[0_16px_40px_rgba(0,0,0,0.5)]"
             >
               <div className="flex items-center justify-between mb-2">
                 <span className="text-[10px] text-white/50">Sales This Year</span>
@@ -182,7 +182,7 @@ export default function FeaturePortal() {
             <motion.div
               animate={{ y: [0, 10, 0] }}
               transition={{ duration: 8, ease: "easeInOut", repeat: Infinity, delay: 1 }}
-              className="absolute -bottom-7 right-0 lg:-right-4 lg:-right-8 rounded-2xl border border-white/10 bg-white/6 backdrop-blur-2xl px-4 py-3 shadow-[0_16px_40px_rgba(0,0,0,0.5)]"
+              className="absolute -bottom-7 right-0 desk:-right-4 desk:-right-8 rounded-2xl border border-white/10 bg-white/6 backdrop-blur-2xl px-4 py-3 shadow-[0_16px_40px_rgba(0,0,0,0.5)]"
             >
               <div className="text-[10px] text-white/50">Success Rate</div>
               <div className="flex items-baseline gap-1.5 mt-0.5">
@@ -198,24 +198,24 @@ export default function FeaturePortal() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col gap-8 order-1 lg:order-2"
+            className="flex flex-col gap-8 order-1 desk:order-2"
           >
-            <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+            <div className="flex flex-col items-center text-center desk:items-start desk:text-left">
               <div className="inline-flex items-center gap-2 bg-white/10 text-white/70 text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
                 <div className="w-1.5 h-1.5 rounded-full bg-[#60b8ff]" />
                 Retailer Portal
               </div>
-              <h2 className="heading-xl text-4xl lg:text-5xl text-white mb-4">
+              <h2 className="heading-xl text-4xl desk:text-5xl text-white mb-4">
                 Manage Every Store
                 <br />
                 <span className="gradient-text">From One Dashboard.</span>
               </h2>
-              <p className="text-lg text-white/60 leading-relaxed max-w-md mx-auto lg:mx-0">
+              <p className="text-lg text-white/60 leading-relaxed max-w-md mx-auto desk:mx-0">
                 Track revenue, settlements, transactions, stores, and cashiers from a single dashboard built for growing retailers.
               </p>
             </div>
 
-            <div className="grid lg:grid-cols-2 gap-5">
+            <div className="grid desk:grid-cols-2 gap-5">
               {portalFeatures.map((feat, i) => (
                 <motion.div
                   key={feat.title}
@@ -236,7 +236,7 @@ export default function FeaturePortal() {
 
             <a
               href="#cta"
-              className="inline-flex items-center justify-center lg:justify-start gap-2 text-[#60b8ff] font-semibold text-sm hover:gap-3 transition-all duration-200"
+              className="inline-flex items-center justify-center desk:justify-start gap-2 text-[#60b8ff] font-semibold text-sm hover:gap-3 transition-all duration-200"
             >
               Explore the portal
               <svg className="w-4 h-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2">
