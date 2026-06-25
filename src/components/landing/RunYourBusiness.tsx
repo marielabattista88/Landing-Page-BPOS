@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { revealViewport, staggerDelay } from "@/lib/reveal";
 
 const capabilities = [
   {
@@ -71,7 +72,7 @@ export default function RunYourBusiness() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
+          viewport={revealViewport}
           transition={{ duration: 0.6 }}
           className="text-center max-w-2xl mx-auto mb-16"
         >
@@ -95,8 +96,8 @@ export default function RunYourBusiness() {
               key={c.title}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              viewport={revealViewport}
+              transition={{ duration: 0.6, delay: staggerDelay(i), ease: [0.16, 1, 0.3, 1] }}
               className="p-6 rounded-2xl bg-white border border-[#DEE8EC] hover:border-[#00497A]/30 hover:shadow-[0_8px_40px_rgba(0,73,122,0.1)] transition-all duration-300"
             >
               <div className="flex items-center gap-3 mb-3">

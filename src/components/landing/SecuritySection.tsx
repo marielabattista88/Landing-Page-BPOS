@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import FlowLines from "./FlowLines";
+import { revealViewport, staggerDelay } from "@/lib/reveal";
 
 const pillars = [
   {
@@ -85,7 +86,7 @@ export default function SecuritySection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={revealViewport}
           transition={{ duration: 0.6 }}
           className="text-center max-w-2xl mx-auto mb-16"
         >
@@ -108,8 +109,8 @@ export default function SecuritySection() {
               key={p.title}
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              viewport={revealViewport}
+              transition={{ duration: 0.6, delay: staggerDelay(i), ease: [0.16, 1, 0.3, 1] }}
               className="glass-card rounded-2xl p-6 hover:bg-white/[0.08] transition-colors duration-200"
             >
               <div className="w-12 h-12 rounded-xl bg-[#00497A]/30 text-[#60b8ff] flex items-center justify-center mb-4">
@@ -125,7 +126,7 @@ export default function SecuritySection() {
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={revealViewport}
           transition={{ duration: 0.6 }}
           className="border border-white/10 rounded-3xl p-8 flex flex-wrap gap-8 items-center justify-around"
         >

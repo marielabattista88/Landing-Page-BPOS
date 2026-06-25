@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import FlowLines from "./FlowLines";
+import { revealViewport, staggerDelay } from "@/lib/reveal";
 
 const kpis = [
   { label: "Total Revenue", value: "$708.54", delta: "+5%" },
@@ -71,10 +72,10 @@ export default function FeaturePortal() {
 
           {/* LEFT: Native glass dashboard mock */}
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 28 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-80px" }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            viewport={revealViewport}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="relative order-2 desk:order-1 desk:pr-10 desk:py-8"
           >
             {/* Ambient glows */}
@@ -196,8 +197,8 @@ export default function FeaturePortal() {
           <motion.div
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            viewport={revealViewport}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="flex flex-col gap-8 order-1 desk:order-2"
           >
             <div className="flex flex-col items-center text-center desk:items-start desk:text-left">
@@ -221,8 +222,8 @@ export default function FeaturePortal() {
                   key={feat.title}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 + i * 0.1, duration: 0.5 }}
+                  viewport={revealViewport}
+                  transition={{ delay: staggerDelay(i), duration: 0.5 }}
                   className="glass-card rounded-2xl p-4 hover:bg-white/8 transition-colors duration-200"
                 >
                   <div className="w-9 h-9 rounded-lg bg-navy/30 text-[#60b8ff] flex items-center justify-center mb-3">

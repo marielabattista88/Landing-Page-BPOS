@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { revealViewport } from "@/lib/reveal";
 
 export default function FinalCTA() {
   return (
@@ -9,7 +10,7 @@ export default function FinalCTA() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={revealViewport}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="relative gradient-cta rounded-3xl px-8 py-20 text-center overflow-hidden"
         >
@@ -29,7 +30,7 @@ export default function FinalCTA() {
             <motion.div
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={revealViewport}
               transition={{ duration: 0.5, delay: 0.1 }}
               className="inline-flex items-center gap-2 bg-white/10 text-white/60 text-xs font-semibold px-3 py-1.5 rounded-full mb-6"
             >
@@ -40,7 +41,7 @@ export default function FinalCTA() {
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={revealViewport}
               transition={{ duration: 0.6, delay: 0.15 }}
               className="heading-display text-4xl tabport:text-[2.7rem] desk:text-6xl text-white mb-5"
             >
@@ -52,7 +53,7 @@ export default function FinalCTA() {
             <motion.p
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={revealViewport}
               transition={{ duration: 0.5, delay: 0.25 }}
               className="text-lg tabport:text-[1.35rem] text-white/55 mb-10 max-w-xl mx-auto leading-relaxed"
             >
@@ -62,7 +63,7 @@ export default function FinalCTA() {
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={revealViewport}
               transition={{ duration: 0.5, delay: 0.35 }}
               className="flex flex-col desk:flex-row gap-4 justify-center"
             >
@@ -93,7 +94,7 @@ export default function FinalCTA() {
             <motion.p
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
+              viewport={revealViewport}
               transition={{ duration: 0.5, delay: 0.5 }}
               className="mt-8 text-xs text-white/30"
             >

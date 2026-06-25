@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { revealViewport, staggerDelay } from "@/lib/reveal";
 
 const steps = [
   {
@@ -50,7 +51,7 @@ export default function HowItWorks() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
+          viewport={revealViewport}
           transition={{ duration: 0.6 }}
           className="text-center max-w-2xl mx-auto mb-16"
         >
@@ -71,8 +72,8 @@ export default function HowItWorks() {
               key={s.step}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.6, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
+              viewport={revealViewport}
+              transition={{ duration: 0.6, delay: staggerDelay(i), ease: [0.16, 1, 0.3, 1] }}
               className="relative glass-card rounded-3xl p-8 hover:bg-white/[0.08] transition-colors duration-300"
             >
               <div className="flex items-center justify-between mb-6">

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
+import { revealViewport, staggerDelay } from "@/lib/reveal";
 
 function useCountUp(end: number, duration = 2000, decimals = 0) {
   const [count, setCount] = useState(0);
@@ -75,7 +76,7 @@ function MetricCard({
   index: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, revealViewport);
   const { count, start } = useCountUp(value, 2200, decimals);
 
   useEffect(() => {
@@ -87,7 +88,7 @@ function MetricCard({
       ref={ref}
       initial={{ opacity: 0, y: 30 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.6, delay: staggerDelay(index), ease: [0.16, 1, 0.3, 1] }}
       className="text-center p-8 rounded-3xl bg-white border border-[#DEE8EC] hover:border-[#00497A]/30 hover:shadow-[0_8px_40px_rgba(0,73,122,0.1)] transition-all duration-300"
     >
       <div className="text-5xl font-black text-[#002843] mb-2">
@@ -104,7 +105,7 @@ function MetricCard({
 // Animated SVG line chart
 function LineChart() {
   const wrapRef = useRef<HTMLDivElement>(null);
-  const inView = useInView(wrapRef, { once: true, margin: "-80px" });
+  const inView = useInView(wrapRef, revealViewport);
 
   // Monthly revenue data ($ thousands) — growth trend Jan → Dec
   const data = [14.2, 15.8, 15.1, 17.4, 16.9, 19.6, 21.3, 19.0, 23.1, 21.8, 25.4, 24.38];
@@ -239,7 +240,7 @@ export default function MetricsSection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
+          viewport={revealViewport}
           transition={{ duration: 0.6 }}
           className="text-center max-w-2xl mx-auto mb-16"
         >
@@ -267,7 +268,7 @@ export default function MetricsSection() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={revealViewport}
           transition={{ duration: 0.7 }}
           className="bg-white rounded-3xl border border-[#DEE8EC] p-8 shadow-sm"
         >
