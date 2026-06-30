@@ -9,9 +9,24 @@ export default function HeroSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.playbackRate = 0.75;
-    }
+    const video = videoRef.current;
+    if (!video) return;
+
+    // React doesn't reliably apply the `muted` attribute to the DOM node,
+    // so we set it imperatively — otherwise the browser treats the video as
+    // unmuted and blocks autoplay (showing a play button instead).
+    video.muted = true;
+    video.playbackRate = 0.75;
+
+    const tryPlay = () => {
+      const p = video.play();
+      if (p) p.catch(() => {});
+    };
+
+    tryPlay();
+    // Retry once metadata is ready in case the first attempt was too early.
+    video.addEventListener("loadeddata", tryPlay);
+    return () => video.removeEventListener("loadeddata", tryPlay);
   }, []);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const deviceY = useTransform(scrollYProgress, [0, 1], [0, 80]);
