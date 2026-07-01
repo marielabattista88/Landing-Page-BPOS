@@ -675,8 +675,19 @@ const SCREEN_LABELS = [
   "Processing", "Approved", "Complete",
 ];
 
-// Auto-cycle duration per screen (ms)
-const CYCLE_MS = 2800;
+// Auto-cycle duration per screen (ms), indexed by global screen index.
+// Loading/animated screens keep ~2.8s so their internal motion can play out;
+// static info screens are shorter so they don't feel like they're stuck.
+const SCREEN_DURATIONS = [
+  2400, // 0 Verification Methods (static)
+  2800, // 1 Verifying → Verified (spinner + check animation)
+  2600, // 2 Balance (static list, staggered reveal)
+  2800, // 3 New Sale (static list)
+  2800, // 4 Coverage Verified (static list)
+  1900, // 5 Analyzing (spinner only)
+  2000, // 6 Approved (check animation)
+  3000, // 7 Transaction Successful (final summary, more to read)
+];
 
 const SECTIONS = [
   {
@@ -752,14 +763,22 @@ export default function StickyFeatures() {
     setSectionIndex(newSection);
   });
 
-  // Auto-cycle screens within the active section
+  // Restart at the first screen whenever the section changes
   useEffect(() => {
     setScreenInSection(0);
-    const id = setInterval(() => {
-      setScreenInSection((prev) => (prev + 1) % SECTION_SCREENS[sectionIndex].length);
-    }, CYCLE_MS);
-    return () => clearInterval(id);
   }, [sectionIndex]);
+
+  // Auto-cycle screens within the active section — each screen waits its own
+  // duration, then schedules the next one.
+  useEffect(() => {
+    const screens = SECTION_SCREENS[sectionIndex];
+    const safeIdx = Math.min(screenInSection, screens.length - 1);
+    const globalIdx = screens[safeIdx];
+    const id = setTimeout(() => {
+      setScreenInSection((prev) => (prev + 1) % screens.length);
+    }, SCREEN_DURATIONS[globalIdx]);
+    return () => clearTimeout(id);
+  }, [sectionIndex, screenInSection]);
 
   // Clamp screenInSection so it never goes out of bounds during section transitions
   const safeScreenInSection = Math.min(screenInSection, SECTION_SCREENS[sectionIndex].length - 1);
@@ -915,7 +934,7 @@ export default function StickyFeatures() {
                             className="absolute inset-y-0 left-0 rounded-full bg-[#00A99D]/60"
                             initial={{ width: "0%" }}
                             animate={{ width: "100%" }}
-                            transition={{ duration: CYCLE_MS / 1000, ease: "linear" }}
+                            transition={{ duration: SCREEN_DURATIONS[screenIndex] / 1000, ease: "linear" }}
                           />
                         )}
                       </button>
