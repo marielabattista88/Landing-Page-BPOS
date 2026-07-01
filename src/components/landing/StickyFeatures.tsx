@@ -705,7 +705,6 @@ const SECTIONS = [
       { value: "< 100ms", label: "Verification time" },
       { value: "100%", label: "Digital, no paper" },
     ],
-    cta: "Verify in seconds →",
     step: "01",
   },
   {
@@ -723,7 +722,6 @@ const SECTIONS = [
       { value: "15 items", label: "Scanned in 92ms" },
       { value: "12 / 3", label: "Covered / Declined" },
     ],
-    cta: "See basket intelligence →",
     step: "02",
   },
   {
@@ -741,7 +739,6 @@ const SECTIONS = [
       { value: "$117.07", label: "Benefits applied" },
       { value: "2.3s", label: "Transaction time" },
     ],
-    cta: "Complete checkout →",
     step: "03",
   },
 ];
@@ -880,9 +877,11 @@ export default function StickyFeatures() {
                   </div>
 
                   {/* CTA */}
-                  <button className="w-fit text-[14px] font-bold text-[#00497A] hover:text-[#002843] transition-colors hidden desk:flex items-center gap-1">
-                    {activeSection.cta}
-                  </button>
+                  {activeSection.cta && (
+                    <button className="w-fit text-[14px] font-bold text-[#00497A] hover:text-[#002843] transition-colors hidden desk:flex items-center gap-1">
+                      {activeSection.cta}
+                    </button>
+                  )}
                 </motion.div>
               </AnimatePresence>
             </div>
